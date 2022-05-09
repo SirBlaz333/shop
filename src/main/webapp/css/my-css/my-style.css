@@ -1,0 +1,12 @@
+body{
+    opacity: 0;
+    transition: .35s;
+}
+
+.container{
+    margin-top: 60px;
+}
+
+button {
+    transition: 0.2s;
+}

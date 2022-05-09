@@ -1,0 +1,35 @@
+.registration form {
+  width: 50%;
+  margin: auto;
+}
+input {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+.rows label,
+.rows input,
+.rows button {
+  margin-bottom: 1%;
+  display: block;
+  width: 100%;
+}
+.registration button {
+    margin-top: 24px;
+    width: 100%;
+    height: 50px;
+    border-radius: 8px;
+    border: none;
+    background: #eee;
+    transition: 0.3s;
+}
+
+.registration button:hover{
+    background: #ccc;
+}
+
+.registration form .error {
+  color: #ff0000;
+}

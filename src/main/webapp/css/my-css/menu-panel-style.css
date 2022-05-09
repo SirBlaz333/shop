@@ -1,0 +1,40 @@
+.panel {
+    top:0;
+    left:0;
+    position: fixed;
+    background-color: #eee;
+    height: 50px;
+    width: 100%;
+    margin-bottom: 50px;
+}
+
+.panel button{
+    text-align: center;
+    font-size: 32px;
+}
+
+.panel button:hover{
+    background-color: #ccc;
+}
+
+.menu-button {
+    width: 20%;
+    border: none;
+    float: left;
+}
+
+.cart-button{
+    float: right;
+    border: none;
+    width: 100px;
+}
+
+.login-button {
+    float: right;
+    width: 20%;
+    border: none;
+}
+
+.cart-button img {
+    width: 32px;
+}
