@@ -1,3 +1,12 @@
+How to start server:
+--
+
+Execute maven commands:
+
+mvn clean install
+
+mvn tomcat7:run
+
 Web template was taken from: 
 --
 
