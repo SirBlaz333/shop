@@ -1,23 +1,22 @@
 package com.my.captcha;
 
+import com.my.captcha.container.CaptchaContainer;
+
 import javax.imageio.ImageIO;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.*;
 import java.awt.*;
 import java.awt.font.TextLayout;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
 @WebServlet("/captcha-servlet")
-public class CaptchaServlet extends HttpServlet {
-
-    public static final String CAPTCHA = "captcha";
+public class CaptchaServlet extends HttpServlet implements Captcha {
     private final static long RANDOM_SEED = 111_111;
     private final static int RANDOM_ORIGIN = 100_000;
     private final static int RANDOM_BOUND = 999_999;
@@ -26,9 +25,15 @@ public class CaptchaServlet extends HttpServlet {
     private final static String IMAGE_FORMAT = "jpeg";
     private final static Font FONT =  new Font("Arial", Font.BOLD, 32);
     private final Random random;
+    private final CaptchaContainer container;
 
-    public CaptchaServlet(){
+    public CaptchaServlet() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         random = new Random(RANDOM_SEED);
+        String className = getInitParameter(CAPTCHA_CONTAINER);
+        Class<?> containerClass = Class.forName(className);
+        container = (CaptchaContainer) containerClass.getDeclaredConstructor().newInstance();
+        ServletContext servletContext = getServletContext();
+        servletContext.setAttribute(CAPTCHA_CONTAINER, container);
     }
 
     @Override
@@ -39,6 +44,7 @@ public class CaptchaServlet extends HttpServlet {
         httpSession.setAttribute(CAPTCHA, captcha);
         OutputStream outputStream = response.getOutputStream();
         ImageIO.write(bufferedImage, IMAGE_FORMAT, outputStream);
+        container.put(request, response, captcha);
     }
 
     @Override
