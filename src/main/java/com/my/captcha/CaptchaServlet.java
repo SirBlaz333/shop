@@ -24,16 +24,23 @@ public class CaptchaServlet extends HttpServlet implements Captcha {
     private final static int CAPTCHA_WIDTH = 150;
     private final static String IMAGE_FORMAT = "jpeg";
     private final static Font FONT =  new Font("Arial", Font.BOLD, 32);
-    private final Random random;
-    private final CaptchaContainer container;
+    private Random random;
+    private CaptchaContainer container;
 
-    public CaptchaServlet() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    @Override
+    public void init() throws ServletException {
+        super.init();
         random = new Random(RANDOM_SEED);
-        String className = getInitParameter(CAPTCHA_CONTAINER);
-        Class<?> containerClass = Class.forName(className);
-        container = (CaptchaContainer) containerClass.getDeclaredConstructor().newInstance();
-        ServletContext servletContext = getServletContext();
-        servletContext.setAttribute(CAPTCHA_CONTAINER, container);
+        String className = getServletContext().getInitParameter(CAPTCHA_CONTAINER);
+        try {
+            Class<?> containerClass = Class.forName(className);
+            container = (CaptchaContainer) containerClass.getDeclaredConstructor().newInstance();
+            ServletContext servletContext = getServletContext();
+            servletContext.setAttribute(CAPTCHA_CONTAINER, container);
+        } catch (ClassNotFoundException | InvocationTargetException | InstantiationException | IllegalAccessException |
+                 NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
@@ -43,8 +50,8 @@ public class CaptchaServlet extends HttpServlet implements Captcha {
         HttpSession httpSession = request.getSession();
         httpSession.setAttribute(CAPTCHA, captcha);
         OutputStream outputStream = response.getOutputStream();
-        ImageIO.write(bufferedImage, IMAGE_FORMAT, outputStream);
         container.put(request, response, captcha);
+        ImageIO.write(bufferedImage, IMAGE_FORMAT, outputStream);
     }
 
     @Override

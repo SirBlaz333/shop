@@ -9,7 +9,11 @@ import java.util.HashMap;
 
 public class CookieCaptchaContainer implements CaptchaContainer, Captcha {
 
-    private HashMap<String, String> captchaContainer;
+    private final HashMap<String, String> captchaContainer;
+
+    public CookieCaptchaContainer(){
+        captchaContainer = new HashMap<>();
+    }
 
     @Override
     public void put(HttpServletRequest request, HttpServletResponse response, String captcha) {
