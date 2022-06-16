@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8" isELIgnored="false"%>
+<%@ taglib prefix="mylib" tagdir="/WEB-INF/tags" %>
 <!DOCTYPE html>
 <html>
 
@@ -73,9 +74,8 @@
                         <label for="newsletter">Add me to the newsletter</label>
                     </div>
 
-                    <div class="captcha input-row">
-                        <img alt="captcha" src="captcha-servlet"/>
-                        <input type="captcha" name="captcha" id="captcha" placeholder="Enter numbers from image" required="true" maxlength="6">
+                    <div class="input-row">
+                        <mylib:captcha/>
                     </div>
                     <button type="submit">Register</button>
                 </div>
