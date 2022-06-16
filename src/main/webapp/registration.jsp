@@ -43,23 +43,37 @@
                 </div>
                 <div class="rows">
 
-                    <label for="firstname"><i class="fa fa-user"></i> First Name</label>
-                    <div class="error" id="firstname-error">Please enter your firstname</div>
-                    <input type="text" name="firstname" id="firstname" placeholder="Max" value="${firstname}"/>
+                    <div class = "input-row">
+                        <label for="firstname"><i class="fa fa-user"></i> First Name</label>
+                        <div class="error" id="firstname-error">Please enter your firstname</div>
+                        <input type="text" name="firstname" id="firstname" placeholder="Max" value="${firstname}"/>
+                    </div>
 
-                    <label for="lastname"><i class="fa fa-user"></i> Last Name</label>
-                    <div class="error" id="lastname-error">Please enter your lastname</div>
-                    <input type="text" name="lastname" id="lastname" placeholder="Smith" value="${lastname}"/>
+                    <div class="input-row">
+                        <label for="lastname"><i class="fa fa-user"></i> Last Name</label>
+                        <div class="error" id="lastname-error">Please enter your lastname</div>
+                        <input type="text" name="lastname" id="lastname" placeholder="Smith" value="${lastname}"/>
+                    </div>
 
-                    <label for="email"><i class="fa fa-envelope"></i> Email</label>
-                    <div class="error" id="email-error">Enter correct email</div>
-                    <input type="email" name="email" id="email" placeholder="max@smith.com"  value="${email}"/>
+                    <div class="input-row">
+                        <label for="email"><i class="fa fa-envelope"></i> Email</label>
+                        <div class="error" id="email-error">Enter correct email</div>
+                        <input type="email" name="email" id="email" placeholder="max@smith.com"  value="${email}"/>
+                    </div>
 
-                    <label for="password"><i class="fa-solid fa-lock"></i> Password</label>
-                    <div class="error" id="password-error">Please provide a password</div>
-                    <div class="error" id="password-length-error">Your password must be at least 5 characters long</div>
-                    <input type="password" name="password" id="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"/>
-                    <div class="captcha">
+                    <div class="input-row">
+                        <label for="password"><i class="fa-solid fa-lock"></i> Password</label>
+                        <div class="error" id="password-error">Please provide a password</div>
+                        <div class="error" id="password-length-error">Your password must be at least 5 characters long</div>
+                        <input type="password" name="password" id="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"/>
+                    </div>
+
+                    <div class="newsletter">
+                        <input type="checkbox" id="newsletter" name="newsletter">
+                        <label for="newsletter">Add me to the newsletter</label>
+                    </div>
+
+                    <div class="captcha input-row">
                         <img alt="captcha" src="captcha-servlet"/>
                         <input type="captcha" name="captcha" id="captcha" placeholder="Enter numbers from image" required="true" maxlength="6">
                     </div>

@@ -1,20 +1,35 @@
 .registration form {
-  width: 50%;
-  margin: auto;
+    width: 50%;
+    margin: auto;
 }
-input {
+.input-row input {
     width: 100%;
     margin-bottom: 20px;
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 8px;
 }
-.rows label,
-.rows input,
-.rows button {
-  margin-bottom: 1%;
-  display: block;
-  width: 100%;
+.newsletter{
+    margin-left: 33%;
+    width: 100%;
+}
+
+.newsletter label{
+    width: 34%;
+    text-align: center;
+}
+
+.newsletter input[type="checkbox"]:checked{
+    border: 2px solid red;
+    color: #ff0000;
+}
+
+.input-row label,
+.input-row input,
+.input-row button {
+    margin-bottom: 1%;
+    display: block;
+    width: 100%;
 }
 .registration button {
     margin-top: 24px;
@@ -48,5 +63,5 @@ input {
 }
 
 .registration form .error {
-  color: #ff0000;
+    color: #ff0000;
 }
