@@ -8,7 +8,6 @@ import com.my.user.Users;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,11 +22,12 @@ import static com.my.user.UserField.*;
 @WebServlet(name = "Login",
         urlPatterns = {"/login/*"})
 public class LoginServlet extends HttpServlet {
-    public static final String USER_EXISTS = "User with such email already exists";
+    public static final String USER_EXISTS_MESSAGE = "User with such email already exists";
     public static final String ERROR_MESSAGE = "errorMessage";
     public static final String MAIN_PAGE = "index.html";
     public static final String REGISTRATION = "registration.jsp";
-    public static final String WRONG_CAPTCHA = "You enter wrong number. Please try again";
+    public static final String WRONG_CAPTCHA_MESSAGE = "You enter wrong number. Please try again";
+    public static final String TIMEOUT_MESSAGE = "Captcha expired. Please try again";
     private final Users users;
 
     public LoginServlet() {
@@ -44,12 +44,16 @@ public class LoginServlet extends HttpServlet {
         String expectedCaptcha = getCaptcha(request);
         String userCaptcha = request.getParameter(CAPTCHA);
         String email = request.getParameter(EMAIL.toString().toLowerCase());
+        if(expectedCaptcha == null){
+            showError(request, response, TIMEOUT_MESSAGE);
+            return;
+        }
         if(!userCaptcha.equals(expectedCaptcha)){
-            showError(request, response, WRONG_CAPTCHA);
+            showError(request, response, WRONG_CAPTCHA_MESSAGE);
             return;
         }
         if(userExists(email)){
-            showError(request, response, USER_EXISTS);
+            showError(request, response, USER_EXISTS_MESSAGE);
             return;
         }
         response.sendRedirect(MAIN_PAGE);

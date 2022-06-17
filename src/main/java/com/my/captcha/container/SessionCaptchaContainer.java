@@ -21,8 +21,7 @@ public class SessionCaptchaContainer implements CaptchaContainer {
     }
 
     @Override
-    public void remove(HttpServletRequest request) {
-        HttpSession httpSession = request.getSession();
+    public void remove(HttpSession httpSession, String captcha) {
         httpSession.removeAttribute(CAPTCHA);
     }
 }

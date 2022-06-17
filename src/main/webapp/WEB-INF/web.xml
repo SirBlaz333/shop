@@ -12,4 +12,8 @@
     <param-name>CaptchaContainer</param-name>
     <param-value>com.my.captcha.container.CookieCaptchaContainer</param-value>
   </context-param>
+  <context-param>
+    <param-name>Timeout</param-name>
+    <param-value>180000</param-value>
+  </context-param>
 </web-app>
