@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 
-public class CookieCaptchaContainer implements CaptchaContainer, Captcha {
+public class CookieCaptchaContainer implements CaptchaContainer {
 
     private final HashMap<String, String> captchaContainer;
 
@@ -32,6 +32,17 @@ public class CookieCaptchaContainer implements CaptchaContainer, Captcha {
             }
         }
         return null;
+    }
+
+    @Override
+    public void remove(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        for (Cookie cookie : cookies) {
+            if (cookie.getName().equals(CAPTCHA)) {
+                captchaContainer.remove(cookie.getValue());
+                return;
+            }
+        }
     }
 
     private String getCaptcha(Cookie cookie){
