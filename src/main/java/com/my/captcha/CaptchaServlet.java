@@ -59,7 +59,7 @@ public class CaptchaServlet extends HttpServlet implements Captcha {
     }
 
     private String generateCaptcha(){
-        int number = random.nextInt(RANDOM_ORIGIN, RANDOM_BOUND);
+        int number = random.nextInt(RANDOM_BOUND - RANDOM_ORIGIN) + RANDOM_ORIGIN;
         return Integer.toString(number);
     }
 
