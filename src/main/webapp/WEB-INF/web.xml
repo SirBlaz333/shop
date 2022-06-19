@@ -16,4 +16,12 @@
     <param-name>Timeout</param-name>
     <param-value>180000</param-value>
   </context-param>
+  <context-param>
+    <param-name>UserService</param-name>
+    <param-value>com.my.user.service.UserServiceImpl</param-value>
+  </context-param>
+  <context-param>
+    <param-name>UserDAO</param-name>
+    <param-value>com.my.user.dao.UserDAOMap</param-value>
+  </context-param>
 </web-app>

@@ -14,6 +14,9 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Random;
 
+import static com.my.listener.ContextListener.CAPTCHA_CONTAINER;
+import static com.my.listener.ContextListener.TIMEOUT;
+
 @WebServlet("/captcha-servlet")
 public class CaptchaServlet extends HttpServlet implements Captcha {
     private final static long RANDOM_SEED = 111_111;

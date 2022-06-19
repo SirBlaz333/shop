@@ -31,6 +31,12 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public boolean exists(String email) {
+        User user = userDAO.getUserByEmail(email);
+        return user != null;
+    }
+
+    @Override
     public boolean remove(User user) {
         return userDAO.removeUser(user);
     }

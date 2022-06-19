@@ -2,6 +2,9 @@ package com.my.login;
 
 import com.my.captcha.Captcha;
 import com.my.captcha.container.CaptchaContainer;
+import com.my.user.dao.UserDAOMap;
+import com.my.user.service.UserService;
+import com.my.user.service.UserServiceImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +23,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-import static com.my.captcha.Captcha.CAPTCHA_CONTAINER;
+import static com.my.listener.ContextListener.CAPTCHA_CONTAINER;
+import static com.my.listener.ContextListener.USER_SERVICE;
 import static com.my.login.LoginServlet.*;
 import static com.my.user.UserField.EMAIL;
 import static org.mockito.Mockito.*;
@@ -47,6 +51,8 @@ public class LoginServletTest {
     public void setUp(){
         when(servletConfig.getServletContext()).thenReturn(servletContext);
         when(servletContext.getAttribute(CAPTCHA_CONTAINER)).thenReturn(container);
+        UserService userService = new UserServiceImpl(new UserDAOMap());
+        when(servletContext.getAttribute(USER_SERVICE)).thenReturn(userService);
     }
 
     @Test
