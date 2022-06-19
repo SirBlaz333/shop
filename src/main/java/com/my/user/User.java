@@ -1,12 +1,14 @@
 package com.my.user;
 
 public class User {
-    private final String email;
-    private final String firstName;
-    private final String lastname;
-    private final String password;
+    private long id;
+    private String email;
+    private String firstName;
+    private String lastname;
+    private String password;
 
-    public User(String email, String firstName, String secondName, String password) {
+    public User(long id, String email, String firstName, String secondName, String password) {
+        this.id = id;
         this.email = email;
         this.firstName = firstName;
         this.lastname = secondName;
@@ -27,5 +29,29 @@ public class User {
 
     public String getPassword() {
         return password;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastname(String lastname) {
+        this.lastname = lastname;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }
