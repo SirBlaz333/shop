@@ -1,0 +1,142 @@
+.product-icon {
+    height: 100px;
+    width: 100px;
+}
+
+.product-icon img {
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.header{
+    font-size: 36px;
+    color: #555;
+    border-bottom: 1px solid;
+}
+
+.cart {
+    font-size: 32px;
+    margin: auto;
+    width: 80%;
+    height: 80%;
+}
+
+.row {
+    display: flex;
+    height: 100px;
+    margin-top: 20px;
+    margin: auto;
+    width: 1000px;
+}
+
+.product-info{
+    height: 100%;
+    width: 100%;
+    display: flex;
+}
+
+.product-info div{
+    margin: auto;
+    margin-left: 10px;
+}
+
+.brand {
+    flex: 1;
+    width: 150px;
+}
+
+.name {
+    flex: 2;
+    width: 400px;
+}
+
+.price {
+    width: 150px;
+}
+
+.amount{
+    width: 100px;
+    text-align: center;
+}
+
+.delete {
+    width: 100px;
+    transition: 0.3s;
+    border-radius: 8px;
+}
+
+.delete:hover{
+    background-color: #ff4c4c;
+}
+
+.delete form{
+    width: 100px;
+    height: 100px;
+}
+
+.delete button {
+    background: none;
+    border: none;
+    margin: auto auto;
+    width: 100%;
+    height: 100%;
+}
+
+.delete img{
+    margin: auto;
+    display: block;
+    width: 64px;
+}
+
+.billing {
+    margin-top: 50px;
+}
+
+.small-col {
+    width: 45%;
+}
+
+.small-col:first-of-type{
+    margin-right: 10%;
+}
+
+input[type=text] {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+}
+
+label {
+    margin-bottom: 10px;
+    display: block;
+}
+
+.icon-container {
+    margin-bottom: 20px;
+    padding: 7px 0;
+    font-size: 24px;
+}
+
+.confirmation {
+    width: 100%;
+    padding-top: 50px;
+    padding-bottom: 300px;
+    background: #none;
+}
+
+.confirmation button{
+    font-size: 28px;
+    height: 75px;
+    width: 100%;
+    border-radius: 8px;
+    border: none;
+    background: #eee;
+    transition: 0.3s;
+}
+
+.confirmation button:hover{
+    background: #ccc;
+}
+
