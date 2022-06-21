@@ -1,5 +1,6 @@
 package com.my.login;
 
+import com.my.Controller;
 import com.my.captcha.Captcha;
 import com.my.captcha.container.CaptchaContainer;
 import com.my.user.dao.UserDAOMap;
@@ -11,11 +12,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -25,19 +24,17 @@ import java.io.IOException;
 
 import static com.my.listener.ContextListener.CAPTCHA_CONTAINER;
 import static com.my.listener.ContextListener.USER_SERVICE;
-import static com.my.login.LoginServlet.*;
+import static com.my.command.LoginCommand.*;
 import static com.my.user.UserField.EMAIL;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class LoginServletTest {
+public class LoginCommandTest {
 
     @Mock
     private HttpServletResponse response;
     @Mock
     private HttpServletRequest request;
-    @Mock
-    private ServletConfig servletConfig;
     @Mock
     private ServletContext servletContext;
     @Mock
@@ -49,10 +46,11 @@ public class LoginServletTest {
 
     @Before
     public void setUp(){
-        when(servletConfig.getServletContext()).thenReturn(servletContext);
-        when(servletContext.getAttribute(CAPTCHA_CONTAINER)).thenReturn(container);
         UserService userService = new UserServiceImpl(new UserDAOMap());
+        when(request.getServletContext()).thenReturn(servletContext);
+        when(servletContext.getAttribute(CAPTCHA_CONTAINER)).thenReturn(container);
         when(servletContext.getAttribute(USER_SERVICE)).thenReturn(userService);
+        when(request.getParameter("command")).thenReturn("login");
     }
 
     @Test
@@ -116,8 +114,8 @@ public class LoginServletTest {
     }
 
     private void doServlet() throws ServletException, IOException {
-        LoginServlet loginServlet = new LoginServlet();
-        loginServlet.init(servletConfig);
-        loginServlet.doPost(request, response);
+        Controller controller = new Controller();
+        controller.init();
+        controller.doPost(request, response);
     }
 }

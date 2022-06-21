@@ -1,11 +1,12 @@
-package com.my.captcha;
+package com.my.command;
 
+import com.my.captcha.Captcha;
+import com.my.captcha.CaptchaTimeout;
+import com.my.command.WebCommand;
 import com.my.captcha.container.CaptchaContainer;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 import java.awt.*;
 import java.awt.font.TextLayout;
@@ -17,8 +18,7 @@ import java.util.Random;
 import static com.my.listener.ContextListener.CAPTCHA_CONTAINER;
 import static com.my.listener.ContextListener.TIMEOUT;
 
-@WebServlet("/captcha-servlet")
-public class CaptchaServlet extends HttpServlet implements Captcha {
+public class CaptchaCommand implements Captcha, WebCommand {
     private final static long RANDOM_SEED = 111_111;
     private final static int RANDOM_ORIGIN = 100_000;
     private final static int RANDOM_BOUND = 999_999;
@@ -26,39 +26,22 @@ public class CaptchaServlet extends HttpServlet implements Captcha {
     private final static int CAPTCHA_WIDTH = 150;
     private final static String IMAGE_FORMAT = "jpeg";
     private final static Font FONT =  new Font("Arial", Font.BOLD, 32);
-    private Random random;
-    private CaptchaContainer container;
-    private long timeout;
+    private final Random random;
 
-    @Override
-    public void init() throws ServletException {
-        super.init();
+    public CaptchaCommand(){
         random = new Random(RANDOM_SEED);
-        initTimeout();
-        initCaptchaContainer();
-    }
-
-    public void initTimeout(){
-        timeout = (long) getServletContext().getAttribute(TIMEOUT);
-    }
-
-    private void initCaptchaContainer() {
-        ServletContext servletContext = getServletContext();
-        container = (CaptchaContainer) servletContext.getAttribute(CAPTCHA_CONTAINER);
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void doCommand(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        ServletContext servletContext = request.getServletContext();
+        CaptchaContainer container = (CaptchaContainer) servletContext.getAttribute(CAPTCHA_CONTAINER);
+        long timeout = (long) request.getServletContext().getAttribute(TIMEOUT);
         String captcha = generateCaptcha();
         container.put(request, response, captcha);
         BufferedImage bufferedImage = drawCaptcha(captcha);
         writeImage(response, bufferedImage);
-        startCaptchaTimeout(request.getSession(), captcha);
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        doPost(request, response);
+        startCaptchaTimeout(container ,request.getSession(), captcha, timeout);
     }
 
     private String generateCaptcha(){
@@ -91,7 +74,7 @@ public class CaptchaServlet extends HttpServlet implements Captcha {
         ImageIO.write(bufferedImage, IMAGE_FORMAT, outputStream);
     }
 
-    private void startCaptchaTimeout(HttpSession session, String captcha){
+    private void startCaptchaTimeout(CaptchaContainer container ,HttpSession session, String captcha, long timeout){
         CaptchaTimeout captchaTimeout = new CaptchaTimeout(container, session, captcha, timeout);
         Thread thread = new Thread(captchaTimeout);
         thread.start();
