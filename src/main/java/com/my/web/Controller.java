@@ -1,7 +1,7 @@
-package com.my;
+package com.my.web;
 
-import com.my.command.WebCommand;
-import com.my.command.WebCommandContainer;
+import com.my.web.command.WebCommand;
+import com.my.web.command.WebCommandContainer;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

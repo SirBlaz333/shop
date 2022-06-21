@@ -1,4 +1,4 @@
-package com.my.command;
+package com.my.web.command;
 
 import java.util.HashMap;
 import java.util.Map;

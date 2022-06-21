@@ -1,6 +1,6 @@
-package com.my.captcha.container;
+package com.my.web.captcha;
 
-import com.my.captcha.Captcha;
+import com.my.web.captcha.Captcha;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

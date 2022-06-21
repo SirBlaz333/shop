@@ -10,7 +10,7 @@
   </context-param>
   <context-param>
     <param-name>CaptchaContainer</param-name>
-    <param-value>com.my.captcha.container.CookieCaptchaContainer</param-value>
+    <param-value>com.my.web.captcha.CookieCaptchaContainer</param-value>
   </context-param>
   <context-param>
     <param-name>Timeout</param-name>

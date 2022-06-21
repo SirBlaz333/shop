@@ -1,4 +1,4 @@
-package com.my.exception;
+package com.my.user.service;
 
 public class ServiceException extends Exception{
     public ServiceException(String message){

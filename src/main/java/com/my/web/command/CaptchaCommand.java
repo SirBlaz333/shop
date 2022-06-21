@@ -1,9 +1,8 @@
-package com.my.command;
+package com.my.web.command;
 
-import com.my.captcha.Captcha;
-import com.my.captcha.CaptchaTimeout;
-import com.my.command.WebCommand;
-import com.my.captcha.container.CaptchaContainer;
+import com.my.web.captcha.Captcha;
+import com.my.web.captcha.CaptchaTimeout;
+import com.my.web.captcha.CaptchaContainer;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
@@ -15,8 +14,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Random;
 
-import static com.my.listener.ContextListener.CAPTCHA_CONTAINER;
-import static com.my.listener.ContextListener.TIMEOUT;
+import static com.my.web.ContextListener.CAPTCHA_CONTAINER;
+import static com.my.web.ContextListener.TIMEOUT;
 
 public class CaptchaCommand implements Captcha, WebCommand {
     private final static long RANDOM_SEED = 111_111;

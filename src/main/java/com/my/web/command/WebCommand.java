@@ -1,4 +1,4 @@
-package com.my.command;
+package com.my.web.command;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

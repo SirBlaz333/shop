@@ -1,8 +1,7 @@
-package com.my.command;
+package com.my.web.command;
 
-import com.my.command.WebCommand;
-import com.my.captcha.container.CaptchaContainer;
-import com.my.user.UserField;
+import com.my.web.captcha.CaptchaContainer;
+import com.my.user.UsersField;
 import com.my.user.service.UserService;
 
 import javax.servlet.ServletContext;
@@ -13,10 +12,10 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.my.captcha.Captcha.CAPTCHA;
-import static com.my.listener.ContextListener.CAPTCHA_CONTAINER;
-import static com.my.listener.ContextListener.USER_SERVICE;
-import static com.my.user.UserField.*;
+import static com.my.web.captcha.Captcha.CAPTCHA;
+import static com.my.web.ContextListener.CAPTCHA_CONTAINER;
+import static com.my.web.ContextListener.USER_SERVICE;
+import static com.my.user.UsersField.*;
 
 public class LoginCommand implements WebCommand {
     public static final String USER_EXISTS_MESSAGE = "User with such email already exists";
@@ -60,12 +59,12 @@ public class LoginCommand implements WebCommand {
     }
 
     public void setAttributes(HttpServletRequest request){
-        List<UserField> parameters = new ArrayList<>();
+        List<UsersField> parameters = new ArrayList<>();
         parameters.add(EMAIL);
         parameters.add(FIRSTNAME);
         parameters.add(LASTNAME);
-        for(UserField userField : parameters){
-            String parameter = userField.toString().toLowerCase();
+        for(UsersField usersField : parameters){
+            String parameter = usersField.toString().toLowerCase();
             request.setAttribute(parameter, request.getParameter(parameter));
         }
     }

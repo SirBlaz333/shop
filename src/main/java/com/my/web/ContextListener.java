@@ -1,6 +1,6 @@
-package com.my.listener;
+package com.my.web;
 
-import com.my.captcha.container.CaptchaContainer;
+import com.my.web.captcha.CaptchaContainer;
 import com.my.user.dao.UserDAO;
 import com.my.user.service.UserService;
 

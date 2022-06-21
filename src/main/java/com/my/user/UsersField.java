@@ -1,6 +1,6 @@
 package com.my.user;
 
-public enum UserField {
+public enum UsersField {
     EMAIL,
     FIRSTNAME,
     LASTNAME,

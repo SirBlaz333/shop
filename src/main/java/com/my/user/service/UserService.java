@@ -1,6 +1,5 @@
 package com.my.user.service;
 
-import com.my.exception.ServiceException;
 import com.my.user.User;
 
 import java.util.List;
