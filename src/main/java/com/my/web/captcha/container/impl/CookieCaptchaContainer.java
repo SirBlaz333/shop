@@ -1,6 +1,5 @@
 package com.my.web.captcha.container.impl;
 
-import com.my.web.captcha.Captcha;
 import com.my.web.captcha.container.CaptchaContainer;
 
 import javax.servlet.http.Cookie;
@@ -8,6 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
+
+import static com.my.entity.UserRegFields.CAPTCHA;
 
 public class CookieCaptchaContainer implements CaptchaContainer {
 
@@ -20,7 +21,7 @@ public class CookieCaptchaContainer implements CaptchaContainer {
     @Override
     public void put(HttpServletRequest request, HttpServletResponse response, String captcha) {
         String hashedCaptcha = Integer.toString(captcha.hashCode());
-        Cookie cookie = new Cookie(Captcha.CAPTCHA, hashedCaptcha);
+        Cookie cookie = new Cookie(CAPTCHA, hashedCaptcha);
         response.addCookie(cookie);
         captchaContainer.put(hashedCaptcha, captcha);
     }
@@ -29,7 +30,7 @@ public class CookieCaptchaContainer implements CaptchaContainer {
     public String get(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         for(Cookie cookie : cookies){
-            if(cookie.getName().equals(Captcha.CAPTCHA)){
+            if(cookie.getName().equals(CAPTCHA)){
                 return getCaptcha(cookie);
             }
         }

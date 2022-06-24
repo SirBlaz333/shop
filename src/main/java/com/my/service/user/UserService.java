@@ -1,11 +1,12 @@
 package com.my.service.user;
 
 import com.my.entity.User;
+import com.my.service.ServiceException;
 
 import java.util.List;
 
 public interface UserService {
-    User create(User user) throws ServiceException;
+    User add(User user) throws ServiceException;
     User update(User user);
     boolean exists(String email);
     boolean remove(User user);

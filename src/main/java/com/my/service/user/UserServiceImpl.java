@@ -2,12 +2,13 @@ package com.my.service.user;
 
 import com.my.dao.user.UserDAO;
 import com.my.entity.User;
+import com.my.service.ServiceException;
 
 import java.util.List;
 
 public class UserServiceImpl implements UserService{
 
-    public static final String USER_ALREADY_EXISTS = "User already exists";
+    public static final String USER_ALREADY_EXISTS = "User with such email already exists";
     public static final String USER_DOES_NOT_EXIST = "User does not exist";
     private final UserDAO userDAO;
 
@@ -16,7 +17,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User create(User user) throws ServiceException {
+    public User add(User user) throws ServiceException {
         User existedUser = get(user);
         if(existedUser != null){
             throw new ServiceException(USER_ALREADY_EXISTS);

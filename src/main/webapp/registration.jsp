@@ -37,8 +37,8 @@
             <h1>Registration</h1>
         </header>
         <div class = "registration">
-            <form action="controller" method="get" name="registration" id="registration">
-                <input type="hidden" name="command" value="login">
+            <form action="controller" method="post" name="registration" id="registration">
+                <input type="hidden" name="command" value="registration">
                 <div class = "text-center error">
                     ${errorMessage}
                 </div>

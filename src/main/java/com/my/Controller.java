@@ -2,6 +2,7 @@ package com.my;
 
 import com.my.cmd.Command;
 import com.my.cmd.container.CommandContainer;
+import com.my.web.captcha.container.impl.CaptchaContainerStrategy;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -18,7 +19,7 @@ public class Controller extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        container = new CommandContainer();
+        container = new CommandContainer(CaptchaContainerStrategy.COOKIE, 180000);
     }
 
     @Override

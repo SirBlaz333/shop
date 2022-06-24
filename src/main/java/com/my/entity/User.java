@@ -1,19 +1,12 @@
 package com.my.entity;
 
 public class User {
-    private long id;
+    private int id;
     private String email;
     private String firstName;
     private String lastname;
     private String password;
-
-    public User(long id, String email, String firstName, String secondName, String password) {
-        this.id = id;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastname = secondName;
-        this.password = password;
-    }
+    private boolean newsletter;
 
     public String getEmail() {
         return email;
@@ -31,11 +24,15 @@ public class User {
         return password;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public boolean getNewsletter() {
+        return newsletter;
+    }
+
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -53,5 +50,9 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setNewsletter(boolean newsletter) {
+        this.newsletter = newsletter;
     }
 }
