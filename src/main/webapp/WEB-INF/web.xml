@@ -10,18 +10,18 @@
   </context-param>
   <context-param>
     <param-name>CaptchaContainer</param-name>
-    <param-value>com.my.web.captcha.CookieCaptchaContainer</param-value>
+    <param-value>com.my.web.captcha.container.impl.CookieCaptchaContainer</param-value>
   </context-param>
   <context-param>
     <param-name>Timeout</param-name>
-    <param-value>180000</param-value>
+    <param-value>10000</param-value>
   </context-param>
   <context-param>
     <param-name>UserService</param-name>
-    <param-value>com.my.user.service.UserServiceImpl</param-value>
+    <param-value>com.my.service.user.UserServiceImpl</param-value>
   </context-param>
   <context-param>
     <param-name>UserDAO</param-name>
-    <param-value>com.my.user.dao.UserDAOMap</param-value>
+    <param-value>com.my.dao.user.UserDAOMap</param-value>
   </context-param>
 </web-app>

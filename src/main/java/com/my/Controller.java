@@ -1,7 +1,7 @@
-package com.my.web;
+package com.my;
 
-import com.my.web.command.WebCommand;
-import com.my.web.command.WebCommandContainer;
+import com.my.cmd.Command;
+import com.my.cmd.container.CommandContainer;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,13 +13,12 @@ import java.io.IOException;
 @WebServlet(name = "Controller",
         urlPatterns = "/controller/*")
 public class Controller extends HttpServlet {
-
-    private WebCommandContainer container;
+    private CommandContainer container;
 
     @Override
     public void init() throws ServletException {
         super.init();
-        container = new WebCommandContainer();
+        container = new CommandContainer();
     }
 
     @Override
@@ -30,7 +29,7 @@ public class Controller extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String commandName = request.getParameter("command");
-        WebCommand webCommand = container.getCommand(commandName);
-        webCommand.doCommand(request, response);
+        Command command = container.getCommand(commandName);
+        command.doCommand(request, response);
     }
 }

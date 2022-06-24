@@ -1,6 +1,6 @@
-package com.my.user;
+package com.my.entity;
 
-public enum UsersField {
+public enum UserRegDTO {
     EMAIL,
     FIRSTNAME,
     LASTNAME,

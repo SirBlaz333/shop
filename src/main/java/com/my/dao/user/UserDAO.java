@@ -1,6 +1,6 @@
-package com.my.user.dao;
+package com.my.dao.user;
 
-import com.my.user.User;
+import com.my.entity.User;
 
 import java.util.List;
 

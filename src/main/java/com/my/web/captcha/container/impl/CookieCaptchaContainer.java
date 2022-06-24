@@ -1,7 +1,7 @@
-package com.my.web.captcha;
+package com.my.web.captcha.container.impl;
 
 import com.my.web.captcha.Captcha;
-import com.my.web.captcha.CaptchaContainer;
+import com.my.web.captcha.container.CaptchaContainer;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

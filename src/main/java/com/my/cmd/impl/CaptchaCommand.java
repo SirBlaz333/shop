@@ -1,8 +1,9 @@
-package com.my.web.command;
+package com.my.cmd.impl;
 
 import com.my.web.captcha.Captcha;
 import com.my.web.captcha.CaptchaTimeout;
-import com.my.web.captcha.CaptchaContainer;
+import com.my.web.captcha.container.CaptchaContainer;
+import com.my.cmd.Command;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
@@ -17,7 +18,7 @@ import java.util.Random;
 import static com.my.web.ContextListener.CAPTCHA_CONTAINER;
 import static com.my.web.ContextListener.TIMEOUT;
 
-public class CaptchaCommand implements Captcha, WebCommand {
+public class CaptchaCommand implements Captcha, Command {
     private final static long RANDOM_SEED = 111_111;
     private final static int RANDOM_ORIGIN = 100_000;
     private final static int RANDOM_BOUND = 999_999;

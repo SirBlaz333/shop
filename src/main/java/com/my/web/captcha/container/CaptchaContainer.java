@@ -1,4 +1,4 @@
-package com.my.web.captcha;
+package com.my.web.captcha.container;
 
 import com.my.web.captcha.Captcha;
 

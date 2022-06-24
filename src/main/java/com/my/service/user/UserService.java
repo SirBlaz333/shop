@@ -1,6 +1,6 @@
-package com.my.user.service;
+package com.my.service.user;
 
-import com.my.user.User;
+import com.my.entity.User;
 
 import java.util.List;
 

@@ -1,10 +1,10 @@
 package com.my.web.captcha;
 
+import com.my.web.captcha.container.CaptchaContainer;
+
 import javax.servlet.http.HttpSession;
 
 public class CaptchaTimeout implements Runnable{
-
-
     private final HttpSession httpSession;
     private final String captcha;
     private final CaptchaContainer container;

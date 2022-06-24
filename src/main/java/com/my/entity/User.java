@@ -1,4 +1,4 @@
-package com.my.user;
+package com.my.entity;
 
 public class User {
     private long id;

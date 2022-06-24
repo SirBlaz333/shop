@@ -1,11 +1,11 @@
-package com.my.web.command;
+package com.my.web.cmd;
 
-import com.my.web.Controller;
+import com.my.Controller;
 import com.my.web.captcha.Captcha;
-import com.my.web.captcha.CaptchaContainer;
-import com.my.user.dao.UserDAOMap;
-import com.my.user.service.UserService;
-import com.my.user.service.UserServiceImpl;
+import com.my.web.captcha.container.CaptchaContainer;
+import com.my.dao.user.UserDAOMap;
+import com.my.service.user.UserService;
+import com.my.service.user.UserServiceImpl;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,8 +24,7 @@ import java.io.IOException;
 
 import static com.my.web.ContextListener.CAPTCHA_CONTAINER;
 import static com.my.web.ContextListener.USER_SERVICE;
-import static com.my.web.command.LoginCommand.*;
-import static com.my.user.UsersField.EMAIL;
+import static com.my.entity.UserRegDTO.EMAIL;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)

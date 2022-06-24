@@ -1,8 +1,8 @@
 package com.my.web;
 
-import com.my.web.captcha.CaptchaContainer;
-import com.my.user.dao.UserDAO;
-import com.my.user.service.UserService;
+import com.my.web.captcha.container.CaptchaContainer;
+import com.my.dao.user.UserDAO;
+import com.my.service.user.UserService;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
