@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 import static com.my.entity.UserRegFields.*;
-import static com.my.web.ContextListener.USER_SERVICE;
 
 public class RegistrationCommand implements Command {
     public static final String ERROR_MESSAGE = "errorMessage";
@@ -22,9 +21,11 @@ public class RegistrationCommand implements Command {
     public static final String REGISTRATION = "registration.jsp";
     private final CaptchaContainer container;
     private final RegistrationUtility registrationUtility;
+    private final UserService userService;
 
-    public RegistrationCommand(CaptchaContainer captchaContainer){
+    public RegistrationCommand(CaptchaContainer captchaContainer, UserService userService){
         container = captchaContainer;
+        this.userService = userService;
         registrationUtility = new RegistrationUtility();
     }
 
@@ -40,7 +41,6 @@ public class RegistrationCommand implements Command {
     private void doLogin(HttpServletRequest request, HttpServletResponse response) throws CaptchaException, ServiceException, IOException {
         String expectedCaptcha = container.get(request);
         String userCaptcha = request.getParameter(CAPTCHA);
-        UserService userService = (UserService) request.getServletContext().getAttribute(USER_SERVICE);
         User user = registrationUtility.createUser(request);
         registrationUtility.checkCaptcha(expectedCaptcha, userCaptcha);
         userService.add(user);

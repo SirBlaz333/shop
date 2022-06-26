@@ -2,17 +2,17 @@ package com.my.web.captcha;
 
 import com.my.web.captcha.container.CaptchaContainer;
 
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
 
 public class CaptchaTimeout implements Runnable{
-    private final HttpSession httpSession;
+    private final HttpServletRequest request;
     private final String captcha;
     private final CaptchaContainer container;
     private final long timeout;
 
-    public CaptchaTimeout(CaptchaContainer captchaContainer, HttpSession httpSession, String captcha, long timeout){
+    public CaptchaTimeout(CaptchaContainer captchaContainer, HttpServletRequest request, String captcha, long timeout){
         container = captchaContainer;
-        this.httpSession = httpSession;
+        this.request = request;
         this.captcha = captcha;
         this.timeout = timeout;
     }
@@ -28,6 +28,6 @@ public class CaptchaTimeout implements Runnable{
 
     private void removeCaptcha() throws InterruptedException {
         Thread.sleep(timeout);
-        container.remove(httpSession, captcha);
+        container.remove(request, captcha);
     }
 }

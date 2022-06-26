@@ -1,6 +1,7 @@
 package com.my.web.captcha.container.impl;
 
 import com.my.web.captcha.container.CaptchaContainer;
+import com.my.web.captcha.exception.CaptchaException;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,13 +18,18 @@ public class SessionCaptchaContainer implements CaptchaContainer {
     }
 
     @Override
-    public String get(HttpServletRequest request) {
+    public String get(HttpServletRequest request) throws CaptchaException {
         HttpSession httpSession = request.getSession();
-        return (String) httpSession.getAttribute(CAPTCHA);
+        String captcha = (String) httpSession.getAttribute(CAPTCHA);
+        if(captcha == null){
+            throw new CaptchaException(TIMEOUT_MESSAGE);
+        }
+        return captcha;
     }
 
     @Override
-    public void remove(HttpSession httpSession, String captcha) {
+    public void remove(HttpServletRequest request, String captcha) {
+        HttpSession httpSession = request.getSession();
         httpSession.removeAttribute(CAPTCHA);
     }
 }

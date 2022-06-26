@@ -11,7 +11,6 @@ import static com.my.entity.UserRegFields.LASTNAME;
 
 public class RegistrationUtility {
     public static final String WRONG_CAPTCHA_MESSAGE = "You enter wrong number. Please try again";
-    public static final String TIMEOUT_MESSAGE = "Captcha expired. Please try again";
 
     public void setAttributesForForward(HttpServletRequest request){
         request.setAttribute(EMAIL, request.getParameter(EMAIL));
@@ -36,9 +35,6 @@ public class RegistrationUtility {
     }
 
     public void checkCaptcha(String expectedCaptcha, String actualCaptcha) throws CaptchaException {
-        if(expectedCaptcha == null){
-            throw new CaptchaException(TIMEOUT_MESSAGE);
-        }
         if(!expectedCaptcha.equals(actualCaptcha)){
             throw new CaptchaException(WRONG_CAPTCHA_MESSAGE);
         }

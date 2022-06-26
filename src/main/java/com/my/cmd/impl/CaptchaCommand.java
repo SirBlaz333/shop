@@ -29,7 +29,7 @@ public class CaptchaCommand implements Command {
         container.put(request, response, captcha);
         BufferedImage bufferedImage = captchaUtility.drawCaptcha(captcha);
         writeImage(response, bufferedImage);
-        startCaptchaTimeout(container, request.getSession(), captcha, timeout);
+        startCaptchaTimeout(container, request, captcha, timeout);
     }
 
     private void writeImage(HttpServletResponse response, BufferedImage bufferedImage) throws IOException {
@@ -37,8 +37,8 @@ public class CaptchaCommand implements Command {
         ImageIO.write(bufferedImage, IMAGE_FORMAT, outputStream);
     }
 
-    private void startCaptchaTimeout(CaptchaContainer container, HttpSession session, String captcha, long timeout) {
-        CaptchaTimeout captchaTimeout = new CaptchaTimeout(container, session, captcha, timeout);
+    private void startCaptchaTimeout(CaptchaContainer container, HttpServletRequest request, String captcha, long timeout) {
+        CaptchaTimeout captchaTimeout = new CaptchaTimeout(container, request, captcha, timeout);
         Thread thread = new Thread(captchaTimeout);
         thread.start();
     }
