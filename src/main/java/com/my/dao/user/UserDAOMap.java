@@ -1,13 +1,13 @@
 package com.my.dao.user;
 
 import com.my.entity.User;
+import com.my.entity.UserBuilder;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.concurrent.atomic.AtomicLong;
 
 public class UserDAOMap implements UserDAO{
     private final Map<String, User> users;
@@ -15,10 +15,24 @@ public class UserDAOMap implements UserDAO{
 
     public UserDAOMap(){
         users = new ConcurrentHashMap<>();
-//        User user1 = new User(0, "valera12@gmail.com", "Valera", "Ivanov", "valera");
-//        User user2 = new User(1, "ivan13@gmail.com", "Ivan", "Petrov", "ivan");
-//        users.put(user1.getEmail(), user1);
-//        users.put(user2.getEmail(), user2);
+        addDefaultValues();
+    }
+
+    private void addDefaultValues(){
+        User user = new UserBuilder().
+                withEmail("valera12@gmail.com").
+                withFirstname("Valera").
+                withLastname("Valera").
+                withPassword("valera").
+                getUser();
+        addUser(user);
+        user = new UserBuilder().
+                withEmail("ivan13@gmail.com").
+                withFirstname("Ivan").
+                withLastname("Petrov").
+                withPassword("ivan").
+                getUser();
+        addUser(user);
     }
 
     @Override

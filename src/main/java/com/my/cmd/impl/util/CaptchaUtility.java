@@ -1,5 +1,7 @@
 package com.my.cmd.impl.util;
 
+import com.my.entity.Captcha;
+
 import java.awt.*;
 import java.awt.font.TextLayout;
 import java.awt.image.BufferedImage;
@@ -18,12 +20,14 @@ public class CaptchaUtility {
         random = new Random(RANDOM_SEED);
     }
 
-    public String generateCaptcha() {
+    public Captcha createCaptcha() {
         int number = random.nextInt(RANDOM_BOUND - RANDOM_ORIGIN) + RANDOM_ORIGIN;
-        return Integer.toString(number);
+        String captcha = Integer.toString(number);
+        BufferedImage image = drawCaptcha(captcha);
+        return new Captcha(captcha, image);
     }
 
-    public BufferedImage drawCaptcha(String captcha) {
+    private BufferedImage drawCaptcha(String captcha) {
         BufferedImage bufferedImage = new BufferedImage(CAPTCHA_WIDTH, CAPTCHA_HEIGHT, BufferedImage.OPAQUE);
         Graphics graphics = bufferedImage.createGraphics();
         graphics.setFont(FONT);
@@ -34,7 +38,7 @@ public class CaptchaUtility {
         return bufferedImage;
     }
 
-    public void drawTextInCenter(String text, Graphics graphics) {
+    private void drawTextInCenter(String text, Graphics graphics) {
         TextLayout textLayout = new TextLayout(text, graphics.getFont(), graphics.getFontMetrics().getFontRenderContext());
         double textHeight = textLayout.getBounds().getHeight();
         double textWidth = textLayout.getBounds().getWidth();

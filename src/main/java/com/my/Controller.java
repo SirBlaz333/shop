@@ -2,7 +2,9 @@ package com.my;
 
 import com.my.cmd.Command;
 import com.my.cmd.container.CommandContainer;
+import com.my.dao.user.UserDAO;
 import com.my.dao.user.UserDAOMap;
+import com.my.service.user.UserService;
 import com.my.service.user.UserServiceImpl;
 
 import javax.servlet.ServletException;
@@ -12,17 +14,21 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.my.web.captcha.container.impl.CaptchaContainerStrategy.COOKIE_CONTAINER;
+import static com.my.web.captcha.container.impl.CaptchaContainerStrategy.*;
 
 @WebServlet(name = "Controller",
         urlPatterns = "/controller/*")
 public class Controller extends HttpServlet {
-    private CommandContainer container;
+    private static final int TIMEOUT = 20;
+    private CommandContainer commandContainer;
 
     @Override
     public void init() throws ServletException {
         super.init();
-        setContainer(new CommandContainer(new UserServiceImpl(new UserDAOMap()),COOKIE_CONTAINER, 10000));
+        UserDAO userDAO = new UserDAOMap();
+        UserService userService = new UserServiceImpl(userDAO);
+        CommandContainer cmdContainer = new CommandContainer(userService, COOKIE_CONTAINER, TIMEOUT);
+        setCommandContainer(cmdContainer);
     }
 
     @Override
@@ -33,11 +39,11 @@ public class Controller extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String commandName = request.getParameter("command");
-        Command command = container.getCommand(commandName);
+        Command command = commandContainer.getCommand(commandName);
         command.doCommand(request, response);
     }
 
-    public void setContainer(CommandContainer container) {
-        this.container = container;
+    public void setCommandContainer(CommandContainer commandContainer) {
+        this.commandContainer = commandContainer;
     }
 }
