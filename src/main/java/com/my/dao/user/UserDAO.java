@@ -1,13 +1,14 @@
 package com.my.dao.user;
 
+import com.my.dao.DBException;
 import com.my.entity.User;
 
 import java.util.List;
 
 public interface UserDAO {
-    User addUser(User user);
-    boolean removeUser(User user);
-    User getUserByEmail(String email);
-    User updateUser(User user);
-    List<User> getAllUsers();
+    User addUser(User user) throws DBException;
+    void removeUser(User user) throws DBException;
+    User getUserByEmail(String email) throws DBException;
+    User updateUser(User user) throws DBException;
+    List<User> getAllUsers() throws DBException;
 }

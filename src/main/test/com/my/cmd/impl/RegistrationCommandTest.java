@@ -1,6 +1,6 @@
 package com.my.cmd.impl;
 
-import com.my.dao.user.UserDAOMap;
+import com.my.dao.user.impl.UserDAOMap;
 import com.my.entity.Captcha;
 import com.my.service.ServiceException;
 import com.my.service.user.UserService;

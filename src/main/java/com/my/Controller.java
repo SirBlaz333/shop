@@ -2,8 +2,10 @@ package com.my;
 
 import com.my.cmd.Command;
 import com.my.cmd.container.CommandContainer;
+import com.my.dao.DBManager;
 import com.my.dao.user.UserDAO;
-import com.my.dao.user.UserDAOMap;
+import com.my.dao.user.impl.UserDAOImpl;
+import com.my.dao.user.impl.UserDAOMap;
 import com.my.service.user.UserService;
 import com.my.service.user.UserServiceImpl;
 
@@ -25,7 +27,7 @@ public class Controller extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
-        UserDAO userDAO = new UserDAOMap();
+        UserDAO userDAO = new UserDAOImpl(new DBManager());
         UserService userService = new UserServiceImpl(userDAO);
         CommandContainer cmdContainer = new CommandContainer(userService, COOKIE_CONTAINER, TIMEOUT);
         setCommandContainer(cmdContainer);

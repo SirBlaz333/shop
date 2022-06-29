@@ -1,9 +1,11 @@
 package com.my.service.user;
 
+import com.my.dao.DBException;
 import com.my.dao.user.UserDAO;
 import com.my.entity.User;
 import com.my.service.ServiceException;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class UserServiceImpl implements UserService{
@@ -22,36 +24,46 @@ public class UserServiceImpl implements UserService{
         if(existedUser != null){
             throw new ServiceException(USER_ALREADY_EXISTS);
         }
-        return userDAO.addUser(user);
+        try{
+            return userDAO.addUser(user);
+        } catch (DBException e){
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public User update(User user) {
-        return userDAO.updateUser(user);
+    public User update(User user) throws ServiceException {
+        try{
+            return userDAO.updateUser(user);
+        } catch (DBException e){
+            throw new ServiceException(e);
+        }
     }
 
     @Override
-    public boolean exists(String email) {
-        User user = userDAO.getUserByEmail(email);
-        return user != null;
-    }
-
-    @Override
-    public boolean remove(User user) {
-        return userDAO.removeUser(user);
+    public void remove(User user) throws ServiceException {
+        try{
+            userDAO.removeUser(user);
+        } catch (DBException e){
+            throw new ServiceException(e);
+        }
     }
 
     @Override
     public User get(User user) throws ServiceException {
-        String email = user.getEmail();
-        if(email == null){
-            throw new ServiceException(USER_DOES_NOT_EXIST);
+        try{
+            return userDAO.getUserByEmail(user.getEmail());
+        } catch (DBException e) {
+            throw new ServiceException(e);
         }
-        return userDAO.getUserByEmail(email);
     }
 
     @Override
-    public List<User> getAllUsers() {
-        return userDAO.getAllUsers();
+    public List<User> getAllUsers() throws ServiceException {
+        try {
+            return userDAO.getAllUsers();
+        } catch (DBException e) {
+            throw new ServiceException(e);
+        }
     }
 }

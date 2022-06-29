@@ -1,5 +1,6 @@
-package com.my.dao.user;
+package com.my.dao.user.impl;
 
+import com.my.dao.user.UserDAO;
 import com.my.entity.User;
 import com.my.entity.UserBuilder;
 
@@ -9,7 +10,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class UserDAOMap implements UserDAO{
+public class UserDAOMap implements UserDAO {
     private final Map<String, User> users;
     private static final AtomicInteger ID = new AtomicInteger();
 
@@ -44,10 +45,9 @@ public class UserDAOMap implements UserDAO{
     }
 
     @Override
-    public boolean removeUser(User user) {
+    public void removeUser(User user) {
         String email = user.getEmail();
         User removedUser = users.remove(email);
-        return removedUser != null;
     }
 
     @Override

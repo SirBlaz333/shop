@@ -1,5 +1,7 @@
 package com.my.entity;
 
+import java.awt.image.BufferedImage;
+
 public class User {
     private int id;
     private String email;
@@ -7,6 +9,7 @@ public class User {
     private String lastname;
     private String password;
     private boolean newsletter;
+    private BufferedImage image;
 
     public String getEmail() {
         return email;
@@ -54,5 +57,13 @@ public class User {
 
     public void setNewsletter(boolean newsletter) {
         this.newsletter = newsletter;
+    }
+
+    public BufferedImage getImage() {
+        return image;
+    }
+
+    public void setImage(BufferedImage image) {
+        this.image = image;
     }
 }
