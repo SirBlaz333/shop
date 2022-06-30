@@ -1,12 +1,12 @@
 package com.my.cmd.impl;
 
+import com.my.cmd.Command;
 import com.my.cmd.impl.util.LoginUtility;
 import com.my.entity.User;
 import com.my.service.ServiceException;
-import com.my.web.captcha.exception.CaptchaException;
-import com.my.web.captcha.container.CaptchaContainer;
 import com.my.service.user.UserService;
-import com.my.cmd.Command;
+import com.my.web.captcha.container.CaptchaContainer;
+import com.my.web.captcha.exception.CaptchaException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -15,11 +15,11 @@ import java.io.IOException;
 
 import static com.my.cmd.impl.util.LoginUtility.MAIN_PAGE;
 
-public class RegistrationCommand implements Command {
-    private final LoginUtility loginUtility;
+public class LoginCommand implements Command {
     private final UserService userService;
+    private final LoginUtility loginUtility;
 
-    public RegistrationCommand(CaptchaContainer captchaContainer, UserService userService, int timeout, ShowLoginPageCommand showLoginPageCommand){
+    public LoginCommand(CaptchaContainer captchaContainer, UserService userService, int timeout, ShowLoginPageCommand showLoginPageCommand) {
         this.userService = userService;
         loginUtility = new LoginUtility(showLoginPageCommand, captchaContainer, timeout);
     }
@@ -27,16 +27,16 @@ public class RegistrationCommand implements Command {
     @Override
     public void doCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            doRegister(request, response);
+            doLogin(request, response);
         } catch (ServiceException | CaptchaException e) {
             loginUtility.showError(request, response, e.getMessage());
         }
     }
 
-    private void doRegister(HttpServletRequest request, HttpServletResponse response) throws CaptchaException, ServiceException, IOException {
+    private void doLogin(HttpServletRequest request, HttpServletResponse response) throws ServiceException, CaptchaException, IOException {
         loginUtility.checkCaptcha(request);
         User user = loginUtility.createUser(request);
-        user = userService.add(user);
+        user = userService.login(user);
         request.getSession().setAttribute("user", user);
         response.sendRedirect(MAIN_PAGE);
     }

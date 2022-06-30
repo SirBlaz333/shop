@@ -11,21 +11,23 @@ import java.io.IOException;
 
 import static com.my.cmd.impl.DisplayCaptchaCommand.CAPTCHA_IMAGE;
 
-public class ShowRegistrationPageCommand implements Command {
+public class ShowLoginPageCommand implements Command {
     public static final String REGISTRATION = "registration.jsp";
     private final CaptchaUtility captchaUtility;
     private final CaptchaContainer container;
 
-    public ShowRegistrationPageCommand(CaptchaContainer captchaContainer) {
+    public ShowLoginPageCommand(CaptchaContainer captchaContainer) {
         captchaUtility = new CaptchaUtility();
         container = captchaContainer;
     }
 
     @Override
     public void doCommand(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        HttpSession session = request.getSession();
+        session.setAttribute("register", request.getParameter("register"));
         Captcha captcha = captchaUtility.createCaptcha();
         container.put(request, response, captcha);
-        request.getSession().setAttribute(CAPTCHA_IMAGE, captcha.getImage());
+        session.setAttribute(CAPTCHA_IMAGE, captcha.getImage());
         request.getRequestDispatcher(REGISTRATION).forward(request, response);
     }
 }

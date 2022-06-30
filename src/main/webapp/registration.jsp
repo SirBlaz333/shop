@@ -31,31 +31,35 @@
     <!-- my styles --->
 </head>
 <body>
-
-    <div id="includedContent"></div>
+    <mylib:menu-panel/>
     <div class="container">
         <header id="header" class="text-center tm-text-gray">
-            <h1>Registration</h1>
+            <c:if test="${register != null}">
+                <h1>Registration</h1>
+            </c:if>
+            <c:if test="${register == null}">
+                <h1>Login</h1>
+            </c:if>
         </header>
         <div class = "registration">
             <form action="controller" method="post" name="registration" id="registration">
-                <input type="hidden" name="command" value="registration">
-                <div class = "text-center error">
+                <div class = "text-center" style="color: red">
                     ${errorMessage}
                 </div>
                 <div class="rows">
+                    <c:if test="${register != null}">
+                        <div class = "input-row">
+                            <label for="firstname"><i class="fa fa-user"></i> First Name</label>
+                            <div class="error" id="firstname-error">Please enter your firstname</div>
+                            <input type="text" name="firstname" id="firstname" placeholder="Max" value="${firstname}"/>
+                        </div>
 
-                    <div class = "input-row">
-                        <label for="firstname"><i class="fa fa-user"></i> First Name</label>
-                        <div class="error" id="firstname-error">Please enter your firstname</div>
-                        <input type="text" name="firstname" id="firstname" placeholder="Max" value="${firstname}"/>
-                    </div>
-
-                    <div class="input-row">
-                        <label for="lastname"><i class="fa fa-user"></i> Last Name</label>
-                        <div class="error" id="lastname-error">Please enter your lastname</div>
-                        <input type="text" name="lastname" id="lastname" placeholder="Smith" value="${lastname}"/>
-                    </div>
+                        <div class="input-row">
+                            <label for="lastname"><i class="fa fa-user"></i> Last Name</label>
+                            <div class="error" id="lastname-error">Please enter your lastname</div>
+                            <input type="text" name="lastname" id="lastname" placeholder="Smith" value="${lastname}"/>
+                        </div>
+                    </c:if>
 
                     <div class="input-row">
                         <label for="email"><i class="fa fa-envelope"></i> Email</label>
@@ -70,25 +74,40 @@
                         <input type="password" name="password" id="password" placeholder="&#9679;&#9679;&#9679;&#9679;&#9679;"/>
                     </div>
 
-                    <div class="newsletter">
-                        <input type="checkbox" id="newsletter" name="newsletter">
-                        <label for="newsletter">Add me to the newsletter</label>
-                    </div>
+                    <c:if test="${register != null}">
+                        <div class="newsletter">
+                            <input type="checkbox" id="newsletter" name="newsletter">
+                            <label for="newsletter">Add me to the newsletter</label>
+                        </div>
+                    </c:if>
 
                     <div class="input-row">
                         <mylib:captcha/>
                     </div>
-                    <button type="submit">Register</button>
+                    <button type="submit">
+                        <c:if test="${register != null}">
+                            <input type="hidden" name="command" value="registration">
+                            Register
+                        </c:if>
+                        <c:if test="${register == null}">
+                            <input type="hidden" name="command" value="login">
+                            Login
+                        </c:if>
+                    </button>
                 </div>
-
             </form>
+            <c:if test="${register == null}">
+                <form action="controller">
+                    <input type="hidden" name="command" value="showLoginPage"/>
+                    <input type="hidden" name="register" value="true"/>
+                    <button type="submit">Sign up</button>
+                </form>
+            </c:if>
         </div>
-
     </div>
     <script src="js/jquery-1.11.3.min.js"></script>
-    <script src="js/my-scripts/jquery.form-validation.js"></script>
-<!--    <script src="js/my-scripts/form-validation.js"></script>-->
-    <script src="js/my-scripts/menu-panel.js"></script>
+<!--    <script src="js/my-scripts/jquery.form-validation.js"></script>-->
+    <script src="js/my-scripts/form-validation.js"></script>
     <script src="js/my-scripts/jquery.smooth-appearance.js"></script>
 </body>
 </html>

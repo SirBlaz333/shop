@@ -1,8 +1,6 @@
 package com.my.cmd.container;
 
-import com.my.cmd.impl.ShowRegistrationPageCommand;
-import com.my.cmd.impl.DisplayCaptchaCommand;
-import com.my.cmd.impl.RegistrationCommand;
+import com.my.cmd.impl.*;
 import com.my.cmd.Command;
 import com.my.service.user.UserService;
 import com.my.web.captcha.container.CaptchaContainer;
@@ -20,14 +18,18 @@ public class CommandContainer {
         CaptchaContainerFactory factory = new CaptchaContainerFactory();
         CaptchaContainer container = factory.create(strategy);
 
-        ShowRegistrationPageCommand showRegistrationPageCommand = new ShowRegistrationPageCommand(container);
-        RegistrationCommand registrationCommand = new RegistrationCommand(container, userService, timeout, showRegistrationPageCommand);
+        ShowLoginPageCommand showLoginPageCommand = new ShowLoginPageCommand(container);
+        RegistrationCommand registrationCommand = new RegistrationCommand(container, userService, timeout, showLoginPageCommand);
         DisplayCaptchaCommand displayCaptchaCommand = new DisplayCaptchaCommand();
+        LogoutCommand logoutCommand = new LogoutCommand();
+        LoginCommand loginCommand = new LoginCommand(container, userService, timeout, showLoginPageCommand);
 
         commands = new HashMap<>();
         commands.put("registration", registrationCommand);
-        commands.put("showRegistration", showRegistrationPageCommand);
+        commands.put("showLoginPage", showLoginPageCommand);
         commands.put("displayCaptcha", displayCaptchaCommand);
+        commands.put("logout", logoutCommand);
+        commands.put("login", loginCommand);
     }
 
     public Command getCommand(String commandName){

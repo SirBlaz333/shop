@@ -9,6 +9,6 @@ public interface UserService {
     User add(User user) throws ServiceException;
     User update(User user) throws ServiceException;
     void remove(User user) throws ServiceException;
-    User get(User user) throws ServiceException;
+    User login(User user) throws ServiceException;
     List<User> getAllUsers() throws ServiceException;
 }

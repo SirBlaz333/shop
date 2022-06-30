@@ -51,8 +51,8 @@ public class UserDAOMap implements UserDAO {
     }
 
     @Override
-    public User getUserByEmail(String email) {
-        return users.get(email);
+    public User loginUser(User user) {
+        return users.get(user);
     }
 
     @Override

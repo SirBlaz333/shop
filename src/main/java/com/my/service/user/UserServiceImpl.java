@@ -5,7 +5,6 @@ import com.my.dao.user.UserDAO;
 import com.my.entity.User;
 import com.my.service.ServiceException;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public class UserServiceImpl implements UserService{
@@ -20,14 +19,10 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User add(User user) throws ServiceException {
-        User existedUser = get(user);
-        if(existedUser != null){
-            throw new ServiceException(USER_ALREADY_EXISTS);
-        }
         try{
             return userDAO.addUser(user);
         } catch (DBException e){
-            throw new ServiceException(e);
+            throw new ServiceException(e.getMessage());
         }
     }
 
@@ -36,7 +31,7 @@ public class UserServiceImpl implements UserService{
         try{
             return userDAO.updateUser(user);
         } catch (DBException e){
-            throw new ServiceException(e);
+            throw new ServiceException(e.getMessage());
         }
     }
 
@@ -45,16 +40,16 @@ public class UserServiceImpl implements UserService{
         try{
             userDAO.removeUser(user);
         } catch (DBException e){
-            throw new ServiceException(e);
+            throw new ServiceException(e.getMessage());
         }
     }
 
     @Override
-    public User get(User user) throws ServiceException {
+    public User login(User user) throws ServiceException {
         try{
-            return userDAO.getUserByEmail(user.getEmail());
+            return userDAO.loginUser(user);
         } catch (DBException e) {
-            throw new ServiceException(e);
+            throw new ServiceException(e.getMessage());
         }
     }
 
@@ -63,7 +58,7 @@ public class UserServiceImpl implements UserService{
         try {
             return userDAO.getAllUsers();
         } catch (DBException e) {
-            throw new ServiceException(e);
+            throw new ServiceException(e.getMessage());
         }
     }
 }

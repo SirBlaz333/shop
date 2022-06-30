@@ -22,9 +22,8 @@ import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-import static com.my.cmd.impl.RegistrationCommand.*;
-import static com.my.cmd.impl.ShowRegistrationPageCommand.REGISTRATION;
-import static com.my.cmd.impl.util.RegistrationUtility.WRONG_CAPTCHA_MESSAGE;
+import static com.my.cmd.impl.ShowLoginPageCommand.REGISTRATION;
+import static com.my.cmd.impl.util.LoginUtility.*;
 import static com.my.entity.UserRegFields.CAPTCHA;
 import static com.my.entity.UserRegFields.EMAIL;
 import static com.my.service.user.UserServiceImpl.USER_ALREADY_EXISTS;
@@ -51,8 +50,8 @@ public class RegistrationCommandTest {
     @Before
     public void setUp(){
         UserService userService = new UserServiceImpl(new UserDAOMap());
-        ShowRegistrationPageCommand showRegistrationPageCommand = new ShowRegistrationPageCommand(container);
-        registrationCommand = new RegistrationCommand(container, userService, timeout, showRegistrationPageCommand);
+        ShowLoginPageCommand showLoginPageCommand = new ShowLoginPageCommand(container);
+        registrationCommand = new RegistrationCommand(container, userService, timeout, showLoginPageCommand);
         when(captcha.getText()).thenReturn("123");
         when(request.getRequestDispatcher(REGISTRATION)).thenReturn(requestDispatcher);
         when(request.getSession()).thenReturn(httpSession);

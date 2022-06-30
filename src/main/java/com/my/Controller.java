@@ -5,7 +5,6 @@ import com.my.cmd.container.CommandContainer;
 import com.my.dao.DBManager;
 import com.my.dao.user.UserDAO;
 import com.my.dao.user.impl.UserDAOImpl;
-import com.my.dao.user.impl.UserDAOMap;
 import com.my.service.user.UserService;
 import com.my.service.user.UserServiceImpl;
 

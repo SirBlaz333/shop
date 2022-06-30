@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 public class User {
     private int id;
     private String email;
-    private String firstName;
+    private String firstname;
     private String lastname;
     private String password;
     private boolean newsletter;
@@ -15,8 +15,8 @@ public class User {
         return email;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFirstname() {
+        return firstname;
     }
 
     public String getLastname() {
@@ -43,8 +43,8 @@ public class User {
         this.email = email;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
     public void setLastname(String lastname) {
