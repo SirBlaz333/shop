@@ -1,5 +1,6 @@
 package com.my.cmd.impl;
 
+import com.my.cmd.Method;
 import com.my.dao.user.UserDAOMap;
 import com.my.entity.Captcha;
 import com.my.service.ServiceException;
@@ -64,7 +65,7 @@ public class RegistrationCommandTest {
         when(request.getParameter(CAPTCHA)).thenReturn("123");
         when(request.getParameter(EMAIL)).thenReturn("123@gmail.com");
 
-        registrationCommand.doCommand(request, response);
+        registrationCommand.doCommand(request, response, Method.GET);
 
         verify(response).sendRedirect(MAIN_PAGE);
     }
@@ -74,7 +75,7 @@ public class RegistrationCommandTest {
         when(container.get(request)).thenReturn(captcha);
         when(request.getParameter(CAPTCHA)).thenReturn("321");
 
-        registrationCommand.doCommand(request, response);
+        registrationCommand.doCommand(request, response, Method.GET);
 
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
         verify(request).setAttribute(eq(ERROR_MESSAGE), captor.capture());
@@ -86,7 +87,7 @@ public class RegistrationCommandTest {
     public void captchaTimeoutTest() throws ServletException, IOException, CaptchaException {
         when(container.get(request)).thenReturn(null);
 
-        registrationCommand.doCommand(request, response);
+        registrationCommand.doCommand(request, response, Method.GET);
 
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
         verify(request).setAttribute(eq(ERROR_MESSAGE), captor.capture());
@@ -100,7 +101,7 @@ public class RegistrationCommandTest {
         when(request.getParameter(CAPTCHA)).thenReturn("123");
         when(request.getParameter(EMAIL)).thenReturn("valera12@gmail.com");
 
-        registrationCommand.doCommand(request, response);
+        registrationCommand.doCommand(request, response, Method.GET);
 
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
         verify(request).setAttribute(eq(ERROR_MESSAGE), captor.capture());

@@ -6,5 +6,5 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public interface Command {
-    void doCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
+    void doCommand(HttpServletRequest request, HttpServletResponse response, Method method) throws ServletException, IOException;
 }

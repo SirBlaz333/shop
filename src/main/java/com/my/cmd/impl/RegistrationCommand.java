@@ -1,5 +1,6 @@
 package com.my.cmd.impl;
 
+import com.my.cmd.Method;
 import com.my.cmd.impl.util.RegistrationUtility;
 import com.my.entity.Captcha;
 import com.my.entity.User;
@@ -32,7 +33,7 @@ public class RegistrationCommand implements Command {
     }
 
     @Override
-    public void doCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doCommand(HttpServletRequest request, HttpServletResponse response, Method method) throws ServletException, IOException {
         try {
             doLogin(request, response);
         } catch (ServiceException | CaptchaException e) {
@@ -52,6 +53,6 @@ public class RegistrationCommand implements Command {
     private void showError(HttpServletRequest request, HttpServletResponse response, String errorMessage) throws ServletException, IOException {
         request.setAttribute(ERROR_MESSAGE, errorMessage);
         registrationUtility.setAttributesForForward(request);
-        showRegistrationPageCommand.doCommand(request, response);
+        showRegistrationPageCommand.doCommand(request, response, Method.POST);
     }
 }
