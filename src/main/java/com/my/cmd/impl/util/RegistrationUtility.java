@@ -1,5 +1,6 @@
 package com.my.cmd.impl.util;
 
+import com.my.entity.Captcha;
 import com.my.entity.User;
 import com.my.entity.UserBuilder;
 import com.my.web.captcha.exception.CaptchaException;
@@ -10,6 +11,7 @@ import static com.my.entity.UserRegFields.*;
 import static com.my.entity.UserRegFields.LASTNAME;
 
 public class RegistrationUtility {
+    public static final String TIMEOUT_MESSAGE = "Captcha expired. Please try again";
     public static final String WRONG_CAPTCHA_MESSAGE = "You enter wrong number. Please try again";
 
     public void setAttributesForForward(HttpServletRequest request){
@@ -34,8 +36,11 @@ public class RegistrationUtility {
                 .getUser();
     }
 
-    public void checkCaptcha(String expectedCaptcha, String actualCaptcha) throws CaptchaException {
-        if(!expectedCaptcha.equals(actualCaptcha)){
+    public void checkCaptcha(Captcha expectedCaptcha, String actualCaptcha) throws CaptchaException {
+        if(expectedCaptcha == null){
+            throw new CaptchaException(TIMEOUT_MESSAGE);
+        }
+        if(!expectedCaptcha.getText().equals(actualCaptcha)){
             throw new CaptchaException(WRONG_CAPTCHA_MESSAGE);
         }
     }

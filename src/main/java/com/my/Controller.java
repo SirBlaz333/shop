@@ -14,12 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static com.my.web.captcha.container.impl.CaptchaContainerStrategy.*;
+import static com.my.web.captcha.container.strategy.CaptchaContainerStrategies.*;
 
 @WebServlet(name = "Controller",
         urlPatterns = "/controller/*")
 public class Controller extends HttpServlet {
-    private static final int TIMEOUT = 20;
+    private static final int TIMEOUT = 10_000;
     private CommandContainer commandContainer;
 
     @Override
@@ -27,7 +27,7 @@ public class Controller extends HttpServlet {
         super.init();
         UserDAO userDAO = new UserDAOMap();
         UserService userService = new UserServiceImpl(userDAO);
-        CommandContainer cmdContainer = new CommandContainer(userService, COOKIE_CONTAINER, TIMEOUT);
+        CommandContainer cmdContainer = new CommandContainer(userService, HIDDEN_FIELD_CONTAINER, TIMEOUT);
         setCommandContainer(cmdContainer);
     }
 

@@ -5,7 +5,7 @@ import com.my.entity.Captcha;
 import com.my.entity.User;
 import com.my.service.ServiceException;
 import com.my.web.captcha.exception.CaptchaException;
-import com.my.web.captcha.container.CaptchaContainer;
+import com.my.web.captcha.container.CaptchaContainerStrategy;
 import com.my.service.user.UserService;
 import com.my.cmd.Command;
 
@@ -19,16 +19,14 @@ import static com.my.entity.UserRegFields.*;
 public class RegistrationCommand implements Command {
     public static final String ERROR_MESSAGE = "errorMessage";
     public static final String MAIN_PAGE = "index.html";
-    private final CaptchaContainer container;
+    private final CaptchaContainerStrategy container;
     private final RegistrationUtility registrationUtility;
     private final UserService userService;
-    private final int timeout;
     private final ShowRegistrationPageCommand showRegistrationPageCommand;
 
-    public RegistrationCommand(CaptchaContainer captchaContainer, UserService userService, int timeout, ShowRegistrationPageCommand showRegistrationPageCommand){
-        container = captchaContainer;
+    public RegistrationCommand(CaptchaContainerStrategy captchaContainerStrategy, UserService userService, ShowRegistrationPageCommand showRegistrationPageCommand){
+        container = captchaContainerStrategy;
         this.userService = userService;
-        this.timeout = timeout;
         registrationUtility = new RegistrationUtility();
         this.showRegistrationPageCommand = showRegistrationPageCommand;
     }
@@ -43,10 +41,10 @@ public class RegistrationCommand implements Command {
     }
 
     private void doLogin(HttpServletRequest request, HttpServletResponse response) throws CaptchaException, ServiceException, IOException {
-        Captcha expectedCaptcha = container.getWithTimeout(request, timeout);
+        Captcha expectedCaptcha = container.get(request);
         String userCaptcha = request.getParameter(CAPTCHA);
         User user = registrationUtility.createUser(request);
-        registrationUtility.checkCaptcha(expectedCaptcha.getText(), userCaptcha);
+        registrationUtility.checkCaptcha(expectedCaptcha, userCaptcha);
         userService.add(user);
         response.sendRedirect(MAIN_PAGE);
     }
