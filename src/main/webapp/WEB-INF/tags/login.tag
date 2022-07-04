@@ -2,7 +2,7 @@
 <head>
     <link rel="stylesheet" href="css/my-css/menu-panel-style.css">
 </head>
-<form action="controller">
+<form action="controller" method="post">
     <c:choose>
         <c:when test="${user==null}">
             <button type="submit" class="right-button">

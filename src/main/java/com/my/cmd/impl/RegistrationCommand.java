@@ -1,10 +1,11 @@
 package com.my.cmd.impl;
 
 import com.my.cmd.impl.util.LoginUtility;
+import com.my.cmd.Method;
 import com.my.entity.User;
 import com.my.service.ServiceException;
 import com.my.web.captcha.exception.CaptchaException;
-import com.my.web.captcha.container.CaptchaContainer;
+import com.my.web.captcha.container.CaptchaContainerStrategy;
 import com.my.service.user.UserService;
 import com.my.cmd.Command;
 
@@ -19,20 +20,19 @@ public class RegistrationCommand implements Command {
     private final LoginUtility loginUtility;
     private final UserService userService;
 
-    public RegistrationCommand(CaptchaContainer captchaContainer, UserService userService, int timeout, ShowLoginPageCommand showLoginPageCommand){
+    public RegistrationCommand(CaptchaContainerStrategy captchaContainer, UserService userService, ShowLoginPageCommand showLoginPageCommand) {
         this.userService = userService;
-        loginUtility = new LoginUtility(showLoginPageCommand, captchaContainer, timeout);
+        loginUtility = new LoginUtility(showLoginPageCommand, captchaContainer);
     }
 
     @Override
-    public void doCommand(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public void doCommand(HttpServletRequest request, HttpServletResponse response, Method method) throws ServletException, IOException {
         try {
             doRegister(request, response);
         } catch (ServiceException | CaptchaException e) {
             loginUtility.showError(request, response, e.getMessage());
         }
     }
-
     private void doRegister(HttpServletRequest request, HttpServletResponse response) throws CaptchaException, ServiceException, IOException {
         loginUtility.checkCaptcha(request);
         User user = loginUtility.createUser(request);

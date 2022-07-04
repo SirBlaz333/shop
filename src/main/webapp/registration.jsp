@@ -97,7 +97,7 @@
                 </div>
             </form>
             <c:if test="${register == null}">
-                <form action="controller">
+                <form action="controller" method="post">
                     <input type="hidden" name="command" value="showLoginPage"/>
                     <input type="hidden" name="register" value="true"/>
                     <button type="submit">Sign up</button>

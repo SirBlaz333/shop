@@ -1,11 +1,12 @@
 package com.my.cmd.impl;
 
 import com.my.dao.user.impl.UserDAOMap;
+import com.my.cmd.Method;
 import com.my.entity.Captcha;
 import com.my.service.ServiceException;
 import com.my.service.user.UserService;
 import com.my.service.user.UserServiceImpl;
-import com.my.web.captcha.container.CaptchaContainer;
+import com.my.web.captcha.container.CaptchaContainerStrategy;
 import com.my.web.captcha.exception.CaptchaException;
 import org.junit.Before;
 import org.junit.Test;
@@ -27,14 +28,13 @@ import static com.my.cmd.impl.util.LoginUtility.*;
 import static com.my.entity.UserRegFields.CAPTCHA;
 import static com.my.entity.UserRegFields.EMAIL;
 import static com.my.service.user.UserServiceImpl.USER_ALREADY_EXISTS;
-import static com.my.web.captcha.container.CaptchaContainer.TIMEOUT_MESSAGE;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RegistrationCommandTest {
     @Mock
-    private CaptchaContainer container;
+    private CaptchaContainerStrategy container;
     @Mock
     private HttpServletRequest request;
     @Mock
@@ -45,13 +45,12 @@ public class RegistrationCommandTest {
     private Captcha captcha;
     @Mock
     private HttpSession httpSession;
-    private final int timeout = 10;
     private RegistrationCommand registrationCommand;
     @Before
     public void setUp(){
         UserService userService = new UserServiceImpl(new UserDAOMap());
         ShowLoginPageCommand showLoginPageCommand = new ShowLoginPageCommand(container);
-        registrationCommand = new RegistrationCommand(container, userService, timeout, showLoginPageCommand);
+        registrationCommand = new RegistrationCommand(container, userService, showLoginPageCommand);
         when(captcha.getText()).thenReturn("123");
         when(request.getRequestDispatcher(REGISTRATION)).thenReturn(requestDispatcher);
         when(request.getSession()).thenReturn(httpSession);
@@ -59,21 +58,21 @@ public class RegistrationCommandTest {
 
     @Test
     public void successRegistrationTest() throws ServletException, IOException, CaptchaException {
-        when(container.getWithTimeout(request, timeout)).thenReturn(captcha);
+        when(container.get(request)).thenReturn(captcha);
         when(request.getParameter(CAPTCHA)).thenReturn("123");
         when(request.getParameter(EMAIL)).thenReturn("123@gmail.com");
 
-        registrationCommand.doCommand(request, response);
+        registrationCommand.doCommand(request, response, Method.GET);
 
         verify(response).sendRedirect(MAIN_PAGE);
     }
 
     @Test
     public void wrongCaptchaTest() throws ServletException, IOException, CaptchaException {
-        when(container.getWithTimeout(request, timeout)).thenReturn(captcha);
+        when(container.get(request)).thenReturn(captcha);
         when(request.getParameter(CAPTCHA)).thenReturn("321");
 
-        registrationCommand.doCommand(request, response);
+        registrationCommand.doCommand(request, response, Method.GET);
 
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
         verify(request).setAttribute(eq(ERROR_MESSAGE), captor.capture());
@@ -83,9 +82,9 @@ public class RegistrationCommandTest {
 
     @Test
     public void captchaTimeoutTest() throws ServletException, IOException, CaptchaException {
-        when(container.getWithTimeout(request, timeout)).thenThrow(new CaptchaException(TIMEOUT_MESSAGE));
+        when(container.get(request)).thenReturn(null);
 
-        registrationCommand.doCommand(request, response);
+        registrationCommand.doCommand(request, response, Method.GET);
 
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
         verify(request).setAttribute(eq(ERROR_MESSAGE), captor.capture());
@@ -95,11 +94,11 @@ public class RegistrationCommandTest {
 
     @Test
     public void userExistsErrorTest() throws ServletException, IOException, CaptchaException, ServiceException {
-        when(container.getWithTimeout(request, timeout)).thenReturn(captcha);
+        when(container.get(request)).thenReturn(captcha);
         when(request.getParameter(CAPTCHA)).thenReturn("123");
         when(request.getParameter(EMAIL)).thenReturn("valera12@gmail.com");
 
-        registrationCommand.doCommand(request, response);
+        registrationCommand.doCommand(request, response, Method.GET);
 
         ArgumentCaptor<String> captor = ArgumentCaptor.forClass(String.class);
         verify(request).setAttribute(eq(ERROR_MESSAGE), captor.capture());
