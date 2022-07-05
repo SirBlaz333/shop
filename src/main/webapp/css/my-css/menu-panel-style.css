@@ -31,6 +31,7 @@
 }
 
 .right-button {
+    display: flex;
     float: right;
     width: 20%;
     border: none;
@@ -38,4 +39,9 @@
 
 .cart-button img {
     width: 32px;
+}
+
+.avatar {
+    max-width: 40px;
+    max-height: 40px;
 }

@@ -15,9 +15,9 @@ import java.io.OutputStream;
 
 public class ShowLoginPageCommand implements Command {
     public static final String REGISTRATION = "registration.jsp";
-
-    private final static String IMAGE_FORMAT = "jpeg";
+    public final static String IMAGE_FORMAT = "jpeg";
     public static final String CAPTCHA_IMAGE = "captchaImg";
+    public static final String REGISTER = "register";
     private final CaptchaService captchaService;
     private final CaptchaContainerStrategy container;
 
@@ -42,7 +42,7 @@ public class ShowLoginPageCommand implements Command {
         container.put(request, response, captchaKey, captcha);
         container.startRemoveRemove(captchaKey);
         request.getSession().setAttribute(CAPTCHA_IMAGE, captcha.getImage());
-        request.setAttribute("register", request.getParameter("register"));
+        request.setAttribute(REGISTER, request.getParameter(REGISTER));
         request.getRequestDispatcher(REGISTRATION).forward(request, response);
     }
 

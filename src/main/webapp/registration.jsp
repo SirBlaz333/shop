@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page pageEncoding="utf-8"%>
 <%@ taglib prefix="mylib" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -84,16 +84,15 @@
                     <div class="input-row">
                         <mylib:captcha/>
                     </div>
-                    <button type="submit">
-                        <c:if test="${register != null}">
-                            <input type="hidden" name="command" value="registration">
-                            Register
-                        </c:if>
-                        <c:if test="${register == null}">
-                            <input type="hidden" name="command" value="login">
-                            Login
-                        </c:if>
-                    </button>
+
+                    <c:if test="${register != null}">
+                        <input type="hidden" name="command" value="registration">
+                        <button type="submit">Register</button>
+                    </c:if>
+                    <c:if test="${register == null}">
+                        <input type="hidden" name="command" value="login">
+                        <button type="submit">Login</button>
+                    </c:if>
                 </div>
             </form>
             <c:if test="${register == null}">
@@ -103,11 +102,21 @@
                     <button type="submit">Sign up</button>
                 </form>
             </c:if>
+            <c:if test="${register != null}">
+                <form action="controller" id="uploadAvatar" method="post" enctype="multipart/form-data">
+                    <span id="result"></span>
+                    <div id="uploadForm">
+                        <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg">
+                        <button type="submit" id="uploadButton">Upload</button>
+                    </div>
+                </form>
+            </c:if>
         </div>
     </div>
     <script src="js/jquery-1.11.3.min.js"></script>
 <!--    <script src="js/my-scripts/jquery.form-validation.js"></script>-->
     <script src="js/my-scripts/form-validation.js"></script>
+    <script src="js/my-scripts/jquery.submit-form-ajax.js"></script>
     <script src="js/my-scripts/jquery.smooth-appearance.js"></script>
 </body>
 </html>

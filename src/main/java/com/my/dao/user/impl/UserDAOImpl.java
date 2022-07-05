@@ -103,7 +103,6 @@ public class UserDAOImpl implements UserDAO {
             InputStream inputStream = blob.getBinaryStream();
             image = ImageIO.read(inputStream);
         }
-        System.out.println(image);
         UserBuilder userBuilder = new UserBuilder();
         userBuilder.withId(id)
                 .withFirstname(firstname)

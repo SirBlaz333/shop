@@ -17,6 +17,7 @@
             </button>
             <button type="submit" class="right-button">
                 <c:out value="${user.firstname}"/>
+                <img src="controller?command=displayAvatar" class="avatar" alt=""/>
             </button>
         </c:otherwise>
     </c:choose>

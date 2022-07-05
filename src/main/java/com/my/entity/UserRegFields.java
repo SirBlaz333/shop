@@ -7,4 +7,5 @@ public class UserRegFields {
     public static final String PASSWORD = "password";
     public static final String CAPTCHA = "captcha";
     public static final String NEWSLETTER = "newsletter";
+    public static final String AVATAR = "avatar";
 }

@@ -6,7 +6,6 @@ import com.my.cmd.impl.util.LoginUtility;
 import com.my.entity.User;
 import com.my.service.ServiceException;
 import com.my.service.user.UserService;
-import com.my.web.captcha.container.CaptchaContainer;
 import com.my.web.captcha.container.CaptchaContainerStrategy;
 import com.my.web.captcha.exception.CaptchaException;
 
