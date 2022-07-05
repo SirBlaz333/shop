@@ -5,15 +5,15 @@ import com.my.cmd.impl.ShowLoginPageCommand;
 import com.my.entity.Captcha;
 import com.my.entity.User;
 import com.my.entity.UserBuilder;
-import com.my.service.ServiceException;
-import com.my.web.captcha.container.CaptchaContainer;
 import com.my.web.captcha.container.CaptchaContainerStrategy;
 import com.my.web.captcha.exception.CaptchaException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import static com.my.entity.UserRegFields.*;
@@ -32,7 +32,7 @@ public class LoginUtility {
         container = captchaContainer;
     }
 
-    public void checkCaptcha(HttpServletRequest request) throws ServiceException, CaptchaException, IOException {
+    public void checkCaptcha(HttpServletRequest request) throws CaptchaException {
         Captcha expectedCaptcha = container.get(request);
         String userCaptcha = request.getParameter(CAPTCHA);
         checkCaptcha(expectedCaptcha, userCaptcha);
@@ -44,14 +44,23 @@ public class LoginUtility {
         String lastname = request.getParameter(LASTNAME);
         String password = request.getParameter(PASSWORD);
         String newsletterParameter = request.getParameter(NEWSLETTER);
+        BufferedImage bufferedImage = getImage(request);
         boolean newsletter = (newsletterParameter != null);
         return new UserBuilder().
                 withEmail(email).
                 withFirstname(firstname).
                 withLastname(lastname).
                 withPassword(password).
-                withNewsletter(newsletter)
-                .getUser();
+                withNewsletter(newsletter).
+                withImage(bufferedImage).
+                getUser();
+    }
+
+    public BufferedImage getImage(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        BufferedImage bufferedImage = (BufferedImage) session.getAttribute(AVATAR);
+        session.removeAttribute(AVATAR);
+        return bufferedImage;
     }
 
     private void checkCaptcha(Captcha expectedCaptcha, String actualCaptcha) throws CaptchaException {
