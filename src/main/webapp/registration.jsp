@@ -84,8 +84,13 @@
                     <div class="input-row">
                         <mylib:captcha/>
                     </div>
-
                     <c:if test="${register != null}">
+                        <div class="uploadForm">
+                            <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" form="uploadAvatar">
+                            <input type="submit" form="uploadAvatar" name="Upload avatar" value="Upload avatar"/>
+                            <span id="result"></span>
+                        </div>
+
                         <input type="hidden" name="command" value="registration">
                         <button type="submit">Register</button>
                     </c:if>
@@ -104,11 +109,6 @@
             </c:if>
             <c:if test="${register != null}">
                 <form action="controller" id="uploadAvatar" method="post" enctype="multipart/form-data">
-                    <span id="result"></span>
-                    <div id="uploadForm">
-                        <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg">
-                        <button type="submit" id="uploadButton">Upload</button>
-                    </div>
                 </form>
             </c:if>
         </div>

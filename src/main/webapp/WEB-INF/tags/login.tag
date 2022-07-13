@@ -2,23 +2,25 @@
 <head>
     <link rel="stylesheet" href="css/my-css/menu-panel-style.css">
 </head>
-<form action="controller" method="post">
-    <c:choose>
-        <c:when test="${user==null}">
+<c:choose>
+    <c:when test="${user==null}">
+        <form action="controller" method="post">
             <button type="submit" class="right-button">
                 <input type="hidden" name="command" value="showLoginPage">
                 Login
             </button>
-        </c:when>
-        <c:otherwise>
-            <button type="submit" class="right-button">
-                <input type="hidden" name="command" value="logout">
-                Logout
-            </button>
-            <button type="submit" class="right-button">
+        </form>
+    </c:when>
+    <c:otherwise>
+        <form action="controller" method="post">
+            <input type="hidden" name="command" value="logout">
+            <button type="submit" class="right-button">Logout</button>
+        </form>
+        <form action="controller" method="post">
+            <button class="right-button">
                 <c:out value="${user.firstname}"/>
                 <img src="controller?command=displayAvatar" class="avatar" alt=""/>
             </button>
-        </c:otherwise>
-    </c:choose>
-</form>
+        </form>
+    </c:otherwise>
+</c:choose>
