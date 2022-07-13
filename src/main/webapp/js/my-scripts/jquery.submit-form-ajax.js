@@ -17,7 +17,6 @@ $("#uploadAvatar").submit(function(e) {
         success: function(data)
         {
             $("#result").text(data);
-            document.getElementById('uploadForm').style.display = 'none';
         }
     });
 

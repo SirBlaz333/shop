@@ -85,7 +85,7 @@
                         <mylib:captcha/>
                     </div>
                     <c:if test="${register != null}">
-                        <div class="uploadForm">
+                        <div class="uploadForm input-row">
                             <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" form="uploadAvatar">
                             <input type="submit" form="uploadAvatar" name="Upload avatar" value="Upload avatar"/>
                             <span id="result"></span>
