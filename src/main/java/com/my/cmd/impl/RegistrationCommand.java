@@ -37,6 +37,7 @@ public class RegistrationCommand implements Command {
         loginUtility.checkCaptcha(request);
         User user = loginUtility.createUser(request);
         user = userService.add(user);
+        loginUtility.attachAndRenameImageInFolder(request.getSession(), user);
         request.getSession().setAttribute("user", user);
         response.sendRedirect(MAIN_PAGE);
     }

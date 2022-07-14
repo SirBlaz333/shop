@@ -8,14 +8,17 @@ import com.my.entity.UserBuilder;
 import com.my.web.captcha.container.CaptchaContainerStrategy;
 import com.my.web.captcha.exception.CaptchaException;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 
+import static com.my.cmd.impl.UploadImageCommand.IMAGES_FILEPATH;
 import static com.my.entity.UserRegFields.*;
 import static com.my.entity.UserRegFields.LASTNAME;
 
@@ -44,7 +47,6 @@ public class LoginUtility {
         String lastname = request.getParameter(LASTNAME);
         String password = request.getParameter(PASSWORD);
         String newsletterParameter = request.getParameter(NEWSLETTER);
-        BufferedImage bufferedImage = getImage(request);
         boolean newsletter = (newsletterParameter != null);
         return new UserBuilder().
                 withEmail(email).
@@ -52,15 +54,24 @@ public class LoginUtility {
                 withLastname(lastname).
                 withPassword(password).
                 withNewsletter(newsletter).
-                withImage(bufferedImage).
                 getUser();
     }
 
-    public BufferedImage getImage(HttpServletRequest request){
-        HttpSession session = request.getSession();
-        BufferedImage bufferedImage = (BufferedImage) session.getAttribute(AVATAR);
-        session.removeAttribute(AVATAR);
-        return bufferedImage;
+    public void attachAndRenameImageInFolder(HttpSession httpSession, User user) throws IOException {
+        String filepath = (String) httpSession.getAttribute(AVATAR_FILENAME);
+        httpSession.removeAttribute(AVATAR);
+        File file = new File(IMAGES_FILEPATH + filepath);
+        BufferedImage bufferedImage = ImageIO.read(file);
+        user.setImage(bufferedImage);
+        String newFilename = IMAGES_FILEPATH + user.getId();
+        File newFile = new File(newFilename);
+        file.renameTo(newFile);
+    }
+
+    public void attachImage(User user) throws IOException {
+        String fileName = IMAGES_FILEPATH + user.getId();
+        File file = new File(fileName);
+        user.setImage(ImageIO.read(file));
     }
 
     private void checkCaptcha(Captcha expectedCaptcha, String actualCaptcha) throws CaptchaException {

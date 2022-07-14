@@ -6,10 +6,7 @@ import com.my.dao.user.UserDAO;
 import com.my.entity.User;
 import com.my.entity.UserBuilder;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.*;
-import java.sql.Blob;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,14 +16,12 @@ import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
     private static final int BEGIN_INDEX = 1;
-    private static final int IMAGE_INDEX = 6;
     public static final String GET_USER_ID = "SELECT id FROM users WHERE email = ?;";
-    public static final String ADD_USER = "INSERT INTO users (firstname, lastname, email, password, newsletter, image) VALUES (?, ?, ?, ?, ?, ?);";
-    public static final String ADD_USER_WITHOUT_IMAGE = "INSERT INTO users (firstname, lastname, email, password, newsletter) VALUES (?, ?, ?, ?, ?);";
+    public static final String ADD_USER = "INSERT INTO users (firstname, lastname, email, password, newsletter) VALUES (?, ?, ?, ?, ?);";
 
     public static final String DELETE_USER = "DELETE FROM user WHERE id = ?";
     public static final String LOGIN_USER = "SELECT * FROM users WHERE email = ? AND password = ?;";
-    public static final String UPDATE_USER = "UPDATE users SET firstname = ?, lastname = ?, email = ?, password = ?, newsletter = ?, image = ? WHERE id = ?;";
+    public static final String UPDATE_USER = "UPDATE users SET firstname = ?, lastname = ?, email = ?, password = ?, newsletter = ? WHERE id = ?;";
     private final DBManager dbManager;
 
     public UserDAOImpl(DBManager dbManager) {
@@ -46,14 +41,8 @@ public class UserDAOImpl implements UserDAO {
         }
     }
 
-    private PreparedStatement prepareCreatingUserStatement(Connection connection,User user) throws SQLException, DBException {
-        PreparedStatement preparedStatement;
-        if(user.getImage() == null){
-            preparedStatement = connection.prepareStatement(ADD_USER_WITHOUT_IMAGE);
-        } else {
-            preparedStatement = connection.prepareStatement(ADD_USER);
-            preparedStatement.setBlob(IMAGE_INDEX, createImageInputStream(user.getImage()));
-        }
+    private PreparedStatement prepareCreatingUserStatement(Connection connection,User user) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(ADD_USER);
         int index = BEGIN_INDEX;
         preparedStatement.setString(index++, user.getFirstname());
         preparedStatement.setString(index++, user.getLastname());
@@ -61,16 +50,6 @@ public class UserDAOImpl implements UserDAO {
         preparedStatement.setString(index++, user.getPassword());
         preparedStatement.setBoolean(index, user.getNewsletter());
         return preparedStatement;
-    }
-
-    private InputStream createImageInputStream(BufferedImage bufferedImage) throws DBException {
-        try {
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            ImageIO.write(bufferedImage, "jpeg", byteArrayOutputStream);
-            return new ByteArrayInputStream(byteArrayOutputStream.toByteArray());
-        } catch (IOException e) {
-            throw new DBException("Cannot convert image");
-        }
     }
 
     private int getUserId(Connection connection, User user) throws SQLException, DBException {
@@ -118,21 +97,14 @@ public class UserDAOImpl implements UserDAO {
         String lastname = resultSet.getString(index++);
         String email = resultSet.getString(index++);
         String password = resultSet.getString(index++);
-        boolean newsletter = resultSet.getBoolean(index++);
-        Blob blob = resultSet.getBlob(index);
-        BufferedImage image = null;
-        if (blob != null) {
-            InputStream inputStream = blob.getBinaryStream();
-            image = ImageIO.read(inputStream);
-        }
+        boolean newsletter = resultSet.getBoolean(index);
         UserBuilder userBuilder = new UserBuilder();
         userBuilder.withId(id)
                 .withFirstname(firstname)
                 .withLastname(lastname)
                 .withEmail(email)
                 .withPassword(password)
-                .withNewsletter(newsletter)
-                .withImage(image);
+                .withNewsletter(newsletter);
         return userBuilder.getUser();
     }
 
@@ -145,24 +117,10 @@ public class UserDAOImpl implements UserDAO {
             preparedStatement.setString(index++, user.getLastname());
             preparedStatement.setString(index++, user.getEmail());
             preparedStatement.setString(index++, user.getPassword());
-            preparedStatement.setBoolean(index++, user.getNewsletter());
-            Blob blob = convertBufferedImageToBlob(user.getImage(), connection);
-            preparedStatement.setBlob(index, blob);
+            preparedStatement.setBoolean(index, user.getNewsletter());
             return user;
         } catch (SQLException e) {
             throw new DBException("Cannot update user");
-        }
-    }
-
-    private Blob convertBufferedImageToBlob(BufferedImage bufferedImage, Connection connection) throws DBException {
-        try {
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            ImageIO.write(bufferedImage, "png", byteArrayOutputStream);
-            Blob blob = connection.createBlob();
-            blob.setBytes(BEGIN_INDEX, byteArrayOutputStream.toByteArray());
-            return blob;
-        } catch (IOException | SQLException e) {
-            throw new DBException("Cannot convert image to blob");
         }
     }
 

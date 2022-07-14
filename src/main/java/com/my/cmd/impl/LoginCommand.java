@@ -38,6 +38,7 @@ public class LoginCommand implements Command {
         loginUtility.checkCaptcha(request);
         User user = loginUtility.createUser(request);
         user = userService.login(user);
+        loginUtility.attachImage(user);
         request.getSession().setAttribute("user", user);
         response.sendRedirect(MAIN_PAGE);
     }
