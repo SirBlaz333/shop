@@ -74,7 +74,10 @@
                             <a class="nav-link tm-text-gray" href="products.html">Products</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link tm-text-gray" href="registration.html">Register</a>
+                            <form class="tm-text-grey" action="controller" method="post">
+                                <input type="hidden" name="command" value="showRegistration"/>
+                                <input type="submit" value="Login"/>
+                            </form>
                         </li>
                     </ul>
                 </div>
