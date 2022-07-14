@@ -3,7 +3,7 @@ package com.my.cmd.impl;
 import com.my.cmd.Method;
 import com.my.entity.Captcha;
 import com.my.service.captcha.CaptchaService;
-import com.my.web.captcha.container.CaptchaContainerStrategy;
+import com.my.web.captcha.container.strategy.CaptchaContainerStrategy;
 import com.my.cmd.Command;
 
 import javax.imageio.ImageIO;
@@ -15,7 +15,6 @@ import java.io.OutputStream;
 
 public class ShowRegistrationPageCommand implements Command {
     public static final String REGISTRATION = "registration.jsp";
-
     private final static String IMAGE_FORMAT = "jpeg";
     public static final String CAPTCHA_IMAGE = "captchaImg";
     private final CaptchaService captchaService;
