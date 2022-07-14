@@ -31,13 +31,12 @@
 }
 
 .right-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     float: right;
     width: 20%;
     border: none;
-}
-
-.right-button img {
-    float: right;
 }
 
 .cart-button img {
@@ -45,7 +44,6 @@
 }
 
 .avatar {
-    margin-top: 5px;
     max-width: 40px;
     max-height: 40px;
 }

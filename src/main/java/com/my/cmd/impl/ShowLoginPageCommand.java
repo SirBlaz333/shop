@@ -15,7 +15,7 @@ import java.io.OutputStream;
 
 public class ShowLoginPageCommand implements Command {
     public static final String REGISTRATION = "registration.jsp";
-    public final static String IMAGE_FORMAT = "jpeg";
+    public final static String IMAGE_FORMAT = "png";
     public static final String CAPTCHA_IMAGE = "captchaImg";
     public static final String REGISTER = "register";
     private final CaptchaService captchaService;
