@@ -1,6 +1,8 @@
 package com.my.web.captcha.container.strategy;
 
-import com.my.web.captcha.container.CaptchaContainerStrategy;
+import com.my.web.captcha.container.strategy.impl.CookieCaptchaContainerStrategy;
+import com.my.web.captcha.container.strategy.impl.HiddenFieldCaptchaContainerStrategy;
+import com.my.web.captcha.container.strategy.impl.SessionCaptchaContainerStrategy;
 
 public class CaptchaContainerFactory {
     public CaptchaContainerStrategy create(CaptchaContainerStrategies strategy, long timeout){

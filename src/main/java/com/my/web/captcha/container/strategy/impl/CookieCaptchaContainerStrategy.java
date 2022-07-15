@@ -1,8 +1,8 @@
-package com.my.web.captcha.container.strategy;
+package com.my.web.captcha.container.strategy.impl;
 
 import com.my.entity.Captcha;
-import com.my.web.captcha.container.CaptchaContainerStrategy;
 import com.my.web.captcha.container.impl.CaptchaContainerImpl;
+import com.my.web.captcha.container.strategy.CaptchaContainerStrategy;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;

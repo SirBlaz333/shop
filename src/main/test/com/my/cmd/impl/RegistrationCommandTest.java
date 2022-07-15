@@ -6,7 +6,7 @@ import com.my.entity.Captcha;
 import com.my.service.ServiceException;
 import com.my.service.user.UserService;
 import com.my.service.user.UserServiceImpl;
-import com.my.web.captcha.container.CaptchaContainerStrategy;
+import com.my.web.captcha.container.strategy.CaptchaContainerStrategy;
 import com.my.web.captcha.exception.CaptchaException;
 import org.junit.Before;
 import org.junit.Test;

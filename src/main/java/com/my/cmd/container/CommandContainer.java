@@ -3,7 +3,7 @@ package com.my.cmd.container;
 import com.my.cmd.impl.*;
 import com.my.cmd.Command;
 import com.my.service.user.UserService;
-import com.my.web.captcha.container.CaptchaContainerStrategy;
+import com.my.web.captcha.container.strategy.CaptchaContainerStrategy;
 import com.my.web.captcha.container.strategy.CaptchaContainerFactory;
 import com.my.web.captcha.container.strategy.CaptchaContainerStrategies;
 

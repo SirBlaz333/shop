@@ -1,4 +1,4 @@
-package com.my.web.captcha.container;
+package com.my.web.captcha.container.strategy;
 
 import com.my.entity.Captcha;
 
