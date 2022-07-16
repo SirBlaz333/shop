@@ -2,10 +2,12 @@ package com.my.cmd.impl.util;
 
 import com.my.cmd.Method;
 import com.my.cmd.impl.ShowLoginPageCommand;
+import com.my.cmd.impl.UploadImageCommand;
 import com.my.entity.Captcha;
 import com.my.entity.User;
 import com.my.entity.UserBuilder;
-import com.my.web.captcha.container.CaptchaContainerStrategy;
+import com.my.entity.UserRegFields;
+import com.my.web.captcha.container.strategy.CaptchaContainerStrategy;
 import com.my.web.captcha.exception.CaptchaException;
 
 import javax.imageio.ImageIO;
@@ -17,10 +19,6 @@ import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-
-import static com.my.cmd.impl.UploadImageCommand.IMAGES_FILEPATH;
-import static com.my.entity.UserRegFields.*;
-import static com.my.entity.UserRegFields.LASTNAME;
 
 public class LoginUtility {
     public static final String MAIN_PAGE = "index.jsp";
@@ -37,16 +35,16 @@ public class LoginUtility {
 
     public void checkCaptcha(HttpServletRequest request) throws CaptchaException {
         Captcha expectedCaptcha = container.get(request);
-        String userCaptcha = request.getParameter(CAPTCHA);
+        String userCaptcha = request.getParameter(UserRegFields.CAPTCHA);
         checkCaptcha(expectedCaptcha, userCaptcha);
     }
 
     public User createUser(HttpServletRequest request){
-        String email = request.getParameter(EMAIL);
-        String firstname = request.getParameter(FIRSTNAME);
-        String lastname = request.getParameter(LASTNAME);
-        String password = request.getParameter(PASSWORD);
-        String newsletterParameter = request.getParameter(NEWSLETTER);
+        String email = request.getParameter(UserRegFields.EMAIL);
+        String firstname = request.getParameter(UserRegFields.FIRSTNAME);
+        String lastname = request.getParameter(UserRegFields.LASTNAME);
+        String password = request.getParameter(UserRegFields.PASSWORD);
+        String newsletterParameter = request.getParameter(UserRegFields.NEWSLETTER);
         boolean newsletter = (newsletterParameter != null);
         return new UserBuilder().
                 withEmail(email).
@@ -58,20 +56,26 @@ public class LoginUtility {
     }
 
     public void attachAndRenameImageInFolder(HttpSession httpSession, User user) throws IOException {
-        String filepath = (String) httpSession.getAttribute(AVATAR_FILENAME);
-        httpSession.removeAttribute(AVATAR);
-        File file = new File(IMAGES_FILEPATH + filepath);
-        BufferedImage bufferedImage = ImageIO.read(file);
-        user.setImage(bufferedImage);
-        String newFilename = IMAGES_FILEPATH + user.getId();
-        File newFile = new File(newFilename);
-        file.renameTo(newFile);
+        String filepath = (String) httpSession.getAttribute(UserRegFields.AVATAR_FILENAME);
+        httpSession.removeAttribute(UserRegFields.AVATAR);
+        String imageFilepath = httpSession.getServletContext().getInitParameter(UploadImageCommand.IMAGES_FILEPATH);
+        File file = new File(imageFilepath + filepath);
+        if(file.exists()){
+            BufferedImage bufferedImage = ImageIO.read(file);
+            user.setImage(bufferedImage);
+            String newFilename = imageFilepath + user.getId();
+            File newFile = new File(newFilename);
+            file.renameTo(newFile);
+        }
     }
 
-    public void attachImage(User user) throws IOException {
-        String fileName = IMAGES_FILEPATH + user.getId();
+    public void attachImage(HttpSession httpSession, User user) throws IOException {
+        String imageFilepath = httpSession.getServletContext().getInitParameter(UploadImageCommand.IMAGES_FILEPATH);
+        String fileName = imageFilepath + user.getId();
         File file = new File(fileName);
-        user.setImage(ImageIO.read(file));
+        if(file.exists()){
+            user.setImage(ImageIO.read(file));
+        }
     }
 
     private void checkCaptcha(Captcha expectedCaptcha, String actualCaptcha) throws CaptchaException {
@@ -91,8 +95,8 @@ public class LoginUtility {
     }
 
     private void setAttributesForForward(HttpServletRequest request){
-        request.setAttribute(EMAIL, request.getParameter(EMAIL));
-        request.setAttribute(FIRSTNAME, request.getParameter(FIRSTNAME));
-        request.setAttribute(LASTNAME, request.getParameter(LASTNAME));
+        request.setAttribute(UserRegFields.EMAIL, request.getParameter(UserRegFields.EMAIL));
+        request.setAttribute(UserRegFields.FIRSTNAME, request.getParameter(UserRegFields.FIRSTNAME));
+        request.setAttribute(UserRegFields.LASTNAME, request.getParameter(UserRegFields.LASTNAME));
     }
 }

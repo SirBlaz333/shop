@@ -23,4 +23,8 @@
     <param-name>UserDAO</param-name>
     <param-value>com.my.dao.user.impl.UserDAOMap</param-value>
   </context-param>
+  <context-param>
+    <param-name>ImagesFilepath</param-name>
+    <param-value>images\</param-value>
+  </context-param>
 </web-app>

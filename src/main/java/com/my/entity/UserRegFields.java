@@ -9,4 +9,5 @@ public class UserRegFields {
     public static final String NEWSLETTER = "newsletter";
     public static final String AVATAR = "avatar";
     public static final String AVATAR_FILENAME = "avatar filename";
+    public static final String USER = "user";
 }

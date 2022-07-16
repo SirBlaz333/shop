@@ -2,6 +2,7 @@ package com.my.cmd.impl;
 
 import com.my.cmd.Command;
 import com.my.cmd.Method;
+import com.my.entity.UserRegFields;
 import org.apache.commons.io.FileUtils;
 
 import javax.servlet.ServletException;
@@ -14,26 +15,24 @@ import java.io.InputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.my.entity.UserRegFields.AVATAR;
-import static com.my.entity.UserRegFields.AVATAR_FILENAME;
-
 public class UploadImageCommand implements Command {
 
+    public static final String IMAGES_FILEPATH = "ImagesFilepath";
     private static final String UPLOAD_RESULT = "Image has been uploaded";
-    public final static String IMAGES_FILEPATH = "images\\";
     public static final String CONTENT_DISPOSITION = "content-disposition";
     public static final String FILENAME_PATTERN = ".*filename=\"(.*)\"";
     public static final int FILENAME_GROUP = 1;
 
     @Override
     public void doCommand(HttpServletRequest request, HttpServletResponse response, Method method) throws ServletException, IOException {
-        Part part = request.getPart(AVATAR);
+        Part part = request.getPart(UserRegFields.AVATAR);
+        String imagesFilepath = request.getServletContext().getInitParameter(IMAGES_FILEPATH);
         if(part != null){
             InputStream inputStream = part.getInputStream();
             String fileName = getSubmittedFileName(part);
-            File file = new File(IMAGES_FILEPATH + fileName);
+            File file = new File(imagesFilepath + fileName);
             FileUtils.copyInputStreamToFile(inputStream, file);
-            request.getSession().setAttribute(AVATAR_FILENAME, file.getName());
+            request.getSession().setAttribute(UserRegFields.AVATAR_FILENAME, file.getName());
             response.getOutputStream().write(UPLOAD_RESULT.getBytes());
         }
     }
