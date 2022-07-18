@@ -32,11 +32,11 @@ public class RegistrationCommand implements Command {
             loginUtility.showError(request, response, e.getMessage());
         }
     }
-    private void doRegister(HttpServletRequest request, HttpServletResponse response) throws CaptchaException, ServiceException, IOException {
+    private void doRegister(HttpServletRequest request, HttpServletResponse response) throws CaptchaException, ServiceException, IOException, ServletException {
         loginUtility.checkCaptcha(request);
         User user = loginUtility.createUser(request);
         user = userService.add(user);
-        loginUtility.attachAndRenameImageInFolder(request.getSession(), user);
+        loginUtility.uploadAvatar(request, user);
         request.getSession().setAttribute(UserRegFields.USER, user);
         response.sendRedirect(LoginUtility.MAIN_PAGE);
     }

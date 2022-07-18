@@ -42,7 +42,7 @@
             </c:if>
         </header>
         <div class = "registration">
-            <form action="controller" method="post" name="registration" id="registration">
+            <form action="controller" method="post" name="registration" id="registration" enctype="multipart/form-data">
                 <div class = "text-center" style="color: red">
                     ${errorMessage}
                 </div>
@@ -86,9 +86,7 @@
                     </div>
                     <c:if test="${register != null}">
                         <div class="uploadForm input-row">
-                            <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg" form="uploadAvatar">
-                            <input type="submit" form="uploadAvatar" name="Upload avatar" value="Upload avatar"/>
-                            <span id="result"></span>
+                            <input type="file" id="avatar" name="avatar" accept="image/png, image/jpeg">
                         </div>
 
                         <input type="hidden" name="command" value="registration">
@@ -107,16 +105,11 @@
                     <button type="submit">Sign up</button>
                 </form>
             </c:if>
-            <c:if test="${register != null}">
-                <form action="controller" id="uploadAvatar" method="post" enctype="multipart/form-data">
-                </form>
-            </c:if>
         </div>
     </div>
     <script src="js/jquery-1.11.3.min.js"></script>
 <!--    <script src="js/my-scripts/jquery.form-validation.js"></script>-->
     <script src="js/my-scripts/form-validation.js"></script>
-    <script src="js/my-scripts/jquery.submit-form-ajax.js"></script>
     <script src="js/my-scripts/jquery.smooth-appearance.js"></script>
 </body>
 </html>

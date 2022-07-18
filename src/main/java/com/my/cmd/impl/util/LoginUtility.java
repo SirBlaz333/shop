@@ -1,8 +1,8 @@
 package com.my.cmd.impl.util;
 
 import com.my.cmd.Method;
+import com.my.cmd.impl.DisplayAvatarCommand;
 import com.my.cmd.impl.ShowLoginPageCommand;
-import com.my.cmd.impl.UploadImageCommand;
 import com.my.entity.Captcha;
 import com.my.entity.User;
 import com.my.entity.UserBuilder;
@@ -14,11 +14,12 @@ import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 public class LoginUtility {
     public static final String MAIN_PAGE = "index.jsp";
@@ -55,26 +56,14 @@ public class LoginUtility {
                 getUser();
     }
 
-    public void attachAndRenameImageInFolder(HttpSession httpSession, User user) throws IOException {
-        String filepath = (String) httpSession.getAttribute(UserRegFields.AVATAR_FILENAME);
-        httpSession.removeAttribute(UserRegFields.AVATAR);
-        String imageFilepath = httpSession.getServletContext().getInitParameter(UploadImageCommand.IMAGES_FILEPATH);
-        File file = new File(imageFilepath + filepath);
-        if(file.exists()){
-            BufferedImage bufferedImage = ImageIO.read(file);
-            user.setImage(bufferedImage);
-            String newFilename = imageFilepath + user.getId();
-            File newFile = new File(newFilename);
-            file.renameTo(newFile);
-        }
-    }
-
-    public void attachImage(HttpSession httpSession, User user) throws IOException {
-        String imageFilepath = httpSession.getServletContext().getInitParameter(UploadImageCommand.IMAGES_FILEPATH);
-        String fileName = imageFilepath + user.getId();
-        File file = new File(fileName);
-        if(file.exists()){
-            user.setImage(ImageIO.read(file));
+    public void uploadAvatar(HttpServletRequest request, User user) throws IOException, ServletException {
+        Part part = request.getPart(UserRegFields.AVATAR);
+        String imagesFilepath = request.getServletContext().getInitParameter(DisplayAvatarCommand.IMAGES_FILEPATH);
+        InputStream inputStream = part.getInputStream();
+        BufferedImage bufferedImage = ImageIO.read(inputStream);
+        if(bufferedImage != null){
+            File file = new File(imagesFilepath + user.getId());
+            ImageIO.write(bufferedImage, ShowLoginPageCommand.IMAGE_FORMAT, file);
         }
     }
 

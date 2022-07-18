@@ -23,7 +23,6 @@ public class CommandContainer {
         LogoutCommand logoutCommand = new LogoutCommand();
         LoginCommand loginCommand = new LoginCommand(container, userService, showLoginPageCommand);
         DisplayAvatarCommand displayAvatarCommand = new DisplayAvatarCommand();
-        UploadImageCommand uploadImageCommand = new UploadImageCommand();
 
         commands = new HashMap<>();
         commands.put("registration", registrationCommand);
@@ -31,7 +30,6 @@ public class CommandContainer {
         commands.put("logout", logoutCommand);
         commands.put("login", loginCommand);
         commands.put("displayAvatar", displayAvatarCommand);
-        commands.put("uploadImage", uploadImageCommand);
     }
 
     public Command getCommand(String commandName){
