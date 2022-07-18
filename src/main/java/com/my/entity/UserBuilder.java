@@ -1,7 +1,5 @@
 package com.my.entity;
 
-import java.awt.image.BufferedImage;
-
 public class UserBuilder {
     private final User user;
     public UserBuilder(){
@@ -35,11 +33,6 @@ public class UserBuilder {
 
     public UserBuilder withNewsletter(boolean newsletter){
         user.setNewsletter(newsletter);
-        return this;
-    }
-
-    public UserBuilder withImage(BufferedImage image){
-        user.setImage(image);
         return this;
     }
 
