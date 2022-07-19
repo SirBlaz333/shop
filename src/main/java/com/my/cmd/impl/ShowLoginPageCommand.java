@@ -14,18 +14,23 @@ import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ShowLoginPageCommand implements Command {
     public static final String REGISTRATION = "registration.jsp";
     public final static String IMAGE_FORMAT = "png";
     public static final String CAPTCHA_IMAGE = "captchaImg";
     public static final String REGISTER = "register";
+    public static final String CANNOT_DISPLAY_CAPTCHA = "Cannot display captcha";
     private final CaptchaService captchaService;
     private final CaptchaContainerStrategy container;
+    private final Logger logger;
 
     public ShowLoginPageCommand(CaptchaContainerStrategy captchaContainerStrategy) {
         captchaService = new CaptchaService();
         container = captchaContainerStrategy;
+        logger = Logger.getLogger(getClass().getName());
     }
 
     @Override
@@ -48,14 +53,18 @@ public class ShowLoginPageCommand implements Command {
         request.getRequestDispatcher(REGISTRATION).forward(request, response);
     }
 
-    private void displayCaptcha(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void displayCaptcha(HttpServletRequest request, HttpServletResponse response) {
         HttpSession httpSession = request.getSession();
         BufferedImage captchaImg = (BufferedImage) httpSession.getAttribute(CAPTCHA_IMAGE);
         writeImage(response, captchaImg);
     }
 
-    private void writeImage(HttpServletResponse response, BufferedImage bufferedImage) throws IOException {
-        OutputStream outputStream = response.getOutputStream();
-        ImageIO.write(bufferedImage, IMAGE_FORMAT, outputStream);
+    private void writeImage(HttpServletResponse response, BufferedImage bufferedImage) {
+        try{
+            OutputStream outputStream = response.getOutputStream();
+            ImageIO.write(bufferedImage, IMAGE_FORMAT, outputStream);
+        } catch (IOException e){
+            logger.log(Level.SEVERE, CANNOT_DISPLAY_CAPTCHA);
+        }
     }
 }

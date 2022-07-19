@@ -40,7 +40,7 @@ public class LoginUtility {
         checkCaptcha(expectedCaptcha, userCaptcha);
     }
 
-    public User createUser(HttpServletRequest request) throws ServletException, IOException {
+    public User createUser(HttpServletRequest request) throws ServletException {
         String email = request.getParameter(UserRegFields.EMAIL);
         String firstname = request.getParameter(UserRegFields.FIRSTNAME);
         String lastname = request.getParameter(UserRegFields.LASTNAME);
@@ -58,13 +58,14 @@ public class LoginUtility {
                 getUser();
     }
 
-    public BufferedImage uploadAvatar(HttpServletRequest request) throws IOException, ServletException {
-        Part part = request.getPart(UserRegFields.AVATAR);
-        if(part == null){
+    private BufferedImage uploadAvatar(HttpServletRequest request) throws ServletException {
+        try{
+            Part part = request.getPart(UserRegFields.AVATAR);
+            InputStream inputStream = part.getInputStream();
+            return ImageIO.read(inputStream);
+        } catch (IOException | NullPointerException e){
             return null;
         }
-        InputStream inputStream = part.getInputStream();
-        return ImageIO.read(inputStream);
     }
 
     private void checkCaptcha(Captcha expectedCaptcha, String actualCaptcha) throws CaptchaException {
