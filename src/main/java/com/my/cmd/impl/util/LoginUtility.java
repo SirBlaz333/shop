@@ -40,31 +40,31 @@ public class LoginUtility {
         checkCaptcha(expectedCaptcha, userCaptcha);
     }
 
-    public User createUser(HttpServletRequest request){
+    public User createUser(HttpServletRequest request) throws ServletException, IOException {
         String email = request.getParameter(UserRegFields.EMAIL);
         String firstname = request.getParameter(UserRegFields.FIRSTNAME);
         String lastname = request.getParameter(UserRegFields.LASTNAME);
         String password = request.getParameter(UserRegFields.PASSWORD);
         String newsletterParameter = request.getParameter(UserRegFields.NEWSLETTER);
         boolean newsletter = (newsletterParameter != null);
+        BufferedImage bufferedImage = uploadAvatar(request);
         return new UserBuilder().
                 withEmail(email).
                 withFirstname(firstname).
                 withLastname(lastname).
                 withPassword(password).
                 withNewsletter(newsletter).
+                withImage(bufferedImage).
                 getUser();
     }
 
-    public void uploadAvatar(HttpServletRequest request, User user) throws IOException, ServletException {
+    public BufferedImage uploadAvatar(HttpServletRequest request) throws IOException, ServletException {
         Part part = request.getPart(UserRegFields.AVATAR);
-        String imagesFilepath = request.getServletContext().getInitParameter(DisplayAvatarCommand.IMAGES_FILEPATH);
-        InputStream inputStream = part.getInputStream();
-        BufferedImage bufferedImage = ImageIO.read(inputStream);
-        if(bufferedImage != null){
-            File file = new File(imagesFilepath + user.getId());
-            ImageIO.write(bufferedImage, ShowLoginPageCommand.IMAGE_FORMAT, file);
+        if(part == null){
+            return null;
         }
+        InputStream inputStream = part.getInputStream();
+        return ImageIO.read(inputStream);
     }
 
     private void checkCaptcha(Captcha expectedCaptcha, String actualCaptcha) throws CaptchaException {

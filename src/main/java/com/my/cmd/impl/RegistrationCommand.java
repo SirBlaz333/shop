@@ -35,8 +35,8 @@ public class RegistrationCommand implements Command {
     private void doRegister(HttpServletRequest request, HttpServletResponse response) throws CaptchaException, ServiceException, IOException, ServletException {
         loginUtility.checkCaptcha(request);
         User user = loginUtility.createUser(request);
-        user = userService.add(user);
-        loginUtility.uploadAvatar(request, user);
+        String imagesFilepath = request.getServletContext().getInitParameter(DisplayAvatarCommand.IMAGES_FILEPATH);
+        user = userService.add(user, imagesFilepath);
         request.getSession().setAttribute(UserRegFields.USER, user);
         response.sendRedirect(LoginUtility.MAIN_PAGE);
     }

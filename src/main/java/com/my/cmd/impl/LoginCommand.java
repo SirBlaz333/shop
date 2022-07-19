@@ -33,7 +33,7 @@ public class LoginCommand implements Command {
         }
     }
 
-    private void doLogin(HttpServletRequest request, HttpServletResponse response) throws ServiceException, CaptchaException, IOException {
+    private void doLogin(HttpServletRequest request, HttpServletResponse response) throws ServiceException, CaptchaException, IOException, ServletException {
         loginUtility.checkCaptcha(request);
         User user = loginUtility.createUser(request);
         user = userService.login(user);

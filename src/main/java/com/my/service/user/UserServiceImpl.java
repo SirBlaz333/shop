@@ -1,16 +1,20 @@
 package com.my.service.user;
 
+import com.my.cmd.impl.ShowLoginPageCommand;
 import com.my.dao.DBException;
 import com.my.dao.user.UserDAO;
 import com.my.entity.User;
 import com.my.service.ServiceException;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 public class UserServiceImpl implements UserService{
 
     public static final String USER_ALREADY_EXISTS = "User with such email already exists";
-    public static final String USER_DOES_NOT_EXIST = "User does not exist";
     private final UserDAO userDAO;
 
     public UserServiceImpl(UserDAO userDAO){
@@ -18,11 +22,21 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public User add(User user) throws ServiceException {
+    public User add(User user, String imagesFilepath) throws ServiceException {
         try{
-            return userDAO.addUser(user);
-        } catch (DBException e){
+            user = userDAO.addUser(user);
+            writeImage(user, imagesFilepath);
+            return user;
+        } catch (DBException | IOException e){
             throw new ServiceException(e.getMessage());
+        }
+    }
+
+    private void writeImage(User user, String imagesFilepath) throws IOException {
+        BufferedImage bufferedImage = user.getImage();
+        if(bufferedImage != null){
+            File file = new File(imagesFilepath + user.getId());
+            ImageIO.write(bufferedImage, ShowLoginPageCommand.IMAGE_FORMAT, file);
         }
     }
 
