@@ -23,8 +23,12 @@ var formIsCorrect;
 form.addEventListener("submit", (e) => {
   formIsCorrect = true;
   e.preventDefault();
-  validateFirstname();
-  validateLastname();
+  var register = window.location.search.substr(1);
+  register = register.split("&")[0].trim();
+  if(register === "register"){
+    validateFirstname();
+    validateLastname();
+  }
   validateEmail();
   validatePassword();
   if(formIsCorrect === true){
@@ -68,7 +72,6 @@ let validatePassword = () => {
 }
 
 let regex = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
-
 
 let validateEmail = () => {
     if(regex.test(email.value.trim()) === false){

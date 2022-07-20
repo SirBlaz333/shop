@@ -1,19 +1,22 @@
 package com.my.entity;
 
+import java.awt.image.BufferedImage;
+
 public class User {
     private int id;
     private String email;
-    private String firstName;
+    private String firstname;
     private String lastname;
     private String password;
     private boolean newsletter;
+    private BufferedImage image;
 
     public String getEmail() {
         return email;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getFirstname() {
+        return firstname;
     }
 
     public String getLastname() {
@@ -40,8 +43,8 @@ public class User {
         this.email = email;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
     }
 
     public void setLastname(String lastname) {
@@ -54,5 +57,13 @@ public class User {
 
     public void setNewsletter(boolean newsletter) {
         this.newsletter = newsletter;
+    }
+
+    public BufferedImage getImage() {
+        return image;
+    }
+
+    public void setImage(BufferedImage image) {
+        this.image = image;
     }
 }

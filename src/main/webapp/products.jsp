@@ -1,3 +1,6 @@
+<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="mylib" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 
@@ -28,7 +31,7 @@
     <!-- my styles --->
 </head>
 <body>
-    <div id="includedContent"></div>
+    <mylib:menu-panel/>
     <div class="container">
         <header id="header" class="text-center tm-text-gray">
             <h1>Products</h1>
@@ -179,6 +182,5 @@
     </div>
     <script src="js/jquery-1.11.3.min.js"></script>
     <script src="js/my-scripts/jquery.smooth-appearance.js"></script>
-    <script src="js/my-scripts/menu-panel.js"></script>
 </body>
 </html>

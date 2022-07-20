@@ -1,4 +1,5 @@
 .panel {
+    z-index: 999;
     top:0;
     left:0;
     position: fixed;
@@ -29,7 +30,10 @@
     width: 100px;
 }
 
-.login-button {
+.right-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     float: right;
     width: 20%;
     border: none;
@@ -37,4 +41,9 @@
 
 .cart-button img {
     width: 32px;
+}
+
+.avatar {
+    max-width: 40px;
+    max-height: 40px;
 }

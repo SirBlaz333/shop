@@ -1,3 +1,5 @@
+<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="mylib" tagdir="/WEB-INF/tags" %>
 <!DOCTYPE html>
 <html>
 
@@ -44,54 +46,12 @@
         <div class="loader-section section-left"></div>
         <div class="loader-section section-right"></div>
     </div>
+    <mylib:menu-panel/>
     <div class="container">
         <section class="tm-section-head" id="top">
             <header id="header" class="text-center tm-text-gray">
                 <h1>SHOP</h1>
             </header>
-
-            <nav class="navbar narbar-light">
-                <a class="navbar-brand tm-text-gray" href="#">
-                    Menu
-                </a>
-                <button type="button" id="nav-toggle" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#mainNav" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon">
-                        <i class="fa fa-navicon tm-fa-toggler-icon"></i>
-                    </span>
-                </button>
-                <div id="mainNav" class="collapse navbar-collapse tm-bg-white">
-                    <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link tm-text-gray" href="#top">Home
-                                <span class="sr-only">(current)</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link tm-text-gray" href="#tm-section-2">Info</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link tm-text-gray" href="products.html">Products</a>
-                        </li>
-                        <li class="nav-item">
-                            <form class="tm-text-grey" action="controller" method="post">
-                                <input type="hidden" name="command" value="showRegistration"/>
-                                <input type="submit" value="Login"/>
-                            </form>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
-
-            <div class="navbar navbar-default navbar-fixed-top">
-                <a href="/index.html" class="navbar-brand"></a>
-                <botton class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mydropdown">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </botton>
-
-            </div>
         </section>
 
         <section class="row" id="tm-section-1">

@@ -1,7 +1,7 @@
 package com.my.cmd.impl;
 
+import com.my.dao.user.impl.UserDAOMap;
 import com.my.cmd.Method;
-import com.my.dao.user.UserDAOMap;
 import com.my.entity.Captcha;
 import com.my.service.ServiceException;
 import com.my.service.user.UserService;
@@ -23,13 +23,11 @@ import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-import static com.my.cmd.impl.RegistrationCommand.*;
-import static com.my.cmd.impl.ShowRegistrationPageCommand.REGISTRATION;
-import static com.my.cmd.impl.util.RegistrationUtility.WRONG_CAPTCHA_MESSAGE;
+import static com.my.cmd.impl.ShowLoginPageCommand.REGISTRATION;
+import static com.my.cmd.impl.util.LoginUtility.*;
 import static com.my.entity.UserRegFields.CAPTCHA;
 import static com.my.entity.UserRegFields.EMAIL;
 import static com.my.service.user.UserServiceImpl.USER_ALREADY_EXISTS;
-import static com.my.cmd.impl.util.RegistrationUtility.TIMEOUT_MESSAGE;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -47,13 +45,12 @@ public class RegistrationCommandTest {
     private Captcha captcha;
     @Mock
     private HttpSession httpSession;
-    private final int timeout = 10;
     private RegistrationCommand registrationCommand;
     @Before
     public void setUp(){
         UserService userService = new UserServiceImpl(new UserDAOMap());
-        ShowRegistrationPageCommand showRegistrationPageCommand = new ShowRegistrationPageCommand(container);
-        registrationCommand = new RegistrationCommand(container, userService, showRegistrationPageCommand);
+        ShowLoginPageCommand showLoginPageCommand = new ShowLoginPageCommand(container);
+        registrationCommand = new RegistrationCommand(container, userService, showLoginPageCommand);
         when(captcha.getText()).thenReturn("123");
         when(request.getRequestDispatcher(REGISTRATION)).thenReturn(requestDispatcher);
         when(request.getSession()).thenReturn(httpSession);

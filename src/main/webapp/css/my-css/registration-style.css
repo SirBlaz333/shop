@@ -24,6 +24,11 @@
     color: #ff0000;
 }
 
+.uploadForm input[type="submit"]{
+    margin-top: 10px;
+    border: none;
+}
+
 .input-row label,
 .input-row input,
 .input-row button {
@@ -31,6 +36,7 @@
     display: block;
     width: 100%;
 }
+
 .registration button {
     margin-top: 24px;
     width: 100%;

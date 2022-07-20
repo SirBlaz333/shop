@@ -1,25 +1,25 @@
 package com.my.cmd.impl;
 
-import com.my.cmd.impl.util.LoginUtility;
+import com.my.cmd.Command;
 import com.my.cmd.Method;
+import com.my.cmd.impl.util.LoginUtility;
 import com.my.entity.User;
 import com.my.entity.UserRegFields;
 import com.my.service.ServiceException;
-import com.my.web.captcha.exception.CaptchaException;
-import com.my.web.captcha.container.strategy.CaptchaContainerStrategy;
 import com.my.service.user.UserService;
-import com.my.cmd.Command;
+import com.my.web.captcha.container.strategy.CaptchaContainerStrategy;
+import com.my.web.captcha.exception.CaptchaException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class RegistrationCommand implements Command {
-    private final LoginUtility loginUtility;
+public class LoginCommand implements Command {
     private final UserService userService;
+    private final LoginUtility loginUtility;
 
-    public RegistrationCommand(CaptchaContainerStrategy captchaContainer, UserService userService, ShowLoginPageCommand showLoginPageCommand) {
+    public LoginCommand(CaptchaContainerStrategy captchaContainer, UserService userService, ShowLoginPageCommand showLoginPageCommand) {
         this.userService = userService;
         loginUtility = new LoginUtility(showLoginPageCommand, captchaContainer);
     }
@@ -27,16 +27,16 @@ public class RegistrationCommand implements Command {
     @Override
     public void doCommand(HttpServletRequest request, HttpServletResponse response, Method method) throws ServletException, IOException {
         try {
-            doRegister(request, response);
+            doLogin(request, response);
         } catch (ServiceException | CaptchaException e) {
             loginUtility.showError(request, response, e.getMessage());
         }
     }
-    private void doRegister(HttpServletRequest request, HttpServletResponse response) throws CaptchaException, ServiceException, IOException, ServletException {
+
+    private void doLogin(HttpServletRequest request, HttpServletResponse response) throws ServiceException, CaptchaException, IOException, ServletException {
         loginUtility.checkCaptcha(request);
         User user = loginUtility.createUser(request);
-        String imagesFilepath = request.getServletContext().getInitParameter(DisplayAvatarCommand.IMAGES_FILEPATH);
-        user = userService.add(user, imagesFilepath);
+        user = userService.login(user);
         request.getSession().setAttribute(UserRegFields.USER, user);
         response.sendRedirect(LoginUtility.MAIN_PAGE);
     }

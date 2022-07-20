@@ -1,8 +1,9 @@
 package com.my.init;
 
 import com.my.cmd.container.CommandContainer;
+import com.my.dao.DBManager;
 import com.my.dao.user.UserDAO;
-import com.my.dao.user.UserDAOMap;
+import com.my.dao.user.impl.UserDAOImpl;
 import com.my.service.user.UserService;
 import com.my.service.user.UserServiceImpl;
 import com.my.web.captcha.container.strategy.CaptchaContainerStrategies;
@@ -15,7 +16,8 @@ public class ApplicationInitializer {
     private final CommandContainer commandContainer;
 
     public ApplicationInitializer(){
-        userDAO = new UserDAOMap();
+        DBManager dbManager = new DBManager();
+        userDAO = new UserDAOImpl(dbManager);
         userService = new UserServiceImpl(userDAO);
         timeoutMillis = 180_000;
         strategy = CaptchaContainerStrategies.COOKIE_CONTAINER;

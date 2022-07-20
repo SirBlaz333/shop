@@ -1,3 +1,5 @@
+<%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="mylib" tagdir="/WEB-INF/tags" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 
@@ -28,7 +30,7 @@
     <!-- my styles --->
 </head>
 <body>
-    <div id="includedContent"></div>
+    <mylib:menu-panel/>
     <div class="product-container">
 
         <div class="left-column">
@@ -107,6 +109,5 @@
     <script src="js/jquery-1.11.3.min.js"></script>
     <script src="js/my-scripts/collapsible.js"></script>
     <script src="js/my-scripts/jquery.smooth-appearance.js"></script>
-    <script src="js/my-scripts/menu-panel.js"></script>
 </body>
 </html>
