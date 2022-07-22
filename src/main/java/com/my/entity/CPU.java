@@ -5,7 +5,6 @@ public class CPU {
     private String name;
     private String manufacturer;
     private double price;
-    private double voltage;
     private int coreNumber;
     private MemoryType memoryType;
 
@@ -39,14 +38,6 @@ public class CPU {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public double getVoltage() {
-        return voltage;
-    }
-
-    public void setVoltage(double voltage) {
-        this.voltage = voltage;
     }
 
     public int getCoreNumber() {

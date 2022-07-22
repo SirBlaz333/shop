@@ -18,7 +18,7 @@ public class ProductSQLQueryBuilderTest {
         productFilterFormBean.setCriteria("price");
         productFilterFormBean.setOrder(SortingOrder.ASC);
         ProductSQLQueryBuilder builder = new ProductSQLQueryBuilder();
-        String query = builder.buildQuery(productFilterFormBean, 10, 2);
+        String query = builder.buildSelectQuery(productFilterFormBean, 10, 2);
         String expected = "SELECT * FROM products WHERE name = " +
                 "Core I-7 AND manufacturer = Intel " +
                 "AND price >= 200.0 AND price <= 500.0 ORDER BY price ASC LIMIT 10, 10;";
@@ -33,7 +33,7 @@ public class ProductSQLQueryBuilderTest {
         productFilterFormBean.setCriteria("price");
         productFilterFormBean.setOrder(SortingOrder.ASC);
         ProductSQLQueryBuilder builder = new ProductSQLQueryBuilder();
-        String query = builder.buildQuery(productFilterFormBean, 10, 2);
+        String query = builder.buildSelectQuery(productFilterFormBean, 10, 2);
         String expected = "SELECT * FROM products ORDER BY price ASC LIMIT 10, 10;";
         assertEquals(query, expected);
     }

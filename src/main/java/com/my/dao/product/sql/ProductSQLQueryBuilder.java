@@ -4,15 +4,12 @@ import com.my.entity.ProductFilterFormBean;
 
 public class ProductSQLQueryBuilder {
     private final static String SPACE = " ";
-    private final StringBuilder query;
+    private StringBuilder query;
     private boolean first;
 
-    public ProductSQLQueryBuilder(){
+    public String buildSelectQuery(ProductFilterFormBean bean, int pageSize, int pageCount) {
         query = new StringBuilder();
         query.append("SELECT * FROM products");
-    }
-
-    public String buildQuery(ProductFilterFormBean bean, int pageSize, int pageCount){
         appendFilters(bean);
         appendSorting(bean);
         appendLimit(pageSize, pageCount);
@@ -20,9 +17,17 @@ public class ProductSQLQueryBuilder {
         return query.toString();
     }
 
-    private void appendFilters(ProductFilterFormBean bean){
+    public String buildCountQuery(ProductFilterFormBean bean) {
+        query = new StringBuilder();
+        query.append("SELECT COUNT(id) FROM products");
+        appendFilters(bean);
+        query.append(";");
+        return query.toString();
+    }
+
+    private void appendFilters(ProductFilterFormBean bean) {
         first = true;
-        if(bean.getName() != null || bean.getManufacturer() != null || bean.getOriginPrice() != -1 || bean.getBoundPrice() != -1){
+        if (bean.getName() != null || bean.getManufacturer() != null || bean.getOriginPrice() != -1 || bean.getBoundPrice() != -1) {
             query.append(" WHERE");
             checkAndAppendSQLFilter("name", bean.getName(), "=");
             checkAndAppendSQLFilter("manufacturer", bean.getManufacturer(), "=");
@@ -31,26 +36,28 @@ public class ProductSQLQueryBuilder {
         }
     }
 
-    private void appendSorting(ProductFilterFormBean bean){
-        if(bean.getCriteria() != null){
+    private void appendSorting(ProductFilterFormBean bean) {
+        if (bean.getCriteria() != null) {
             query.append(" ORDER BY").append(SPACE).append(bean.getCriteria());
             query.append(" ").append(bean.getOrder().toString());
         }
     }
 
-    private void appendLimit(int pageSize, int pageCount){
-        int rowCount = (pageCount - 1) * pageSize;
-        query.append(" LIMIT").append(SPACE).append(pageSize).append(", ").append(rowCount);
+    private void appendLimit(int pageSize, int pageCount) {
+        if (pageCount > 0) {
+            int rowCount = (pageCount - 1) * pageSize;
+            query.append(" LIMIT").append(SPACE).append(pageSize).append(", ").append(rowCount);
+        }
     }
 
-    private void checkAndAppendSQLFilter(String fieldName, Object fieldValue, String sign){
-        if(fieldValue != null){
+    private void checkAndAppendSQLFilter(String fieldName, Object fieldValue, String sign) {
+        if (fieldValue != null) {
             appendSQLFilter(fieldName, fieldValue, sign);
         }
     }
 
-    private void appendSQLFilter(String fieldName, Object fieldValue, String sign){
-        if(!first){
+    private void appendSQLFilter(String fieldName, Object fieldValue, String sign) {
+        if (!first) {
             query.append(" AND");
         }
         query.append(SPACE).
