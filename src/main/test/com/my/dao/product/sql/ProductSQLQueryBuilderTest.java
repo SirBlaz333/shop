@@ -15,7 +15,7 @@ public class ProductSQLQueryBuilderTest {
         productFilterFormBean.setManufacturer("Intel");
         productFilterFormBean.setOriginPrice(200);
         productFilterFormBean.setBoundPrice(500);
-        productFilterFormBean.setCriteria("price");
+        productFilterFormBean.setFilterCriteria("price");
         productFilterFormBean.setOrder(SortingOrder.ASC);
         ProductSQLQueryBuilder builder = new ProductSQLQueryBuilder();
         String query = builder.buildSelectQuery(productFilterFormBean, 10, 2);
@@ -30,7 +30,7 @@ public class ProductSQLQueryBuilderTest {
         ProductFilterFormBean productFilterFormBean = new ProductFilterFormBean();
         productFilterFormBean.setOriginPrice(-1);
         productFilterFormBean.setBoundPrice(-1);
-        productFilterFormBean.setCriteria("price");
+        productFilterFormBean.setFilterCriteria("price");
         productFilterFormBean.setOrder(SortingOrder.ASC);
         ProductSQLQueryBuilder builder = new ProductSQLQueryBuilder();
         String query = builder.buildSelectQuery(productFilterFormBean, 10, 2);

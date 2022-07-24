@@ -1,11 +1,12 @@
 package com.my.entity;
 
 public class ProductFilterFormBean {
+    public static final int INAPPROPRIATE_NUMBER = -1;
     private String name;
     private String manufacturer;
     private double originPrice;
     private double boundPrice;
-    private String criteria;
+    private String filterCriteria;
     private SortingOrder order;
 
     public String getName() {
@@ -40,12 +41,12 @@ public class ProductFilterFormBean {
         this.boundPrice = boundPrice;
     }
 
-    public String getCriteria() {
-        return criteria;
+    public String getFilterCriteria() {
+        return filterCriteria;
     }
 
-    public void setCriteria(String criteria) {
-        this.criteria = criteria;
+    public void setFilterCriteria(String filterCriteria) {
+        this.filterCriteria = filterCriteria;
     }
 
     public SortingOrder getOrder() {

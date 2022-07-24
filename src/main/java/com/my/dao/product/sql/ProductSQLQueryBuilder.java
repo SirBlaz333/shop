@@ -27,7 +27,9 @@ public class ProductSQLQueryBuilder {
 
     private void appendFilters(ProductFilterFormBean bean) {
         first = true;
-        if (bean.getName() != null || bean.getManufacturer() != null || bean.getOriginPrice() != -1 || bean.getBoundPrice() != -1) {
+        if (bean.getName() != null || bean.getManufacturer() != null
+                || bean.getOriginPrice() != ProductFilterFormBean.INAPPROPRIATE_NUMBER
+                || bean.getBoundPrice() != ProductFilterFormBean.INAPPROPRIATE_NUMBER) {
             query.append(" WHERE");
             checkAndAppendSQLFilter("name", bean.getName(), "=");
             checkAndAppendSQLFilter("manufacturer", bean.getManufacturer(), "=");
@@ -37,8 +39,8 @@ public class ProductSQLQueryBuilder {
     }
 
     private void appendSorting(ProductFilterFormBean bean) {
-        if (bean.getCriteria() != null) {
-            query.append(" ORDER BY").append(SPACE).append(bean.getCriteria());
+        if (bean.getFilterCriteria() != null) {
+            query.append(" ORDER BY").append(SPACE).append(bean.getFilterCriteria());
             query.append(" ").append(bean.getOrder().toString());
         }
     }

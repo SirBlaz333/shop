@@ -8,7 +8,8 @@
             Home
         </button>
     </form>
-    <form action="products.jsp">
+    <form action="controller">
+        <input type="hidden" name="command" value="products"/>
         <button type="submit" class="menu-button">
             Products
         </button>
