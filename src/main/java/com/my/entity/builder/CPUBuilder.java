@@ -1,7 +1,6 @@
 package com.my.entity.builder;
 
 import com.my.entity.CPU;
-import com.my.entity.MemoryType;
 
 public class CPUBuilder {
     private final CPU cpu;
@@ -35,7 +34,7 @@ public class CPUBuilder {
         return this;
     }
 
-    public CPUBuilder withMemoryType(MemoryType memoryType){
+    public CPUBuilder withMemoryType(String memoryType){
         cpu.setMemoryType(memoryType);
         return this;
     }

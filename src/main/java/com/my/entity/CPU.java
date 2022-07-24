@@ -6,7 +6,7 @@ public class CPU {
     private String manufacturer;
     private double price;
     private int coreNumber;
-    private MemoryType memoryType;
+    private String memoryType;
 
     public int getId() {
         return id;
@@ -48,11 +48,11 @@ public class CPU {
         this.coreNumber = coreNumber;
     }
 
-    public MemoryType getMemoryType() {
+    public String getMemoryType() {
         return memoryType;
     }
 
-    public void setMemoryType(MemoryType memoryType) {
+    public void setMemoryType(String memoryType) {
         this.memoryType = memoryType;
     }
 }

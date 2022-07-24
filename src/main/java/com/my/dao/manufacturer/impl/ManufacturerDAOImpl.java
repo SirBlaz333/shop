@@ -1,7 +1,8 @@
-package com.my.dao.manufacturer;
+package com.my.dao.manufacturer.impl;
 
 import com.my.dao.DBException;
 import com.my.dao.DBManager;
+import com.my.dao.manufacturer.ManufacturerDAO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
