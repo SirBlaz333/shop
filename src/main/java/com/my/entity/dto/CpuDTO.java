@@ -1,17 +1,17 @@
 package com.my.entity.dto;
 
-import com.my.entity.CPU;
+import com.my.entity.Cpu;
 
 public class CpuDTO {
-    private CPU cpu;
+    private Cpu cpu;
     private int manufacturerId;
     private int MemoryTypeId;
 
-    public CPU getCpu() {
+    public Cpu getCpu() {
         return cpu;
     }
 
-    public void setCpu(CPU cpu) {
+    public void setCpu(Cpu cpu) {
         this.cpu = cpu;
     }
 

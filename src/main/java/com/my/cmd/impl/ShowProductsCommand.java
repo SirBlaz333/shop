@@ -3,7 +3,7 @@ package com.my.cmd.impl;
 import com.my.cmd.Command;
 import com.my.cmd.Method;
 import com.my.cmd.impl.util.ProductUtility;
-import com.my.entity.CPU;
+import com.my.entity.Cpu;
 import com.my.entity.ProductFilterFormBean;
 import com.my.service.product.ProductService;
 
@@ -26,8 +26,8 @@ public class ShowProductsCommand implements Command {
     public void doCommand(HttpServletRequest request, HttpServletResponse response, Method method) throws ServletException, IOException {
         ProductFilterFormBean productFilterFormBean = productUtility.createFilterFormBean(request);
         int productCount = productService.getProductCount(productFilterFormBean);
-        List<CPU> cpus = productService.getProducts(productFilterFormBean);
-        request.setAttribute(ProductFilterFormBean.PRODUCT_LIST, cpus);
+        List<Cpu> cpuses = productService.getProducts(productFilterFormBean);
+        request.setAttribute(ProductFilterFormBean.PRODUCT_LIST, cpuses);
         request.getRequestDispatcher("products.jsp").forward(request, response);
     }
 

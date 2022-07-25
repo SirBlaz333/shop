@@ -1,6 +1,6 @@
 package com.my.entity;
 
-public class CPU {
+public class Cpu {
     private int id;
     private String name;
     private String manufacturer;

@@ -4,9 +4,9 @@ import com.my.dao.DBException;
 import com.my.dao.DBManager;
 import com.my.dao.product.ProductDAO;
 import com.my.dao.product.sql.ProductSQLQueryBuilder;
-import com.my.entity.CPU;
+import com.my.entity.Cpu;
 import com.my.entity.ProductFilterFormBean;
-import com.my.entity.builder.CPUBuilder;
+import com.my.entity.builder.CpuBuilder;
 import com.my.entity.dto.CpuDTO;
 
 import java.sql.Connection;
@@ -47,7 +47,7 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public void updateProductAmount(CPU cpu, int amount) {
+    public void updateProductAmount(Cpu cpu, int amount) {
         try (Connection connection = dbManager.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PRODUCT_AMOUNT);
             int index = BEGIN_INDEX;
@@ -60,7 +60,7 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public int getProductAmount(CPU cpu) {
+    public int getProductAmount(Cpu cpu) {
         int amount = 0;
         try (Connection connection = dbManager.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(GET_PRODUCT_AMOUNT);
@@ -111,14 +111,14 @@ public class ProductDAOImpl implements ProductDAO {
 
     private CpuDTO buildCPU(ResultSet resultSet) throws SQLException {
         int index = BEGIN_INDEX;
-        CPUBuilder cpuBuilder = new CPUBuilder();
+        CpuBuilder cpuBuilder = new CpuBuilder();
         int id = resultSet.getInt(index++);
         String name = resultSet.getString(index++);
         int manufacturerId = resultSet.getInt(index++);
         double price = resultSet.getDouble(index++);
         int coreNumber = resultSet.getInt(index++);
         int memoryTypeId = resultSet.getInt(index);
-        CPU cpu = cpuBuilder.withId(id)
+        Cpu cpu = cpuBuilder.withId(id)
                 .withName(name)
                 .withPrice(price)
                 .withCoreNumber(coreNumber)
