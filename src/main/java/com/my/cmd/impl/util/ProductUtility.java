@@ -34,14 +34,14 @@ public class ProductUtility {
         if (request.getParameter(field) != null) {
             return Double.parseDouble(request.getParameter(field));
         }
-        return ProductFilterFormBean.INAPPROPRIATE_NUMBER;
+        return ProductFilterFormBean.INVALID_NUMBER;
     }
 
     private int getIntField(HttpServletRequest request, String field) {
         if (request.getParameter(field) != null) {
             return Integer.parseInt(request.getParameter(field));
         }
-        return ProductFilterFormBean.INAPPROPRIATE_NUMBER;
+        return ProductFilterFormBean.INVALID_NUMBER;
     }
 
     private SortingOrder parseSortingOrder(String sortingOrder) {

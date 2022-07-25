@@ -48,6 +48,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<Cpu> getProducts(ProductFilterFormBean bean) {
         bean.setManufacturerId(manufacturerDAO.getManufacturerId(bean.getManufacturer()));
+        bean.setMemoryTypeId(memoryTypeDAO.getMemoryTypeId(bean.getMemoryType()));
         List<CpuDTO> cpuDTOs = productDAO.getProducts(bean);
         return cpuDTOs.stream()
                 .map(this::parseCPUDataTransferObject)

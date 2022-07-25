@@ -27,11 +27,13 @@ public class ProductSQLQueryBuilder {
 
     private void appendFilters(ProductFilterFormBean bean) {
         first = true;
-        if (bean.getName() != null || bean.getManufacturerId() != ProductFilterFormBean.INAPPROPRIATE_NUMBER
-                || bean.getOriginPrice() != ProductFilterFormBean.INAPPROPRIATE_NUMBER
-                || bean.getBoundPrice() != ProductFilterFormBean.INAPPROPRIATE_NUMBER) {
+        if (bean.getName() != null || bean.getManufacturerId() != ProductFilterFormBean.INVALID_NUMBER
+                || bean.getOriginPrice() != ProductFilterFormBean.INVALID_NUMBER
+                || bean.getBoundPrice() != ProductFilterFormBean.INVALID_NUMBER
+                || bean.getMemoryTypeId() != ProductFilterFormBean.INVALID_NUMBER) {
             query.append(" WHERE");
             checkAndAppendString("name", bean.getName(), "=");
+            checkAndAppendNumber("memory_type_id", bean.getMemoryTypeId(), "=");
             checkAndAppendNumber("manufacturer_id", bean.getManufacturerId(), "=");
             checkAndAppendNumber("price", bean.getOriginPrice(), ">=");
             checkAndAppendNumber("price", bean.getBoundPrice(), "<=");
@@ -59,7 +61,7 @@ public class ProductSQLQueryBuilder {
     }
 
     private void checkAndAppendNumber(String fieldName, double number, String sign) {
-        if (number != ProductFilterFormBean.INAPPROPRIATE_NUMBER) {
+        if (number != ProductFilterFormBean.INVALID_NUMBER) {
             appendSQLFilter(fieldName, number, sign);
         }
     }

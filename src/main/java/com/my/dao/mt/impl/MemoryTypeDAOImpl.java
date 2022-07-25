@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 
 public class MemoryTypeDAOImpl implements MemoryTypeDAO {
     public static final String GET_MEMORY_TYPE_BY_ID = "SELECT memory_type FROM memory_types WHERE id = ?;";
+    public static final String GET_MEMORY_TYPE_ID = "SELECT id FROM memory_types WHERE memory_type = ?;";
     private final DBManager dbManager;
     private final Logger logger;
 
@@ -35,5 +36,21 @@ public class MemoryTypeDAOImpl implements MemoryTypeDAO {
             logger.log(Level.SEVERE, "Cannot get memory type by id");
         }
         return memoryType;
+    }
+
+    @Override
+    public int getMemoryTypeId(String memoryType) {
+        int memoryTypeId = -1;
+        try (Connection connection = dbManager.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(GET_MEMORY_TYPE_ID);
+            preparedStatement.setString(BEGIN_INDEX, memoryType);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                memoryTypeId = resultSet.getInt(BEGIN_INDEX);
+            }
+        } catch (SQLException | DBException e) {
+            logger.log(Level.SEVERE, "Cannot get memory type by id");
+        }
+        return memoryTypeId;
     }
 }
