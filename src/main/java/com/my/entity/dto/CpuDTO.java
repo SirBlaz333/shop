@@ -2,7 +2,7 @@ package com.my.entity.dto;
 
 import com.my.entity.CPU;
 
-public class CPUDataTransferObject {
+public class CpuDTO {
     private CPU cpu;
     private int manufacturerId;
     private int MemoryTypeId;

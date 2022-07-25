@@ -7,12 +7,12 @@ public class ProductSQLQueryBuilder {
     private StringBuilder query;
     private boolean first;
 
-    public String buildSelectQuery(ProductFilterFormBean bean, int pageSize, int pageCount) {
+    public String buildSelectQuery(ProductFilterFormBean bean) {
         query = new StringBuilder();
         query.append("SELECT * FROM products");
         appendFilters(bean);
         appendSorting(bean);
-        appendLimit(pageSize, pageCount);
+        appendLimit(bean);
         query.append(";");
         return query.toString();
     }
@@ -27,14 +27,14 @@ public class ProductSQLQueryBuilder {
 
     private void appendFilters(ProductFilterFormBean bean) {
         first = true;
-        if (bean.getName() != null || bean.getManufacturer() != null
+        if (bean.getName() != null || bean.getManufacturerId() != ProductFilterFormBean.INAPPROPRIATE_NUMBER
                 || bean.getOriginPrice() != ProductFilterFormBean.INAPPROPRIATE_NUMBER
                 || bean.getBoundPrice() != ProductFilterFormBean.INAPPROPRIATE_NUMBER) {
             query.append(" WHERE");
-            checkAndAppendSQLFilter("name", bean.getName(), "=");
-            checkAndAppendSQLFilter("manufacturer", bean.getManufacturer(), "=");
-            checkAndAppendSQLFilter("price", bean.getOriginPrice(), ">=");
-            checkAndAppendSQLFilter("price", bean.getBoundPrice(), "<=");
+            checkAndAppendString("name", bean.getName(), "=");
+            checkAndAppendNumber("manufacturer_id", bean.getManufacturerId(), "=");
+            checkAndAppendNumber("price", bean.getOriginPrice(), ">=");
+            checkAndAppendNumber("price", bean.getBoundPrice(), "<=");
         }
     }
 
@@ -45,16 +45,22 @@ public class ProductSQLQueryBuilder {
         }
     }
 
-    private void appendLimit(int pageSize, int pageCount) {
-        if (pageCount > 0) {
-            int rowCount = (pageCount - 1) * pageSize;
-            query.append(" LIMIT").append(SPACE).append(pageSize).append(", ").append(rowCount);
+    private void appendLimit(ProductFilterFormBean bean) {
+        if (bean.getPageCount() > 0) {
+            int rowCount = (bean.getPageCount() - 1) * bean.getPageSize();
+            query.append(" LIMIT").append(SPACE).append(rowCount).append(", ").append(bean.getPageSize());
         }
     }
 
-    private void checkAndAppendSQLFilter(String fieldName, Object fieldValue, String sign) {
+    private void checkAndAppendString(String fieldName, String fieldValue, String sign) {
         if (fieldValue != null) {
             appendSQLFilter(fieldName, fieldValue, sign);
+        }
+    }
+
+    private void checkAndAppendNumber(String fieldName, double number, String sign) {
+        if (number != ProductFilterFormBean.INAPPROPRIATE_NUMBER) {
+            appendSQLFilter(fieldName, number, sign);
         }
     }
 

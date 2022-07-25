@@ -7,7 +7,7 @@ import com.my.dao.product.sql.ProductSQLQueryBuilder;
 import com.my.entity.CPU;
 import com.my.entity.ProductFilterFormBean;
 import com.my.entity.builder.CPUBuilder;
-import com.my.entity.dto.CPUDataTransferObject;
+import com.my.entity.dto.CpuDTO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -31,19 +31,19 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public CPUDataTransferObject getProductById(int id) {
-        CPUDataTransferObject cpuDataTransferObject = new CPUDataTransferObject();
+    public CpuDTO getProductById(int id) {
+        CpuDTO cpuDTO = new CpuDTO();
         try (Connection connection = dbManager.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(GET_PRODUCT_BY_ID);
             preparedStatement.setInt(BEGIN_INDEX, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if(resultSet.next()){
-                cpuDataTransferObject = buildCPU(resultSet);
+                cpuDTO = buildCPU(resultSet);
             }
         } catch (SQLException | DBException e) {
             logger.log(Level.SEVERE, "Cannot get CPU by id");
         }
-        return cpuDataTransferObject;
+        return cpuDTO;
     }
 
     @Override
@@ -76,10 +76,10 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public List<CPUDataTransferObject> getProducts(ProductFilterFormBean bean, int pageSize, int pageCount) {
-        List<CPUDataTransferObject> cpus = new ArrayList<>();
+    public List<CpuDTO> getProducts(ProductFilterFormBean bean) {
+        List<CpuDTO> cpus = new ArrayList<>();
         ProductSQLQueryBuilder sqlQueryBuilder = new ProductSQLQueryBuilder();
-        String query = sqlQueryBuilder.buildSelectQuery(bean, pageSize, pageCount);
+        String query = sqlQueryBuilder.buildSelectQuery(bean);
         try (Connection connection = dbManager.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -109,7 +109,7 @@ public class ProductDAOImpl implements ProductDAO {
         return amount;
     }
 
-    private CPUDataTransferObject buildCPU(ResultSet resultSet) throws SQLException {
+    private CpuDTO buildCPU(ResultSet resultSet) throws SQLException {
         int index = BEGIN_INDEX;
         CPUBuilder cpuBuilder = new CPUBuilder();
         int id = resultSet.getInt(index++);
@@ -123,11 +123,11 @@ public class ProductDAOImpl implements ProductDAO {
                 .withPrice(price)
                 .withCoreNumber(coreNumber)
                 .buildCPU();
-        CPUDataTransferObject cpuDataTransferObject = new CPUDataTransferObject();
-        cpuDataTransferObject.setCpu(cpu);
-        cpuDataTransferObject.setManufacturerId(manufacturerId);
-        cpuDataTransferObject.setMemoryTypeId(memoryTypeId);
-        return cpuDataTransferObject;
+        CpuDTO cpuDTO = new CpuDTO();
+        cpuDTO.setCpu(cpu);
+        cpuDTO.setManufacturerId(manufacturerId);
+        cpuDTO.setMemoryTypeId(memoryTypeId);
+        return cpuDTO;
     }
 
 }

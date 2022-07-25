@@ -5,7 +5,7 @@ import com.my.dao.mt.MemoryTypeDAO;
 import com.my.dao.product.ProductDAO;
 import com.my.entity.CPU;
 import com.my.entity.ProductFilterFormBean;
-import com.my.entity.dto.CPUDataTransferObject;
+import com.my.entity.dto.CpuDTO;
 import com.my.service.ServiceException;
 import com.my.service.product.ProductService;
 
@@ -25,8 +25,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public CPU getProductById(int id) {
-        CPUDataTransferObject cpuDataTransferObject = productDAO.getProductById(id);
-        return parseCPUDataTransferObject(cpuDataTransferObject);
+        CpuDTO cpuDTO = productDAO.getProductById(id);
+        return parseCPUDataTransferObject(cpuDTO);
     }
 
     @Override
@@ -46,9 +46,10 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<CPU> getProducts(ProductFilterFormBean bean, int pageSize, int pageCount) {
-        List<CPUDataTransferObject> cpuDataTransferObjects = productDAO.getProducts(bean, pageSize, pageCount);
-        return cpuDataTransferObjects.stream()
+    public List<CPU> getProducts(ProductFilterFormBean bean) {
+        bean.setManufacturerId(manufacturerDAO.getManufacturerId(bean.getManufacturer()));
+        List<CpuDTO> cpuDTOs = productDAO.getProducts(bean);
+        return cpuDTOs.stream()
                 .map(this::parseCPUDataTransferObject)
                 .collect(Collectors.toList());
     }
@@ -58,10 +59,10 @@ public class ProductServiceImpl implements ProductService {
         return productDAO.getProductCount(bean);
     }
 
-    private CPU parseCPUDataTransferObject(CPUDataTransferObject cpuDataTransferObject) {
-        CPU cpu = cpuDataTransferObject.getCpu();
-        String memoryType = memoryTypeDAO.getMemoryTypeById(cpuDataTransferObject.getMemoryTypeId());
-        String manufacturer = manufacturerDAO.getManufacturerById(cpuDataTransferObject.getManufacturerId());
+    private CPU parseCPUDataTransferObject(CpuDTO cpuDTO) {
+        CPU cpu = cpuDTO.getCpu();
+        String memoryType = memoryTypeDAO.getMemoryTypeById(cpuDTO.getMemoryTypeId());
+        String manufacturer = manufacturerDAO.getManufacturerById(cpuDTO.getManufacturerId());
         cpu.setManufacturer(manufacturer);
         cpu.setMemoryType(memoryType);
         return cpu;

@@ -10,6 +10,6 @@ public interface ProductService {
     CPU getProductById(int id);
     void buyProduct(CPU cpu, int amount) throws ServiceException;
     void putProduct(CPU cpu, int amount);
-    List<CPU> getProducts(ProductFilterFormBean bean, int pageSize, int pageCount);
+    List<CPU> getProducts(ProductFilterFormBean bean);
     int getProductCount(ProductFilterFormBean bean);
 }

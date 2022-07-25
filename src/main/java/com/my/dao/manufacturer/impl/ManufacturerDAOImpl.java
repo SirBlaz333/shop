@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,5 +36,21 @@ public class ManufacturerDAOImpl implements ManufacturerDAO {
             logger.log(Level.SEVERE, "Cannot get manufacturer by id");
         }
         return manufacturerName;
+    }
+
+    @Override
+    public int getManufacturerId(String name) {
+        int manufacturerId = -1;
+        try(Connection connection = dbManager.getConnection()){
+            PreparedStatement preparedStatement = connection.prepareStatement("SELECT id FROM manufacturers WHERE name = ?;");
+            preparedStatement.setString(BEGIN_INDEX, name);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                manufacturerId = resultSet.getInt(BEGIN_INDEX);
+            }
+        } catch (DBException | SQLException e) {
+            logger.log(Level.SEVERE, "Cannot get manufacturer by id");
+        }
+        return manufacturerId;
     }
 }
