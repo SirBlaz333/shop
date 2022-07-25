@@ -32,7 +32,7 @@ public class ProductSQLQueryBuilder {
                 || bean.getBoundPrice() != ProductFilterFormBean.INVALID_NUMBER
                 || bean.getMemoryTypeId() != ProductFilterFormBean.INVALID_NUMBER) {
             query.append(" WHERE");
-            checkAndAppendString("name", bean.getName(), "=");
+            checkAndAppendName(bean.getName());
             checkAndAppendNumber("memory_type_id", bean.getMemoryTypeId(), "=");
             checkAndAppendNumber("manufacturer_id", bean.getManufacturerId(), "=");
             checkAndAppendNumber("price", bean.getOriginPrice(), ">=");
@@ -54,9 +54,9 @@ public class ProductSQLQueryBuilder {
         }
     }
 
-    private void checkAndAppendString(String fieldName, String fieldValue, String sign) {
+    private void checkAndAppendName(String fieldValue) {
         if (fieldValue != null) {
-            appendSQLFilter(fieldName, fieldValue, sign);
+            appendSQLFilter("name", fieldValue, "=");
         }
     }
 
