@@ -10,6 +10,7 @@ import com.my.service.ServiceException;
 import com.my.service.product.ProductService;
 
 import java.util.List;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ProductServiceImpl implements ProductService {
@@ -47,12 +48,23 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Cpu> getProducts(ProductFilterFormBean bean) {
-        bean.setManufacturerId(manufacturerDAO.getManufacturerId(bean.getManufacturer()));
-        bean.setMemoryTypeId(memoryTypeDAO.getMemoryTypeId(bean.getMemoryType()));
+        bean.setManufacturerIds(parseArray(bean.getManufacturers(), manufacturerDAO::getManufacturerId));
+        bean.setMemoryTypeIds(parseArray(bean.getMemoryTypes(), memoryTypeDAO::getMemoryTypeId));
         List<CpuDTO> cpuDTOs = productDAO.getProducts(bean);
         return cpuDTOs.stream()
                 .map(this::parseCPUDataTransferObject)
                 .collect(Collectors.toList());
+    }
+
+    private int[] parseArray(String[] array, Function<String, Integer> function){
+        if(array == null){
+            return null;
+        }
+        int[] numbers = new int[array.length];
+        for(int i = 0; i<array.length; i++){
+            numbers[i] = function.apply(array[i]);
+        }
+        return numbers;
     }
 
     @Override

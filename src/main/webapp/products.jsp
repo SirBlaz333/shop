@@ -36,11 +36,30 @@
         <header id="header" class="text-center tm-text-gray">
             <h1>Products</h1>
         </header>
-
-        <ul class="products clearfix">
+        <form action="controller" method="get" id="filtering">
+            <input type="text" name="productName"/>
+            <input type="checkbox" name="manufacturer" id="Intel" value="Intel"/>
+            <label for="Intel">Intel</label>
+            <input type="checkbox" name="manufacturer" id="AMD" value="AMD"/>
+            <label for="AMD">AMD</label>
+            <button type="submit">Submit</button>
+        </form>
+        <form id="sorting">
+            <label for="sortingList">Sort by:</label>
+            <select name="sortingCriteria" id="sortingCriteria">
+              <option value="">None</option>
+              <option value="price">Price</option>
+              <option value="name">Name</option>
+            </select>
+            <select name="sortingOrder" id="sortingOrder">
+              <option value="ASC">ASC</option>
+              <option value="DESC">DESC</option>
+            </select>
+        </form>
+        <ul id="products" class="products clearfix">
             <c:forEach var="product" items="${productList}">
                 <li class="product-wrapper">
-                    <div href="" class="product">
+                    <div class="product">
                         <div class="product-photo">
                             <img src="img/products/product-1.jpg" alt="">
                         </div>
@@ -62,5 +81,6 @@
     </div>
     <script src="js/jquery-1.11.3.min.js"></script>
     <script src="js/my-scripts/jquery.smooth-appearance.js"></script>
+    <script src="js/my-scripts/jquery.products-form.js"></script>
 </body>
 </html>

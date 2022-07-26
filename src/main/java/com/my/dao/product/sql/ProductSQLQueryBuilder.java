@@ -27,16 +27,15 @@ public class ProductSQLQueryBuilder {
 
     private void appendFilters(ProductFilterFormBean bean) {
         first = true;
-        if (bean.getName() != null || bean.getManufacturerId() != ProductFilterFormBean.INVALID_NUMBER
+        if (bean.getName() != null || bean.getManufacturerIds() != null || bean.getMemoryTypeIds() != null
                 || bean.getOriginPrice() != ProductFilterFormBean.INVALID_NUMBER
-                || bean.getBoundPrice() != ProductFilterFormBean.INVALID_NUMBER
-                || bean.getMemoryTypeId() != ProductFilterFormBean.INVALID_NUMBER) {
+                || bean.getBoundPrice() != ProductFilterFormBean.INVALID_NUMBER) {
             query.append(" WHERE");
             checkAndAppendName(bean.getName());
-            checkAndAppendNumber("memory_type_id", bean.getMemoryTypeId(), "=");
-            checkAndAppendNumber("manufacturer_id", bean.getManufacturerId(), "=");
-            checkAndAppendNumber("price", bean.getOriginPrice(), ">=");
-            checkAndAppendNumber("price", bean.getBoundPrice(), "<=");
+            appendArrayFilter("memory_type_id", bean.getMemoryTypeIds());
+            appendArrayFilter("manufacturer_id", bean.getManufacturerIds());
+            checkAndAppendNumber(bean.getOriginPrice(), ">=");
+            checkAndAppendNumber(bean.getBoundPrice(), "<=");
         }
     }
 
@@ -54,19 +53,19 @@ public class ProductSQLQueryBuilder {
         }
     }
 
-    private void checkAndAppendName(String fieldValue) {
-        if (fieldValue != null) {
-            appendSQLFilter("name", fieldValue, "=");
+    private void checkAndAppendName(String name){
+        if(name != null){
+            appendFilter("`name`", "'" + name + "'", "=");
         }
     }
 
-    private void checkAndAppendNumber(String fieldName, double number, String sign) {
+    private void checkAndAppendNumber(double number, String sign) {
         if (number != ProductFilterFormBean.INVALID_NUMBER) {
-            appendSQLFilter(fieldName, number, sign);
+            appendFilter("price", number, sign);
         }
     }
 
-    private void appendSQLFilter(String fieldName, Object fieldValue, String sign) {
+    private void appendFilter(String fieldName, Object fieldValue, String sign) {
         if (!first) {
             query.append(" AND");
         }
@@ -77,5 +76,26 @@ public class ProductSQLQueryBuilder {
                 append(SPACE).
                 append(fieldValue);
         first = false;
+    }
+
+    private void appendArrayFilter(String fieldName, int[] fieldValues){
+        if(fieldValues != null){
+            if (!first) {
+                query.append(" AND");
+            }
+            query.append(" (");
+            for(int i = 0; i < fieldValues.length; i++){
+                if(i > 0){
+                    query.append(" OR");
+                }
+                query.append(SPACE).
+                        append(fieldName).
+                        append(SPACE).
+                        append("=").
+                        append(SPACE).
+                        append(fieldValues[i]);
+            }
+            query.append(")");
+        }
     }
 }

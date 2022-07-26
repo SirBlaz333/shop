@@ -10,6 +10,7 @@ import com.my.service.product.ProductService;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import java.io.IOException;
 import java.util.List;
 
@@ -30,6 +31,5 @@ public class ShowProductsCommand implements Command {
         request.setAttribute(ProductFilterFormBean.PRODUCT_LIST, cpuses);
         request.getRequestDispatcher("products.jsp").forward(request, response);
     }
-
 
 }

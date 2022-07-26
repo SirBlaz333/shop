@@ -1,11 +1,11 @@
 package com.my.entity;
 
 public class ProductFilterFormBean {
-    public static final String NAME = "name";
+    public static final String NAME = "productName";
     public static final String MANUFACTURER = "manufacturer";
     public static final String ORIGIN_PRICE = "originPrice";
     public static final String BOUND_PRICE = "boundPrice";
-    public static final String FILTER_CRITERIA = "filterCriteria";
+    public static final String SORTING_CRITERIA = "sortingCriteria";
     public static final String SORTING_ORDER = "sortingOrder";
     public static final String PAGE_SIZE = "pageSize";
     public static final String PAGE_COUNT = "pageCount";
@@ -13,14 +13,14 @@ public class ProductFilterFormBean {
     public static final String MEMORY_TYPE = "memoryType";
     public static final int INVALID_NUMBER = -1;
     private String name;
-    private String manufacturer;
-    private String memoryType;
+    private String[] manufacturers;
+    private String[] memoryTypes;
     private double originPrice;
     private double boundPrice;
     private String filterCriteria;
     private SortingOrder order;
-    private int manufacturerId;
-    private int memoryTypeId;
+    private int[] manufacturerIds;
+    private int[] memoryTypeIds;
     private int pageSize;
     private int pageCount;
 
@@ -40,28 +40,28 @@ public class ProductFilterFormBean {
         this.pageCount = pageCount;
     }
 
-    public String getMemoryType() {
-        return memoryType;
+    public String[] getMemoryTypes() {
+        return memoryTypes;
     }
 
-    public void setMemoryType(String memoryType) {
-        this.memoryType = memoryType;
+    public void setMemoryTypes(String[] memoryTypes) {
+        this.memoryTypes = memoryTypes;
     }
 
-    public int getMemoryTypeId() {
-        return memoryTypeId;
+    public int[] getMemoryTypeIds() {
+        return memoryTypeIds;
     }
 
-    public void setMemoryTypeId(int memoryTypeId) {
-        this.memoryTypeId = memoryTypeId;
+    public void setMemoryTypeIds(int[] memoryTypeIds) {
+        this.memoryTypeIds = memoryTypeIds;
     }
 
-    public int getManufacturerId() {
-        return manufacturerId;
+    public int[] getManufacturerIds() {
+        return manufacturerIds;
     }
 
-    public void setManufacturerId(int manufacturerId) {
-        this.manufacturerId = manufacturerId;
+    public void setManufacturerIds(int[] manufacturerIds) {
+        this.manufacturerIds = manufacturerIds;
     }
 
     public String getName() {
@@ -72,12 +72,12 @@ public class ProductFilterFormBean {
         this.name = name;
     }
 
-    public String getManufacturer() {
-        return manufacturer;
+    public String[] getManufacturers() {
+        return manufacturers;
     }
 
-    public void setManufacturer(String manufacturer) {
-        this.manufacturer = manufacturer;
+    public void setManufacturers(String[] manufacturers) {
+        this.manufacturers = manufacturers;
     }
 
     public double getOriginPrice() {

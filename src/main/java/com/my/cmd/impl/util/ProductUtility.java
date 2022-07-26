@@ -10,21 +10,21 @@ public class ProductUtility {
     public ProductFilterFormBean createFilterFormBean(HttpServletRequest request) {
         ProductFilterFormBean productFilterFormBean = new ProductFilterFormBean();
         String name = request.getParameter(ProductFilterFormBean.NAME);
-        String manufacturer = request.getParameter(ProductFilterFormBean.MANUFACTURER);
-        String memoryType = request.getParameter(ProductFilterFormBean.MEMORY_TYPE);
+        String[] manufacturers = request.getParameterValues(ProductFilterFormBean.MANUFACTURER);
+        String[] memoryTypes = request.getParameterValues(ProductFilterFormBean.MEMORY_TYPE);
         double originPrice = getDoubleField(request, ProductFilterFormBean.ORIGIN_PRICE);
         double boundPrice = getDoubleField(request, ProductFilterFormBean.BOUND_PRICE);
-        String filterCriteria = request.getParameter(ProductFilterFormBean.FILTER_CRITERIA);
+        String filterCriteria = request.getParameter(ProductFilterFormBean.SORTING_CRITERIA);
         SortingOrder sortingOrder = parseSortingOrder(request.getParameter(ProductFilterFormBean.SORTING_ORDER));
         int pageSize = getIntField(request, ProductFilterFormBean.PAGE_SIZE);
         int pageCount = getIntField(request, ProductFilterFormBean.PAGE_COUNT);
         productFilterFormBean.setName(name);
-        productFilterFormBean.setManufacturer(manufacturer);
+        productFilterFormBean.setManufacturers(manufacturers);
         productFilterFormBean.setOriginPrice(originPrice);
         productFilterFormBean.setBoundPrice(boundPrice);
         productFilterFormBean.setFilterCriteria(filterCriteria);
         productFilterFormBean.setOrder(sortingOrder);
-        productFilterFormBean.setMemoryType(memoryType);
+        productFilterFormBean.setMemoryTypes(memoryTypes);
         productFilterFormBean.setPageSize(pageSize);
         productFilterFormBean.setPageCount(pageCount);
         return productFilterFormBean;
