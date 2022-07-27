@@ -37,42 +37,66 @@
         <header id="header" class="text-center tm-text-gray">
             <h1>Products</h1>
         </header>
-        <form action="controller" method="get" id="filtering">
-            <input type="text" name="productName"/>
-            <input type="number" min=0 name="originPrice"/>
-            <input type="number" min=0 name="boundPrice"/>
-
-            <input type="checkbox" name="manufacturer" id="Intel" value="Intel"/>
-            <label for="Intel">Intel</label>
-            <input type="checkbox" name="manufacturer" id="AMD" value="AMD"/>
-            <label for="AMD">AMD</label>
-
-            <input type="checkbox" name="memoryType" id="DDR3" value="DDR3"/>
-            <label for="DDR3">DDR3</label>
-            <input type="checkbox" name="memoryType" id="DDR4" value="DDR4"/>
-            <label for="DDR4">DDR4</label>
-            <input type="checkbox" name="memoryType" id="DDR5" value="DDR5"/>
-            <label for="DDR5">DDR5</label>
-
-            <button type="submit">Confirm</button>
-        </form>
-        <form id="sorting">
-            <label for="sortingList">Sort by:</label>
-            <select name="sortingCriteria" id="sortingCriteria">
-              <option value="">None</option>
-              <option value="price">Price</option>
-              <option value="name">Name</option>
-            </select>
-            <select name="sortingOrder" id="sortingOrder">
-              <option value="ASC">ASC</option>
-              <option value="DESC">DESC</option>
-            </select>
-        </form>
-        <form id="pagination">
-            <input type="number" min=1 id="pageSize" name="pageSize" value="${pageSize}"/>
-            <input type="hidden" id="pageCount" name="pageCount" value="${pageCount}"/>
-            <button type="submit">Confirm</button>
-        </form>
+        <div class="filter-menu">
+            <div class="block">
+                <div class="filtering-panel">
+                    <div class="filter-content">
+                        <form action="controller" method="get" id="filtering">
+                            <div>
+                                <input type="text" name="productName" placeholder="Name"/>
+                                <input type="number" min=0 name="originPrice" placeholder="Origin price"/>
+                                <input type="number" min=0 name="boundPrice" placeholder="Bound price"/>
+                            </div>
+                            <div>
+                                <input type="checkbox" name="manufacturer" id="Intel" value="Intel"/>
+                                <label for="Intel">Intel</label>
+                                <input type="checkbox" name="manufacturer" id="AMD" value="AMD"/>
+                                <label for="AMD">AMD</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" name="memoryType" id="DDR3" value="DDR3"/>
+                                <label for="DDR3">DDR3</label>
+                                <input type="checkbox" name="memoryType" id="DDR4" value="DDR4"/>
+                                <label for="DDR4">DDR4</label>
+                                <input type="checkbox" name="memoryType" id="DDR5" value="DDR5"/>
+                                <label for="DDR5">DDR5</label>
+                            </div>
+                            <div>
+                                <button type="submit" class="link-button">Confirm</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="block">
+                <div class="sorting filtering-panel">
+                    <div class="filter-content">
+                        <form id="sorting">
+                            <label for="sortingList">Sort by:</label>
+                            <select name="sortingCriteria" id="sortingCriteria">
+                              <option value="">None</option>
+                              <option value="price">Price</option>
+                              <option value="name">Name</option>
+                            </select>
+                            <select name="sortingOrder" id="sortingOrder">
+                              <option value="ASC">ASC</option>
+                              <option value="DESC">DESC</option>
+                            </select>
+                        </form>
+                    </div>
+                </div>
+                <div class="page-size filtering-panel">
+                    <div class="filter-content">
+                        <form id="pagination">
+                            <input type="number" min=1 id="pageSize" name="pageSize" value="${pageSize}" placeholder="Page size"/>
+                            <span>Current page:</span>
+                            <input type="number" id="pageCount" name="pageCount" value="${pageCount}" placeholder="Current page"/>
+                            <button type="submit" class="link-button">Confirm</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div id="products">
             <input type="hidden" id="maxPages" value="${maxPages}"/>
             <ul class="products clearfix">
@@ -86,18 +110,17 @@
                                 <c:out value="${product.manufacturer}"/>
                                 <c:out value="${product.name}"/>
                             </div>
-                            <div class="product-link">
-                                <form action="product_info.html">
-                                    <button type="submit" class="product-link-button">
-                                        Check
-                                    </button>
-                                </form>
-                            </div>
+                            <form action="product_info.html">
+                            <button type="submit" class="link-button">
+                                Check
+                            </button>
                         </div>
                     </li>
                 </c:forEach>
             </ul>
         </div>
+    </div>
+    <div class="pagination">
         <a class="pageLink" id="previousPage" href="">❮</a>
         <a class="pageLink" id="nextPage" href="">❯</a>
     </div>

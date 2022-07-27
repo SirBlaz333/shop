@@ -1,3 +1,50 @@
+body {
+    padding-bottom: 50px;
+}
+.filter-menu {
+    border: 1px solid #999;
+    height: 220px;
+}
+.block {
+    position: relative;
+    border: 1px solid #999;
+    height: 100%;
+    float: left;
+    width: 50%;
+}
+
+.filtering-panel {
+    margin: auto;
+	text-align: center;
+    display: flex;
+    position: relative;
+    height: 100%;
+    width: 80%;
+}
+
+.filter-content {
+    margin-top: 10px;
+}
+
+.filtering-panel button {
+    width: 100%;
+    position: absolute;
+    bottom: 2px;
+    right: 0;
+}
+
+.filtering-panel input[type=text],[type=number]{
+    margin-bottom: 5px;
+    width: 100%;
+}
+
+.sorting {
+    height: 30%;
+}
+
+.page-size {
+    height: 70%;
+}
 
 .product-wrapper {
 	display: block;
@@ -23,21 +70,15 @@
     -webkit-box-orient: vertical;
 }
 
-.product-link {
-    border-radius: 1px;
+.link-button {
     width: 100%;
     background: #eee;
     transition: .2s;
-}
-
-
-.product-link-button {
     border: none;
-    background: none;
     width: 100%;
 }
 
-.product-link:hover {
+.link-button:hover {
     background: #ccc;
 }
 
@@ -86,4 +127,34 @@
 	.product-wrapper {
 		width: 25%;
 	}
+}
+.pagination {
+    width: 100%;
+    position: fixed;
+    bottom: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+}
+
+.pagination a {
+    color: black;
+    float: left;
+    text-align: center;
+    width: 50%;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+    border: 1px solid #ddd;
+}
+
+.pagination a.active {
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid #4CAF50;
+}
+
+.pagination a:hover:not(.active) {
+    background-color: #ddd;
 }
