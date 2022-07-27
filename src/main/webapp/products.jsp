@@ -54,7 +54,7 @@
             <input type="checkbox" name="memoryType" id="DDR5" value="DDR5"/>
             <label for="DDR5">DDR5</label>
 
-            <button type="submit">Submit</button>
+            <button type="submit">Confirm</button>
         </form>
         <form id="sorting">
             <label for="sortingList">Sort by:</label>
@@ -71,7 +71,7 @@
         <form id="pagination">
             <input type="number" min=1 id="pageSize" name="pageSize" value="${pageSize}"/>
             <input type="hidden" id="pageCount" name="pageCount" value="${pageCount}"/>
-            <button type="submit">Page</button>
+            <button type="submit">Confirm</button>
         </form>
         <div id="products">
             <input type="hidden" id="maxPages" value="${maxPages}"/>
