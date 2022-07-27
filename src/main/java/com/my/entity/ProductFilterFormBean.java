@@ -11,6 +11,7 @@ public class ProductFilterFormBean {
     public static final String PAGE_COUNT = "pageCount";
     public static final String PRODUCT_LIST = "productList";
     public static final String MEMORY_TYPE = "memoryType";
+    public static final String MAX_PAGES = "maxPages";
     public static final int INVALID_NUMBER = -1;
     private String name;
     private String[] manufacturers;

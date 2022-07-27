@@ -96,6 +96,7 @@ public class ProductSQLQueryBuilder {
                         append(fieldValues[i]);
             }
             query.append(")");
+            first = false;
         }
     }
 }

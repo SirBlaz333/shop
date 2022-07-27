@@ -11,5 +11,5 @@ public interface ProductService {
     void buyProduct(Cpu cpu, int amount) throws ServiceException;
     void putProduct(Cpu cpu, int amount);
     List<Cpu> getProducts(ProductFilterFormBean bean);
-    int getProductCount(ProductFilterFormBean bean);
+    int getMaxPages(ProductFilterFormBean bean);
 }

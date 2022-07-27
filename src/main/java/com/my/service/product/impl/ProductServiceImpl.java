@@ -56,20 +56,21 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toList());
     }
 
-    private int[] parseArray(String[] array, Function<String, Integer> function){
-        if(array == null){
+    private int[] parseArray(String[] array, Function<String, Integer> function) {
+        if (array == null) {
             return null;
         }
         int[] numbers = new int[array.length];
-        for(int i = 0; i<array.length; i++){
+        for (int i = 0; i < array.length; i++) {
             numbers[i] = function.apply(array[i]);
         }
         return numbers;
     }
 
     @Override
-    public int getProductCount(ProductFilterFormBean bean) {
-        return productDAO.getProductCount(bean);
+    public int getMaxPages(ProductFilterFormBean bean) {
+        int productCount = productDAO.getProductCount(bean);
+        return (int) Math.ceil((double) productCount / bean.getPageSize());
     }
 
     private Cpu parseCPUDataTransferObject(CpuDTO cpuDTO) {

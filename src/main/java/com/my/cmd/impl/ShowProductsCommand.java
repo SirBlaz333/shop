@@ -10,7 +10,6 @@ import com.my.service.product.ProductService;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 import java.io.IOException;
 import java.util.List;
 
@@ -26,9 +25,12 @@ public class ShowProductsCommand implements Command {
     @Override
     public void doCommand(HttpServletRequest request, HttpServletResponse response, Method method) throws ServletException, IOException {
         ProductFilterFormBean productFilterFormBean = productUtility.createFilterFormBean(request);
-        int productCount = productService.getProductCount(productFilterFormBean);
-        List<Cpu> cpuses = productService.getProducts(productFilterFormBean);
-        request.setAttribute(ProductFilterFormBean.PRODUCT_LIST, cpuses);
+        List<Cpu> cpus = productService.getProducts(productFilterFormBean);
+        int maxPages = productService.getMaxPages(productFilterFormBean);
+        // TODO: 27.07.2022
+        // Move parsing ids to different method or send ids from requests
+        request.setAttribute(ProductFilterFormBean.PRODUCT_LIST, cpus);
+        request.setAttribute(ProductFilterFormBean.MAX_PAGES, maxPages);
         request.getRequestDispatcher("products.jsp").forward(request, response);
     }
 

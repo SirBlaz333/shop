@@ -8,8 +8,10 @@
             Home
         </button>
     </form>
-    <form action="controller">
+    <form method="get" action="controller">
         <input type="hidden" name="command" value="products"/>
+        <input type="hidden" name="pageSize" value="8"/>
+        <input type="hidden" name="pageCount" value="1"/>
         <button type="submit" class="menu-button">
             Products
         </button>
