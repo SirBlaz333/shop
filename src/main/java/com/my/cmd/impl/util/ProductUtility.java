@@ -4,8 +4,6 @@ import com.my.entity.ProductFilterFormBean;
 import com.my.entity.SortingOrder;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
-import java.util.stream.Collectors;
 
 public class ProductUtility {
     private static final int DEFAULT_PAGE_SIZE = 8;
