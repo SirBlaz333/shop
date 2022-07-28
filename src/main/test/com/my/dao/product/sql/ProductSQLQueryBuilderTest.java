@@ -4,8 +4,6 @@ import com.my.entity.ProductFilterFormBean;
 import com.my.entity.SortingOrder;
 import org.junit.Test;
 
-import java.util.Arrays;
-
 import static org.junit.Assert.*;
 
 public class ProductSQLQueryBuilderTest {
@@ -24,27 +22,74 @@ public class ProductSQLQueryBuilderTest {
         bean.setPageCount(2);
         ProductSQLQueryBuilder builder = new ProductSQLQueryBuilder();
         String query = builder.buildSelectQuery(bean);
-        String expected = "SELECT * FROM products WHERE name = Core I-7 " +
-                "AND ( memory_type_id = 5 OR memory_type_id = 6) " +
-                "AND ( manufacturer_id = 1 OR manufacturer_id = 2 OR manufacturer_id = 3) " +
+        String expected = "SELECT * FROM products WHERE `name` = 'Core I-7' " +
+                "AND (memory_type_id = 5 OR memory_type_id = 6) " +
+                "AND (manufacturer_id = 1 OR manufacturer_id = 2 OR manufacturer_id = 3) " +
                 "AND price >= 200.0 AND price <= 500.0 ORDER BY price ASC LIMIT 10, 10;";
         assertEquals(query, expected);
     }
 
     @Test
     public void testOnlySorting(){
-        ProductFilterFormBean productFilterFormBean = new ProductFilterFormBean();
-        productFilterFormBean.setOriginPrice(-1);
-        productFilterFormBean.setBoundPrice(-1);
-        productFilterFormBean.setManufacturerIds(new int[]{1, 2});
-        productFilterFormBean.setFilterCriteria("price");
-        productFilterFormBean.setOrder(SortingOrder.ASC);
-        productFilterFormBean.setPageSize(10);
-        productFilterFormBean.setPageCount(2);
+        ProductFilterFormBean bean = new ProductFilterFormBean();
+        bean.setOriginPrice(-1);
+        bean.setBoundPrice(-1);
+        bean.setFilterCriteria("price");
+        bean.setOrder(SortingOrder.ASC);
         ProductSQLQueryBuilder builder = new ProductSQLQueryBuilder();
-        String query = builder.buildSelectQuery(productFilterFormBean);
-        String expected = "SELECT * FROM products WHERE ( manufacturer_id = 1 " +
-                "OR manufacturer_id = 2) ORDER BY price ASC LIMIT 10, 10;";
+        String query = builder.buildSelectQuery(bean);
+        String expected = "SELECT * FROM products ORDER BY price ASC;";
+        assertEquals(expected, query);
+    }
+
+    @Test
+    public void testOnlyFilters(){
+        ProductFilterFormBean bean = new ProductFilterFormBean();
+        bean.setOriginPrice(200);
+        bean.setBoundPrice(500);
+        bean.setManufacturerIds(new int[]{1, 2});
+        bean.setMemoryTypeIds(new int[]{1, 2});
+        ProductSQLQueryBuilder builder = new ProductSQLQueryBuilder();
+        String query = builder.buildSelectQuery(bean);
+        String expected = "SELECT * FROM products WHERE " +
+                "(memory_type_id = 1 OR memory_type_id = 2) AND (manufacturer_id = 1 " +
+                "OR manufacturer_id = 2) AND price >= 200.0 AND price <= 500.0;";
+        assertEquals(expected, query);
+    }
+
+    @Test
+    public void testOnlyLimit(){
+        ProductFilterFormBean bean = new ProductFilterFormBean();
+        bean.setOriginPrice(-1);
+        bean.setBoundPrice(-1);
+        bean.setPageSize(10);
+        bean.setPageCount(2);
+        ProductSQLQueryBuilder builder = new ProductSQLQueryBuilder();
+        String query = builder.buildSelectQuery(bean);
+        String expected = "SELECT * FROM products LIMIT 10, 10;";
+        assertEquals(expected, query);
+    }
+
+    @Test
+    public void testNoFilters(){
+        ProductFilterFormBean bean = new ProductFilterFormBean();
+        bean.setOriginPrice(-1);
+        bean.setBoundPrice(-1);
+        ProductSQLQueryBuilder builder = new ProductSQLQueryBuilder();
+        String query = builder.buildSelectQuery(bean);
+        String expected = "SELECT * FROM products;";
+        assertEquals(expected, query);
+    }
+
+    @Test
+    public void testOnlyMemoryType(){
+        ProductFilterFormBean bean = new ProductFilterFormBean();
+        bean.setOriginPrice(-1);
+        bean.setBoundPrice(-1);
+        bean.setMemoryTypeIds(new int[]{1, 2});
+        ProductSQLQueryBuilder builder = new ProductSQLQueryBuilder();
+        String query = builder.buildSelectQuery(bean);
+        String expected = "SELECT * FROM products WHERE (memory_type_id = 1 OR memory_type_id = 2);";
         assertEquals(expected, query);
     }
 }
