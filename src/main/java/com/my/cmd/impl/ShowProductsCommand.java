@@ -25,12 +25,12 @@ public class ShowProductsCommand implements Command {
     @Override
     public void doCommand(HttpServletRequest request, HttpServletResponse response, Method method) throws ServletException, IOException {
         ProductFilterFormBean productFilterFormBean = productUtility.createFilterFormBean(request);
+        int maxPages = productService.getMaxPagesAndSetPageCount(productFilterFormBean);
         List<Cpu> cpus = productService.getProducts(productFilterFormBean);
-        int maxPages = productService.getMaxPages(productFilterFormBean);
-        // TODO: 27.07.2022
-        // Move parsing ids to different method or send ids from requests
         request.setAttribute(ProductFilterFormBean.PRODUCT_LIST, cpus);
         request.setAttribute(ProductFilterFormBean.MAX_PAGES, maxPages);
+        request.setAttribute(ProductFilterFormBean.PAGE_COUNT, productFilterFormBean.getPageCount());
+        request.setAttribute(ProductFilterFormBean.PAGE_SIZE, productFilterFormBean.getPageSize());
         request.getRequestDispatcher("products.jsp").forward(request, response);
     }
 

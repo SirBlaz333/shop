@@ -14,8 +14,6 @@ public class ProductFilterFormBean {
     public static final String MAX_PAGES = "maxPages";
     public static final int INVALID_NUMBER = -1;
     private String name;
-    private String[] manufacturers;
-    private String[] memoryTypes;
     private double originPrice;
     private double boundPrice;
     private String filterCriteria;
@@ -41,14 +39,6 @@ public class ProductFilterFormBean {
         this.pageCount = pageCount;
     }
 
-    public String[] getMemoryTypes() {
-        return memoryTypes;
-    }
-
-    public void setMemoryTypes(String[] memoryTypes) {
-        this.memoryTypes = memoryTypes;
-    }
-
     public int[] getMemoryTypeIds() {
         return memoryTypeIds;
     }
@@ -71,14 +61,6 @@ public class ProductFilterFormBean {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public String[] getManufacturers() {
-        return manufacturers;
-    }
-
-    public void setManufacturers(String[] manufacturers) {
-        this.manufacturers = manufacturers;
     }
 
     public double getOriginPrice() {

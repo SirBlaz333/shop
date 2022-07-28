@@ -4,6 +4,8 @@ import com.my.entity.ProductFilterFormBean;
 import com.my.entity.SortingOrder;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class ProductUtility {
     private static final int DEFAULT_PAGE_SIZE = 8;
@@ -23,11 +25,22 @@ public class ProductUtility {
         String[] memoryTypes = request.getParameterValues(ProductFilterFormBean.MEMORY_TYPE);
         double originPrice = getDoubleField(request, ProductFilterFormBean.ORIGIN_PRICE);
         double boundPrice = getDoubleField(request, ProductFilterFormBean.BOUND_PRICE);
-        bean.setMemoryTypes(memoryTypes);
         bean.setName(name);
-        bean.setManufacturers(manufacturers);
+        bean.setManufacturerIds(parseIntParameters(manufacturers));
+        bean.setMemoryTypeIds(parseIntParameters(memoryTypes));
         bean.setOriginPrice(originPrice);
         bean.setBoundPrice(boundPrice);
+    }
+
+    private int[] parseIntParameters(String[] array){
+        if(array == null){
+            return null;
+        }
+        int[] parameters = new int[array.length];
+        for(int i = 0; i<array.length; i++){
+            parameters[i] = Integer.parseInt(array[i]);
+        }
+        return parameters;
     }
 
     private void setSorting(HttpServletRequest request, ProductFilterFormBean bean){

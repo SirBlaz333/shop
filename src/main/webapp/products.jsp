@@ -48,17 +48,17 @@
                                 <input type="number" min=0 name="boundPrice" placeholder="Bound price"/>
                             </div>
                             <div>
-                                <input type="checkbox" name="manufacturer" id="Intel" value="Intel"/>
+                                <input type="checkbox" name="manufacturer" id="Intel" value="1"/>
                                 <label for="Intel">Intel</label>
-                                <input type="checkbox" name="manufacturer" id="AMD" value="AMD"/>
+                                <input type="checkbox" name="manufacturer" id="AMD" value="2"/>
                                 <label for="AMD">AMD</label>
                             </div>
                             <div>
-                                <input type="checkbox" name="memoryType" id="DDR3" value="DDR3"/>
+                                <input type="checkbox" name="memoryType" id="DDR3" value="1"/>
                                 <label for="DDR3">DDR3</label>
-                                <input type="checkbox" name="memoryType" id="DDR4" value="DDR4"/>
+                                <input type="checkbox" name="memoryType" id="DDR4" value="2"/>
                                 <label for="DDR4">DDR4</label>
-                                <input type="checkbox" name="memoryType" id="DDR5" value="DDR5"/>
+                                <input type="checkbox" name="memoryType" id="DDR5" value="3"/>
                                 <label for="DDR5">DDR5</label>
                             </div>
                             <div>
@@ -88,9 +88,12 @@
                 <div class="page-size filtering-panel">
                     <div class="filter-content">
                         <form id="pagination">
-                            <input type="number" min=1 id="pageSize" name="pageSize" value="${pageSize}" placeholder="Page size"/>
-                            <span>Current page:</span>
-                            <input type="number" id="pageCount" name="pageCount" value="${pageCount}" placeholder="Current page"/>
+                            <div id="pageInfo">
+                                <span>Page size:</span>
+                                <input type="number" min=1 id="pageSize" name="pageSize" value="${pageSize}" placeholder="Page size"/>
+                                <span>Current page:</span>
+                                <input type="number" id="pageCount" name="pageCount" value="${pageCount}" placeholder="Current page"/>
+                            </div>
                             <button type="submit" class="link-button">Confirm</button>
                         </form>
                     </div>

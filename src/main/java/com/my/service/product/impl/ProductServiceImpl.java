@@ -48,8 +48,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Cpu> getProducts(ProductFilterFormBean bean) {
-        bean.setManufacturerIds(parseArray(bean.getManufacturers(), manufacturerDAO::getManufacturerId));
-        bean.setMemoryTypeIds(parseArray(bean.getMemoryTypes(), memoryTypeDAO::getMemoryTypeId));
         List<CpuDTO> cpuDTOs = productDAO.getProducts(bean);
         return cpuDTOs.stream()
                 .map(this::parseCPUDataTransferObject)
@@ -68,9 +66,13 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public int getMaxPages(ProductFilterFormBean bean) {
+    public int getMaxPagesAndSetPageCount(ProductFilterFormBean bean) {
         int productCount = productDAO.getProductCount(bean);
-        return (int) Math.ceil((double) productCount / bean.getPageSize());
+        int maxPages = (int) Math.ceil((double) productCount / bean.getPageSize());
+        if(bean.getPageCount() > maxPages){
+            bean.setPageCount(1);
+        }
+        return maxPages;
     }
 
     private Cpu parseCPUDataTransferObject(CpuDTO cpuDTO) {

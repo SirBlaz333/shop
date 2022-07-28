@@ -34,6 +34,7 @@ function submitForms(){
             success: function (data) {
                 window.history.pushState("Hallo", "Title", url);
                 $("#products").load(location.href + " #products");
+                $("#pageInfo").load(location.href + " #pageInfo");
             }
         });
 }
