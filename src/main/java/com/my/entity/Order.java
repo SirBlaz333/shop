@@ -1,12 +1,11 @@
 package com.my.entity;
 
-import org.joda.time.DateTime;
-
 public class Order {
     private int id;
     private OrderStatus orderStatus;
+    private int orderStatusId;
     private String statusDescription;
-    private DateTime dateTime;
+    private String dateTime;
     private User user;
     private OrderedProducts orderedProducts;
 
@@ -26,6 +25,14 @@ public class Order {
         this.orderStatus = orderStatus;
     }
 
+    public int getOrderStatusId() {
+        return orderStatusId;
+    }
+
+    public void setOrderStatusId(int orderStatusId) {
+        this.orderStatusId = orderStatusId;
+    }
+
     public String getStatusDescription() {
         return statusDescription;
     }
@@ -34,11 +41,11 @@ public class Order {
         this.statusDescription = statusDescription;
     }
 
-    public DateTime getDateTime() {
+    public String getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(DateTime dateTime) {
+    public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
     }
 
