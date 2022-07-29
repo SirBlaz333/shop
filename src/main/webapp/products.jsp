@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="mylib" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 
@@ -36,151 +37,102 @@
         <header id="header" class="text-center tm-text-gray">
             <h1>Products</h1>
         </header>
-
-        <ul class="products clearfix">
-            <li class="product-wrapper">
-                <div href="" class="product">
-                    <div class="product-photo">
-                        <img src="img/products/product-1.jpg" alt="">
-                    </div>
-                    <div class="product-name">
-                        Intel Core I7 10th Gen
-                        Intel Core I7 10th Gen
-                        Intel Core I7 10th Gen
-                        Intel Core I7 10th Gen
-                        Intel Core I7 10th Gen
-                    </div>
-                    <div class="product-link">
-                        <form action="product_info.html">
-                            <button type="submit" class="product-link-button">
-                                Check
-                            </button>
+        <div class="filter-menu">
+            <div class="block">
+                <div class="filtering-panel">
+                    <div class="filter-content">
+                        <form action="controller" method="get" id="filtering">
+                            <div>
+                                <input type="text" name="productName" placeholder="Name"/>
+                                <input type="number" min=0 name="originPrice" placeholder="Origin price"/>
+                                <input type="number" min=0 name="boundPrice" placeholder="Bound price"/>
+                            </div>
+                            <div>
+                                <input type="checkbox" name="manufacturer" id="Intel" value="1"/>
+                                <label for="Intel">Intel</label>
+                                <input type="checkbox" name="manufacturer" id="AMD" value="2"/>
+                                <label for="AMD">AMD</label>
+                            </div>
+                            <div>
+                                <input type="checkbox" name="memoryType" id="DDR3" value="1"/>
+                                <label for="DDR3">DDR3</label>
+                                <input type="checkbox" name="memoryType" id="DDR4" value="2"/>
+                                <label for="DDR4">DDR4</label>
+                                <input type="checkbox" name="memoryType" id="DDR5" value="3"/>
+                                <label for="DDR5">DDR5</label>
+                            </div>
+                            <div>
+                                <button type="submit" class="link-button">Confirm</button>
+                            </div>
                         </form>
                     </div>
                 </div>
-            </li>
-            <li class="product-wrapper">
-                <div href="" class="product">
-                    <div class="product-photo">
-                        <img src="img/products/product-1.jpg" alt="">
-                    </div>
-                    <div class="product-name">
-                        Intel Core I7 10th Gen
-                    </div>
-                    <div class="product-link">
-                        <form action="product_info.html">
-                            <button type="submit" class="product-link-button">
-                                Check
-                            </button>
+            </div>
+            <div class="block">
+                <div class="sorting filtering-panel">
+                    <div class="filter-content">
+                        <form id="sorting">
+                            <label for="sortingList">Sort by:</label>
+                            <select name="sortingCriteria" id="sortingCriteria">
+                              <option value="">None</option>
+                              <option value="price">Price</option>
+                              <option value="name">Name</option>
+                            </select>
+                            <select name="sortingOrder" id="sortingOrder">
+                              <option value="ASC">ASC</option>
+                              <option value="DESC">DESC</option>
+                            </select>
                         </form>
                     </div>
                 </div>
-            </li>
-            <li class="product-wrapper">
-                <div href="" class="product">
-                    <div class="product-photo">
-                        <img src="img/gallery-img-01.jpg" alt="">
-                    </div>
-                    <div class="product-name">
-                        Intel Core I7 10th Gen
-                    </div>
-                    <div class="product-link">
-                        <form action="product_info.html">
-                            <button type="submit" class="product-link-button">
-                                Check
-                            </button>
+                <div class="page-size filtering-panel">
+                    <div class="filter-content">
+                        <form id="pagination">
+                            <div id="pageInfo">
+                                <span>Page size:</span>
+                                <input type="number" min=1 id="pageSize" name="pageSize" value="${pageSize}" placeholder="Page size"/>
+                                <span>Current page:</span>
+                                <input type="number" id="pageCount" name="pageCount" value="${pageCount}" placeholder="Current page"/>
+                            </div>
+                            <button type="submit" class="link-button">Confirm</button>
                         </form>
                     </div>
                 </div>
-            </li>
-            <li class="product-wrapper">
-                <div href="" class="product">
-                    <div class="product-photo">
-                        <img src="img/products/product-1.jpg" alt="">
-                    </div>
-                    <div class="product-name">
-                        Intel Core I7 10th Gen
-                    </div>
-                    <div class="product-link">
-                        <form action="product_info.html">
-                            <button type="submit" class="product-link-button">
+            </div>
+        </div>
+        <div id="products">
+            <input type="hidden" id="maxPages" value="${maxPages}"/>
+            <c:if test="${productList.size() == 0}">
+                <c:out value="Products not found"/>
+            </c:if>
+            <ul class="products clearfix">
+                <c:forEach var="product" items="${productList}">
+                    <li class="product-wrapper">
+                        <div class="product">
+                            <div class="product-photo">
+                                <img src="img/products/product-1.jpg" alt="">
+                            </div>
+                            <div class="product-name">
+                                <c:out value="${product.manufacturer}"/>
+                                <c:out value="${product.name}"/>
+                                <c:out value="${product.price}"/>
+                            </div>
+                            <form action="product_info.html">
+                            <button type="submit" class="link-button">
                                 Check
                             </button>
-                        </form>
-                    </div>
-                </div>
-            </li>
-            <li class="product-wrapper">
-                <div class="product">
-                    <div class="product-photo">
-                        <img src="img/products/product-2.jpg" alt="">
-                    </div>
-                    <div class="product-name">
-                        AMD Ryzen 7
-                    </div>
-                    <div class="product-link">
-                        <form action="product_info.html">
-                            <button type="submit" class="product-link-button">
-                                Check
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </li>
-            <li class="product-wrapper">
-                <div class="product">
-                    <div class="product-photo">
-                        <img src="img/products/product-2.jpg" alt="">
-                    </div>
-                    <div class="product-name">
-                        AMD Ryzen 7
-                    </div>
-                    <div class="product-link">
-                        <form action="product_info.html">
-                            <button type="submit" class="product-link-button">
-                                Check
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </li>
-            <li class="product-wrapper">
-                <div class="product">
-                    <div class="product-photo">
-                        <img src="img/products/product-2.jpg" alt="">
-                    </div>
-                    <div class="product-name">
-                        AMD Ryzen 7
-                    </div>
-                    <div class="product-link">
-                        <form action="product_info.html">
-                            <button type="submit" class="product-link-button">
-                                Check
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </li>
-            <li class="product-wrapper">
-                <div class="product">
-                    <div class="product-photo">
-                        <img src="img/products/product-2.jpg" alt="">
-                    </div>
-                    <div class="product-name">
-                        AMD Ryzen 7
-                    </div>
-                    <div class="product-link">
-                        <form action="product_info.html">
-                            <button type="submit" class="product-link-button">
-                                Check
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </li>
-        </ul>
+                        </div>
+                    </li>
+                </c:forEach>
+            </ul>
+        </div>
+    </div>
+    <div class="pagination">
+        <a class="pageLink" id="previousPage" href="">❮</a>
+        <a class="pageLink" id="nextPage" href="">❯</a>
     </div>
     <script src="js/jquery-1.11.3.min.js"></script>
     <script src="js/my-scripts/jquery.smooth-appearance.js"></script>
+    <script src="js/my-scripts/jquery.products-form.js"></script>
 </body>
 </html>

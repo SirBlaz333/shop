@@ -1,7 +1,6 @@
 package com.my.cmd.impl.util;
 
 import com.my.cmd.Method;
-import com.my.cmd.impl.DisplayAvatarCommand;
 import com.my.cmd.impl.ShowLoginPageCommand;
 import com.my.entity.Captcha;
 import com.my.entity.User;
@@ -17,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 

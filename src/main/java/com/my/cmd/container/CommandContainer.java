@@ -6,6 +6,8 @@ import com.my.cmd.impl.LoginCommand;
 import com.my.cmd.impl.LogoutCommand;
 import com.my.cmd.impl.RegistrationCommand;
 import com.my.cmd.impl.ShowLoginPageCommand;
+import com.my.cmd.impl.ShowProductsCommand;
+import com.my.service.product.ProductService;
 import com.my.service.user.UserService;
 import com.my.web.captcha.container.strategy.CaptchaContainerStrategy;
 import com.my.web.captcha.container.strategy.CaptchaContainerFactory;
@@ -18,7 +20,7 @@ public class CommandContainer {
 
     private final Map<String, Command> commands;
 
-    public CommandContainer(UserService userService, CaptchaContainerStrategies strategy, long timeout){
+    public CommandContainer(UserService userService, ProductService productService, CaptchaContainerStrategies strategy, long timeout){
         CaptchaContainerFactory factory = new CaptchaContainerFactory();
         CaptchaContainerStrategy container = factory.create(strategy, timeout);
 
@@ -27,6 +29,7 @@ public class CommandContainer {
         LogoutCommand logoutCommand = new LogoutCommand();
         LoginCommand loginCommand = new LoginCommand(container, userService, showLoginPageCommand);
         DisplayAvatarCommand displayAvatarCommand = new DisplayAvatarCommand();
+        ShowProductsCommand showProductsCommand = new ShowProductsCommand(productService);
 
         commands = new HashMap<>();
         commands.put("registration", registrationCommand);
@@ -34,6 +37,7 @@ public class CommandContainer {
         commands.put("logout", logoutCommand);
         commands.put("login", loginCommand);
         commands.put("displayAvatar", displayAvatarCommand);
+        commands.put("products", showProductsCommand);
     }
 
     public Command getCommand(String commandName){
