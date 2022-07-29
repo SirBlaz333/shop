@@ -27,22 +27,15 @@ public class ProductSQLQueryBuilder {
 
     private void appendFilters(ProductFilterFormBean bean) {
         first = true;
-        if (filtersExist(bean)) {
-            query.append(" WHERE");
-            appendName(bean.getName());
-            appendArray("memory_type_id", bean.getMemoryTypeIds());
-            appendArray("manufacturer_id", bean.getManufacturerIds());
-            appendPrice(bean.getOriginPrice(), ">=");
-            appendPrice(bean.getBoundPrice(), "<=");
+        query.append(" WHERE");
+        appendName(bean.getName());
+        appendArray("memory_type_id", bean.getMemoryTypeIds());
+        appendArray("manufacturer_id", bean.getManufacturerIds());
+        appendPrice(bean.getOriginPrice(), ">=");
+        appendPrice(bean.getBoundPrice(), "<=");
+        if (first) {
+            query.delete(query.length() - 6, query.length());
         }
-    }
-
-    private boolean filtersExist(ProductFilterFormBean bean){
-        return bean.getName() != null
-                || bean.getManufacturerIds() != null
-                || bean.getMemoryTypeIds() != null
-                || bean.getOriginPrice() != ProductFilterFormBean.INVALID_NUMBER
-                || bean.getBoundPrice() != ProductFilterFormBean.INVALID_NUMBER;
     }
 
     private void appendSorting(ProductFilterFormBean bean) {
@@ -61,7 +54,7 @@ public class ProductSQLQueryBuilder {
 
     private void appendName(String name) {
         if (name != null) {
-            appendFilter("`name`", "'" + name + "'", "=");
+            appendFilter("`name`", "'" + name + "%'", "LIKE");
         }
     }
 
@@ -84,7 +77,7 @@ public class ProductSQLQueryBuilder {
         }
     }
 
-    private void appendArrayFilters(String fieldName, int[] fieldValues){
+    private void appendArrayFilters(String fieldName, int[] fieldValues) {
         query.append(" (");
         for (int i = 0; i < fieldValues.length; i++) {
             appendOR(i);
@@ -108,7 +101,7 @@ public class ProductSQLQueryBuilder {
         }
     }
 
-    private void appendOR(int parameterNumber){
+    private void appendOR(int parameterNumber) {
         if (parameterNumber > 0) {
             query.append(" OR ");
         }
