@@ -12,15 +12,19 @@ public class Cart {
         cart = new HashMap<>();
     }
 
-    public void put(Cpu cpu) {
-        cart.merge(cpu, 1, Integer::sum);
+    public void put(Cpu cpu, int amount) {
+        cart.merge(cpu, amount, Integer::sum);
+    }
+
+    public void remove(Cpu cpu, int amount) {
+        Integer oldAmount = cart.get(cpu);
+        if (oldAmount != null) {
+            cart.put(cpu, oldAmount - amount);
+        }
     }
 
     public void remove(Cpu cpu) {
-        Integer amount = cart.get(cpu);
-        if (amount != null) {
-            cart.put(cpu, amount - 1);
-        }
+        cart.remove(cpu);
     }
 
     public int getCpuAmount(Cpu cpu) {
