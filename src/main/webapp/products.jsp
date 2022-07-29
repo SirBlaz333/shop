@@ -102,6 +102,9 @@
         </div>
         <div id="products">
             <input type="hidden" id="maxPages" value="${maxPages}"/>
+            <c:if test="${productList.size() == 0}">
+                <c:out value="Products not found"/>
+            </c:if>
             <ul class="products clearfix">
                 <c:forEach var="product" items="${productList}">
                     <li class="product-wrapper">
@@ -112,6 +115,7 @@
                             <div class="product-name">
                                 <c:out value="${product.manufacturer}"/>
                                 <c:out value="${product.name}"/>
+                                <c:out value="${product.price}"/>
                             </div>
                             <form action="product_info.html">
                             <button type="submit" class="link-button">
