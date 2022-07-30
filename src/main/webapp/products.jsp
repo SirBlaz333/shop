@@ -117,10 +117,12 @@
                                 <c:out value="${product.name}"/>
                                 <c:out value="${product.price}"/>
                             </div>
-                            <form action="product_info.html">
-                            <button type="submit" class="link-button">
-                                Check
-                            </button>
+                            <form method="post" action="controller">
+                                <input type="hidden" name="command" value="putInCart"/>
+                                <input type="hidden" name="productId" value="${product.id}"/>
+                                <input type="hidden" name="amount" value="1"/>
+                                <input type="button" onclick="doCart(this)" value="Check" class="link-button"/>
+                            </form>
                         </div>
                     </li>
                 </c:forEach>
@@ -134,5 +136,6 @@
     <script src="js/jquery-1.11.3.min.js"></script>
     <script src="js/my-scripts/jquery.smooth-appearance.js"></script>
     <script src="js/my-scripts/jquery.products-form.js"></script>
+    <script src="js/my-scripts/jquery.cart-ajax.js"></script>
 </body>
 </html>
