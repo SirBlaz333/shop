@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <%@ taglib prefix="mylib" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 
@@ -56,58 +57,35 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="product-info">
-                    <div class="product-icon">
-                        <img src="img/products/product-1.jpg">
-                    </div>
-                    <div class="brand">
-                        Intel
-                    </div>
-                    <div class="name">
-                        Core I7-10500
-                    </div>
-                    <div class="price">
-                        $400.00
-                    </div>
-                    <div class="amount">
-                        2
-                    </div>
-                    <div class="delete">
-                        <form>
-                            <button>
-                                <img src="img/bin-icon.png">
-                            </button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="product-info">
-                    <div class="product-icon">
-                        <img src="img/products/product-2.jpg">
-                    </div>
-                    <div class="brand">
-                        AMD
-                    </div>
-                    <div class="name">
-                        Ryzen-5 5700
-                    </div>
-                    <div class="price">
-                        $400.00
-                    </div>
-                    <div class="amount">
-                        1
-                    </div>
-                    <div class="delete">
-                        <form>
-                            <button>
-                                <img src="img/bin-icon.png">
-                            </button>
-                        </form>
+
+            <c:forEach var="product" items="${cart.getMap().keySet()}">
+                <div class="row">
+                    <div class="product-info">
+                        <div class="product-icon">
+                            <img src="img/products/product-1.jpg">
+                        </div>
+                        <div class="brand">
+                            <c:out value="${product.manufacturer}"/>
+                        </div>
+                        <div class="name">
+                            <c:out value="${product.name}"/>
+                        </div>
+                        <div class="price">
+                            $<c:out value="${product.price}"/>
+                        </div>
+                        <div class="amount">
+                            <c:out value="${cart.get(product)}"/>
+                        </div>
+                        <div class="delete">
+                            <form>
+                                <button>
+                                    <img src="img/bin-icon.png">
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </c:forEach>
         </div>
 
         <div class="billing row">

@@ -1,8 +1,6 @@
 package com.my.entity;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Cart {
@@ -27,12 +25,12 @@ public class Cart {
         cart.remove(cpu);
     }
 
-    public int getCpuAmount(Cpu cpu) {
+    public int get(Cpu cpu) {
         return cart.get(cpu);
     }
 
-    public List<Cpu> getList() {
-        return new ArrayList<>(cart.keySet());
+    public Map<Cpu, Integer> getMap() {
+        return new HashMap<>(cart);
     }
 
     public int getSize() {
@@ -42,7 +40,7 @@ public class Cart {
     public double calculatePrice() {
         double totalPrice = 0;
         for (Cpu cpu : cart.keySet()) {
-            totalPrice += cpu.getPrice() * getCpuAmount(cpu);
+            totalPrice += cpu.getPrice() * get(cpu);
         }
         return totalPrice;
     }
