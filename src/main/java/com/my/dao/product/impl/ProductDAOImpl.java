@@ -15,6 +15,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -37,7 +38,7 @@ public class ProductDAOImpl implements ProductDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(GET_PRODUCT_BY_ID);
             preparedStatement.setInt(BEGIN_INDEX, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 cpuDTO = buildCPU(resultSet);
             }
         } catch (SQLException | DBException e) {
@@ -47,16 +48,26 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public void updateProductAmount(Cpu cpu, int amount) {
+    public void updateProductAmount(Map<Cpu, Integer> map) throws DBException {
         try (Connection connection = dbManager.getConnection()) {
-            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PRODUCT_AMOUNT);
-            int index = BEGIN_INDEX;
-            preparedStatement.setInt(index++, amount);
-            preparedStatement.setInt(index, cpu.getId());
-            preparedStatement.execute();
-        } catch (SQLException | DBException e) {
-            logger.log(Level.SEVERE, "Cannot update project amount");
+            connection.setAutoCommit(false);
+            for (Cpu cpu : map.keySet()) {
+                updateCpu(connection, cpu, map.get(cpu));
+            }
+            connection.commit();
+        } catch (DBException e) {
+            logger.log(Level.SEVERE, "Cannot obtain a connection");
+        } catch (SQLException e){
+            throw new DBException("There is no such quantity in stock");
         }
+    }
+
+    private void updateCpu(Connection connection, Cpu cpu, int amount) throws SQLException {
+        PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PRODUCT_AMOUNT);
+        int index = BEGIN_INDEX;
+        preparedStatement.setInt(index++, amount);
+        preparedStatement.setInt(index, cpu.getId());
+        preparedStatement.execute();
     }
 
     @Override
@@ -66,7 +77,7 @@ public class ProductDAOImpl implements ProductDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(GET_PRODUCT_AMOUNT);
             preparedStatement.setInt(BEGIN_INDEX, cpu.getId());
             ResultSet resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 amount = resultSet.getInt(BEGIN_INDEX);
             }
         } catch (SQLException | DBException e) {
@@ -100,7 +111,7 @@ public class ProductDAOImpl implements ProductDAO {
         try (Connection connection = dbManager.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()){
+            if (resultSet.next()) {
                 amount = resultSet.getInt(BEGIN_INDEX);
             }
         } catch (SQLException | DBException e) {

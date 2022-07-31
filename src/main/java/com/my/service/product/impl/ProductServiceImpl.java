@@ -1,5 +1,6 @@
 package com.my.service.product.impl;
 
+import com.my.dao.DBException;
 import com.my.dao.manufacturer.ManufacturerDAO;
 import com.my.dao.mt.MemoryTypeDAO;
 import com.my.dao.product.ProductDAO;
@@ -10,6 +11,7 @@ import com.my.service.ServiceException;
 import com.my.service.product.ProductService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -31,19 +33,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void buyProduct(Cpu cpu, int amount) throws ServiceException {
-        int productAmount = productDAO.getProductAmount(cpu);
-        if (productAmount - amount < 0) {
-            throw new ServiceException("Cannot buy this amount of product");
+    public void buyProduct(Map<Cpu, Integer> map) throws ServiceException {
+        try {
+            productDAO.updateProductAmount(map);
+        } catch (DBException e) {
+            throw new ServiceException(e.getMessage());
         }
-        productAmount -= amount;
-        productDAO.updateProductAmount(cpu, productAmount);
-    }
-
-    @Override
-    public void putProduct(Cpu cpu, int amount) {
-        int productAmount = productDAO.getProductAmount(cpu) + amount;
-        productDAO.updateProductAmount(cpu, productAmount);
     }
 
     @Override
@@ -69,7 +64,7 @@ public class ProductServiceImpl implements ProductService {
     public int getMaxPagesAndSetPageCount(ProductFilterFormBean bean) {
         int productCount = productDAO.getProductCount(bean);
         int maxPages = (int) Math.ceil((double) productCount / bean.getPageSize());
-        if(bean.getPageCount() > maxPages){
+        if (bean.getPageCount() > maxPages) {
             bean.setPageCount(1);
         }
         return maxPages;
