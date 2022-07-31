@@ -12,11 +12,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class PutProductInCartCommand implements Command {
+public class ProcessCartCommand implements Command {
     private final CartUtility cartUtility;
     private final ProductService productService;
 
-    public PutProductInCartCommand(ProductService productService) {
+    public ProcessCartCommand(ProductService productService) {
         this.productService = productService;
         cartUtility = new CartUtility();
     }
@@ -27,6 +27,22 @@ public class PutProductInCartCommand implements Command {
         int id = Integer.parseInt(request.getParameter("productId"));
         Cpu cpu = productService.getProductById(id);
         int amount = Integer.parseInt(request.getParameter("amount"));
-        cart.put(cpu, amount);
+        String action = request.getParameter("action");
+        doAction(cpu, amount, cart, action);
+    }
+
+    private void doAction(Cpu cpu, int amount, Cart cart, String action){
+        if(action.equals("put")){
+            cart.put(cpu, amount);
+        }
+        if(action.equals("removeAll")){
+            cart.remove(cpu);
+        }
+        if(action.equals("remove")){
+            cart.remove(cpu, amount);
+        }
+        if(action.equals("clear")){
+            cart = new Cart();
+        }
     }
 }

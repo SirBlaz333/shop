@@ -1,4 +1,4 @@
-function doCart(e){
+function doAsyncRequest(e){
     let form = e.form;
     let formData = $(form).serializeArray();
     $.ajax({

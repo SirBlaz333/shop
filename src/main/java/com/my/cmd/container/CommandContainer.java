@@ -4,7 +4,7 @@ import com.my.cmd.Command;
 import com.my.cmd.impl.DisplayAvatarCommand;
 import com.my.cmd.impl.LoginCommand;
 import com.my.cmd.impl.LogoutCommand;
-import com.my.cmd.impl.PutProductInCartCommand;
+import com.my.cmd.impl.ProcessCartCommand;
 import com.my.cmd.impl.RegistrationCommand;
 import com.my.cmd.impl.ShowLoginPageCommand;
 import com.my.cmd.impl.ShowProductsCommand;
@@ -31,7 +31,7 @@ public class CommandContainer {
         LoginCommand loginCommand = new LoginCommand(container, userService, showLoginPageCommand);
         DisplayAvatarCommand displayAvatarCommand = new DisplayAvatarCommand();
         ShowProductsCommand showProductsCommand = new ShowProductsCommand(productService);
-        PutProductInCartCommand putProductInCartCommand = new PutProductInCartCommand(productService);
+        ProcessCartCommand processCartCommand = new ProcessCartCommand(productService);
 
         commands = new HashMap<>();
         commands.put("registration", registrationCommand);
@@ -40,7 +40,7 @@ public class CommandContainer {
         commands.put("login", loginCommand);
         commands.put("displayAvatar", displayAvatarCommand);
         commands.put("products", showProductsCommand);
-        commands.put("putInCart", putProductInCartCommand);
+        commands.put("processCart", processCartCommand);
     }
 
     public Command getCommand(String commandName){
