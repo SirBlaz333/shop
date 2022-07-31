@@ -1,6 +1,7 @@
 package com.my.cmd.impl;
 
 import com.my.cmd.Method;
+import com.my.cmd.impl.util.LoginUtility;
 import com.my.entity.Captcha;
 import com.my.service.captcha.CaptchaService;
 import com.my.cmd.Command;
@@ -49,8 +50,15 @@ public class ShowLoginPageCommand implements Command {
         container.put(request, response, captchaKey, captcha);
         container.startRemoveRemove(captchaKey);
         request.getSession().setAttribute(CAPTCHA_IMAGE, captcha.getImage());
-        request.setAttribute(REGISTER, request.getParameter(REGISTER));
+        setAttributes(request);
         request.getRequestDispatcher(REGISTRATION).forward(request, response);
+    }
+
+    private void setAttributes(HttpServletRequest request){
+        request.setAttribute(REGISTER, request.getParameter(REGISTER));
+        if(request.getParameter(LoginUtility.ERROR_MESSAGE) != null){
+            request.setAttribute(LoginUtility.ERROR_MESSAGE, request.getParameter(LoginUtility.ERROR_MESSAGE));
+        }
     }
 
     private void displayCaptcha(HttpServletRequest request, HttpServletResponse response) {
