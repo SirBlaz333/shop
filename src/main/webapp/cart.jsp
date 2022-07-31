@@ -74,7 +74,31 @@
                                 $<c:out value="${product.price}"/>
                             </div>
                             <div class="amount">
-                                <c:out value="${cart.get(product)}"/>
+                                <div class="minus">
+                                    <form method="post" action="controller">
+                                        <input type="hidden" name="command" value="processCart"/>
+                                        <input type="hidden" name="productId" value="${product.id}"/>
+                                        <input type="hidden" name="action" value="remove"/>
+                                        <input type="hidden" name="amount" value="1"/>
+                                        <button type="button" onclick="doAsyncRequest(this)">
+                                            <i class="fa-solid fa-minus"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                                <span>
+                                    <c:out value="${cart.get(product)}"/>
+                                </span>
+                                <div class="plus">
+                                    <form method="post" action="controller">
+                                        <input type="hidden" name="command" value="processCart"/>
+                                        <input type="hidden" name="productId" value="${product.id}"/>
+                                        <input type="hidden" name="action" value="put"/>
+                                        <input type="hidden" name="amount" value="1"/>
+                                        <button type="button" onclick="doAsyncRequest(this)">
+                                            <i class="fa-solid fa-plus"></i>
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                             <div class="delete">
                                 <form method="post" action="controller">
@@ -89,13 +113,20 @@
                         </div>
                     </div>
                 </c:forEach>
-            </div>
-            <div class="confirmation">
-                <form action="credentials.jsp">
-                    <button type="submit">
-                        Confirm
-                    </button>
-                </form>
+                <c:if test="${cart.getMap().size() > 0}">
+                    <div class="confirmation">
+                        <form action="credentials.jsp">
+                            <button type="submit">
+                                Confirm
+                            </button>
+                        </form>
+                    </div>
+                </c:if>
+                <c:if test="${cart.getMap().size() == 0}">
+                    <div class="empty">
+                        Your cart is empty
+                    <div>
+                </c:if>
             </div>
         </div>
     </div>

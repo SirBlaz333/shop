@@ -17,7 +17,12 @@ public class Cart {
     public void remove(Cpu cpu, int amount) {
         Integer oldAmount = cart.get(cpu);
         if (oldAmount != null) {
-            cart.put(cpu, oldAmount - amount);
+            amount = oldAmount - amount;
+            if(amount == 0){
+                remove(cpu);
+            } else {
+                cart.put(cpu, amount);
+            }
         }
     }
 
