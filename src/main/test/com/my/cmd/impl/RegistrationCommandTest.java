@@ -50,7 +50,7 @@ public class RegistrationCommandTest {
     public void setUp(){
         UserService userService = new UserServiceImpl(new UserDAOMap());
         ShowLoginPageCommand showLoginPageCommand = new ShowLoginPageCommand(container);
-        registrationCommand = new RegistrationCommand(container, userService, showLoginPageCommand);
+        registrationCommand = new RegistrationCommand(container, userService);
         when(captcha.getText()).thenReturn("123");
         when(request.getRequestDispatcher(REGISTRATION)).thenReturn(requestDispatcher);
         when(request.getSession()).thenReturn(httpSession);

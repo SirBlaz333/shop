@@ -26,9 +26,9 @@ public class CommandContainer {
         CaptchaContainerStrategy container = factory.create(strategy, timeout);
 
         ShowLoginPageCommand showLoginPageCommand = new ShowLoginPageCommand(container);
-        RegistrationCommand registrationCommand = new RegistrationCommand(container, userService, showLoginPageCommand);
+        RegistrationCommand registrationCommand = new RegistrationCommand(container, userService);
         LogoutCommand logoutCommand = new LogoutCommand();
-        LoginCommand loginCommand = new LoginCommand(container, userService, showLoginPageCommand);
+        LoginCommand loginCommand = new LoginCommand(container, userService);
         DisplayAvatarCommand displayAvatarCommand = new DisplayAvatarCommand();
         ShowProductsCommand showProductsCommand = new ShowProductsCommand(productService);
         ProcessCartCommand processCartCommand = new ProcessCartCommand(productService);

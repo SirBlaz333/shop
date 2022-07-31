@@ -19,9 +19,9 @@ public class LoginCommand implements Command {
     private final UserService userService;
     private final LoginUtility loginUtility;
 
-    public LoginCommand(CaptchaContainerStrategy captchaContainer, UserService userService, ShowLoginPageCommand showLoginPageCommand) {
+    public LoginCommand(CaptchaContainerStrategy captchaContainer, UserService userService) {
         this.userService = userService;
-        loginUtility = new LoginUtility(showLoginPageCommand, captchaContainer);
+        loginUtility = new LoginUtility(captchaContainer);
     }
 
     @Override

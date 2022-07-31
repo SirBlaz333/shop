@@ -1,7 +1,5 @@
 package com.my.cmd.impl.util;
 
-import com.my.cmd.Method;
-import com.my.cmd.impl.ShowLoginPageCommand;
 import com.my.entity.Captcha;
 import com.my.entity.User;
 import com.my.entity.UserBuilder;
@@ -24,11 +22,9 @@ public class LoginUtility {
     public static final String ERROR_MESSAGE = "errorMessage";
     public static final String TIMEOUT_MESSAGE = "Captcha expired. Please try again";
     public static final String WRONG_CAPTCHA_MESSAGE = "You enter wrong number. Please try again";
-    private final ShowLoginPageCommand showLoginPageCommand;
     private final CaptchaContainerStrategy container;
 
-    public LoginUtility(ShowLoginPageCommand showLoginPageCommand, CaptchaContainerStrategy captchaContainer){
-        this.showLoginPageCommand = showLoginPageCommand;
+    public LoginUtility(CaptchaContainerStrategy captchaContainer){
         container = captchaContainer;
     }
 
@@ -79,7 +75,7 @@ public class LoginUtility {
     public void showError(HttpServletRequest request, HttpServletResponse response, String errorMessage) throws ServletException, IOException {
         request.setAttribute(ERROR_MESSAGE, errorMessage);
         setAttributesForForward(request);
-        showLoginPageCommand.doCommand(request, response, Method.POST);
+        request.getRequestDispatcher("controller?command=showLoginPage").forward(request, response);
     }
 
     private void setAttributesForForward(HttpServletRequest request){

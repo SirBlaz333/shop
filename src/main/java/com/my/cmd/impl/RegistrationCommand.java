@@ -19,9 +19,9 @@ public class RegistrationCommand implements Command {
     private final LoginUtility loginUtility;
     private final UserService userService;
 
-    public RegistrationCommand(CaptchaContainerStrategy captchaContainer, UserService userService, ShowLoginPageCommand showLoginPageCommand) {
+    public RegistrationCommand(CaptchaContainerStrategy captchaContainer, UserService userService) {
         this.userService = userService;
-        loginUtility = new LoginUtility(showLoginPageCommand, captchaContainer);
+        loginUtility = new LoginUtility(captchaContainer);
     }
 
     @Override
