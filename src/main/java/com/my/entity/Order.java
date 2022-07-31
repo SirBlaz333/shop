@@ -6,6 +6,9 @@ public class Order {
     private int orderStatusId;
     private String statusDescription;
     private String dateTime;
+    private String address;
+    private String zip;
+    private String city;
     private User user;
     private OrderedProducts orderedProducts;
 
@@ -47,6 +50,30 @@ public class Order {
 
     public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getZip() {
+        return zip;
+    }
+
+    public void setZip(String zip) {
+        this.zip = zip;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
     }
 
     public User getUser() {
