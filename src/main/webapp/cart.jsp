@@ -77,9 +77,14 @@
                             <c:out value="${cart.get(product)}"/>
                         </div>
                         <div class="delete">
-                            <button>
-                                <img src="img/bin-icon.png">
-                            </button>
+                            <form method="post" action="controller">
+                                <input type="hidden" name="command" value="processCart"/>
+                                <input type="hidden" name="productId" value="${product.id}"/>
+                                <input type="hidden" name="action" value="removeAll"/>
+                                <button type="button" onclick="doAsyncRequest(this)">
+                                    <img src="img/bin-icon.png"/>
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -96,5 +101,6 @@
     <script src="js/jquery-1.11.3.min.js"></script>
     <script src="js/my-scripts/collapsible.js"></script>
     <script src="js/my-scripts/jquery.smooth-appearance.js"></script>
+    <script src="js/my-scripts/jquery.ajax-request.js"></script>
 </body>
 </html>

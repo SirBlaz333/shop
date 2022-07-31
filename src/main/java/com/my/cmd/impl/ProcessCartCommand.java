@@ -24,25 +24,32 @@ public class ProcessCartCommand implements Command {
     @Override
     public void doCommand(HttpServletRequest request, HttpServletResponse response, Method method) throws ServletException, IOException {
         Cart cart = cartUtility.getCart(request.getSession());
-        int id = Integer.parseInt(request.getParameter("productId"));
+        int id = getInt(request.getParameter("productId"));
         Cpu cpu = productService.getProductById(id);
-        int amount = Integer.parseInt(request.getParameter("amount"));
+        int amount = getInt(request.getParameter("amount"));
         String action = request.getParameter("action");
         doAction(cpu, amount, cart, action);
     }
 
-    private void doAction(Cpu cpu, int amount, Cart cart, String action){
-        if(action.equals("put")){
+    private void doAction(Cpu cpu, int amount, Cart cart, String action) {
+        if (action.equals("put")) {
             cart.put(cpu, amount);
         }
-        if(action.equals("removeAll")){
+        if (action.equals("removeAll")) {
             cart.remove(cpu);
         }
-        if(action.equals("remove")){
+        if (action.equals("remove")) {
             cart.remove(cpu, amount);
         }
-        if(action.equals("clear")){
+        if (action.equals("clear")) {
             cart = new Cart();
         }
+    }
+
+    private int getInt(String value) {
+        if (value == null) {
+            return 0;
+        }
+        return Integer.parseInt(value);
     }
 }
