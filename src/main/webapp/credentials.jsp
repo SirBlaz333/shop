@@ -42,10 +42,21 @@
                 <div class="row">
                     <div>
                         <h3>Billing Address</h3>
-                        <label for="fname"><i class="fa fa-user"></i> Full Name</label>
-                        <input type="text" id="fname" name="firstname" placeholder="John M. Doe">
-                        <label for="email"><i class="fa fa-envelope"></i> Email</label>
-                        <input type="text" id="email" name="email" placeholder="john@example.com">
+                        <div class="row">
+                            <div class="small-col">
+                                <label for="fname"><i class="fa fa-user"></i> Full Name</label>
+                                <span>
+                                    <c:out value="${user.firstname}"/>
+                                    <c:out value="${user.lastname}"/>
+                                </span>
+                            </div>
+                            <div class="small-col">
+                                <label for="email"><i class="fa fa-envelope"></i> Email</label>
+                                <span>
+                                    <c:out value="${user.email}"/>
+                                </span>
+                            </div>
+                        </div>
                         <label for="adr"><i class="fa fa-address-card"></i> Address</label>
                         <input type="text" id="adr" name="address" placeholder="542 W. 15th Street">
                         <label for="city"><i class="fa fa-institution"></i> City</label>
