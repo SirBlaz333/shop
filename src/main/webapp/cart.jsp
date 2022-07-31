@@ -57,38 +57,39 @@
                     </div>
                 </div>
             </div>
-
-            <c:forEach var="product" items="${cart.getMap().keySet()}">
-                <div class="row">
-                    <div class="product-info">
-                        <div class="product-icon">
-                            <img src="img/products/product-1.jpg">
-                        </div>
-                        <div class="brand">
-                            <c:out value="${product.manufacturer}"/>
-                        </div>
-                        <div class="name">
-                            <c:out value="${product.name}"/>
-                        </div>
-                        <div class="price">
-                            $<c:out value="${product.price}"/>
-                        </div>
-                        <div class="amount">
-                            <c:out value="${cart.get(product)}"/>
-                        </div>
-                        <div class="delete">
-                            <form method="post" action="controller">
-                                <input type="hidden" name="command" value="processCart"/>
-                                <input type="hidden" name="productId" value="${product.id}"/>
-                                <input type="hidden" name="action" value="removeAll"/>
-                                <button type="button" onclick="doAsyncRequest(this)">
-                                    <img src="img/bin-icon.png"/>
-                                </button>
-                            </form>
+            <div id="async">
+                <c:forEach var="product" items="${cart.getMap().keySet()}">
+                    <div class="row">
+                        <div class="product-info">
+                            <div class="product-icon">
+                                <img src="img/products/product-1.jpg">
+                            </div>
+                            <div class="brand">
+                                <c:out value="${product.manufacturer}"/>
+                            </div>
+                            <div class="name">
+                                <c:out value="${product.name}"/>
+                            </div>
+                            <div class="price">
+                                $<c:out value="${product.price}"/>
+                            </div>
+                            <div class="amount">
+                                <c:out value="${cart.get(product)}"/>
+                            </div>
+                            <div class="delete">
+                                <form method="post" action="controller">
+                                    <input type="hidden" name="command" value="processCart"/>
+                                    <input type="hidden" name="productId" value="${product.id}"/>
+                                    <input type="hidden" name="action" value="removeAll"/>
+                                    <button type="button" onclick="doAsyncRequest(this)">
+                                        <img src="img/bin-icon.png"/>
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </c:forEach>
+                </c:forEach>
+            </div>
             <div class="confirmation">
                 <form action="credentials.jsp">
                     <button type="submit">
