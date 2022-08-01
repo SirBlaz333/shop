@@ -43,6 +43,7 @@ public class CreateOrderCommand implements Command {
             Order order = buildOrder(request);
             productService.buyProduct(order.getOrderedProducts());
             orderService.create(order);
+            cartUtility.createNewCart(request.getSession());
             request.getRequestDispatcher(Pages.MAIN).forward(request, response);
         } catch (ServiceException e){
             errorUtility.showError(request, response, Pages.CART, e.getMessage());
