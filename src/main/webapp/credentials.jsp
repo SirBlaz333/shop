@@ -72,6 +72,9 @@
                     <div class="row">
                         <div>
                             <div class="row">
+                                <h3><c:out value="Total price: $${cart.calculatePrice()}"/></h3>
+                            </div>
+                            <div class="row">
                                 <div class="small-col">
                                     <label for="fname"><i class="fa fa-user"></i> Full Name</label>
                                     <span>
