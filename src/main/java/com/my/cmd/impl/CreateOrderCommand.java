@@ -15,13 +15,12 @@ import com.my.service.ServiceException;
 import com.my.service.order.OrderService;
 import com.my.service.product.ProductService;
 import com.my.service.time.TimeService;
+import com.my.web.page.Pages;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-
-import static com.my.cmd.impl.util.LoginUtility.MAIN_PAGE;
 
 public class CreateOrderCommand implements Command {
     private final OrderService orderService;
@@ -44,9 +43,9 @@ public class CreateOrderCommand implements Command {
             Order order = buildOrder(request);
             productService.buyProduct(order.getOrderedProducts());
             orderService.create(order);
-            request.getRequestDispatcher(MAIN_PAGE).forward(request, response);
+            request.getRequestDispatcher(Pages.MAIN).forward(request, response);
         } catch (ServiceException e){
-            errorUtility.showError(request, response, "cart.jsp", e.getMessage());
+            errorUtility.showError(request, response, Pages.CART, e.getMessage());
         }
     }
 

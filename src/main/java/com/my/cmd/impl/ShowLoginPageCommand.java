@@ -2,11 +2,11 @@ package com.my.cmd.impl;
 
 import com.my.cmd.Method;
 import com.my.cmd.impl.util.ErrorUtility;
-import com.my.cmd.impl.util.LoginUtility;
 import com.my.entity.Captcha;
 import com.my.service.captcha.CaptchaService;
 import com.my.cmd.Command;
 import com.my.web.captcha.container.strategy.CaptchaContainerStrategy;
+import com.my.web.page.Pages;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
@@ -20,7 +20,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ShowLoginPageCommand implements Command {
-    public static final String REGISTRATION = "registration.jsp";
     public final static String IMAGE_FORMAT = "png";
     public static final String CAPTCHA_IMAGE = "captchaImg";
     public static final String REGISTER = "register";
@@ -52,7 +51,7 @@ public class ShowLoginPageCommand implements Command {
         container.startRemoveRemove(captchaKey);
         request.getSession().setAttribute(CAPTCHA_IMAGE, captcha.getImage());
         setAttributes(request);
-        request.getRequestDispatcher(REGISTRATION).forward(request, response);
+        request.getRequestDispatcher(Pages.REGISTRATION_JSP).forward(request, response);
     }
 
     private void setAttributes(HttpServletRequest request){

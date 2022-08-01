@@ -10,7 +10,6 @@ import com.my.web.captcha.exception.CaptchaException;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 
 import java.awt.image.BufferedImage;
@@ -18,7 +17,6 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class LoginUtility {
-    public static final String MAIN_PAGE = "index.jsp";
     public static final String TIMEOUT_MESSAGE = "Captcha expired. Please try again";
     public static final String WRONG_CAPTCHA_MESSAGE = "You enter wrong number. Please try again";
     private final CaptchaContainerStrategy container;

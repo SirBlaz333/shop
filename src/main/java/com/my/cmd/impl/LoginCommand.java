@@ -10,6 +10,7 @@ import com.my.service.ServiceException;
 import com.my.service.user.UserService;
 import com.my.web.captcha.container.strategy.CaptchaContainerStrategy;
 import com.my.web.captcha.exception.CaptchaException;
+import com.my.web.page.Pages;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -17,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class LoginCommand implements Command {
-    public static final String LOGIN_PAGE = "controller?command=showLoginPage";
     private final UserService userService;
     private final LoginUtility loginUtility;
     private final ErrorUtility errorUtility;
@@ -34,7 +34,7 @@ public class LoginCommand implements Command {
             doLogin(request, response);
         } catch (ServiceException | CaptchaException e) {
             loginUtility.setAttributesForForward(request);
-            errorUtility.showError(request, response, LOGIN_PAGE, e.getMessage());
+            errorUtility.showError(request, response, Pages.LOGIN, e.getMessage());
         }
     }
 
@@ -43,6 +43,6 @@ public class LoginCommand implements Command {
         User user = loginUtility.createUser(request);
         user = userService.login(user);
         request.getSession().setAttribute(UserRegFields.USER, user);
-        response.sendRedirect(LoginUtility.MAIN_PAGE);
+        response.sendRedirect(Pages.MAIN);
     }
 }

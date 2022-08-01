@@ -35,6 +35,9 @@
         <header id="header" class="text-center tm-text-gray">
             <h1>Cart</h1>
         </header>
+        <div class = "text-center" style="color: red">
+            ${errorMessage}
+        </div>
         <div class="cart">
             <div class="header row product-info">
                 <div class="product-icon"></div>

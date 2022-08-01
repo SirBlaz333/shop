@@ -23,12 +23,13 @@ import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-import static com.my.cmd.impl.ShowLoginPageCommand.REGISTRATION;
 import static com.my.cmd.impl.util.ErrorUtility.ERROR_MESSAGE;
 import static com.my.cmd.impl.util.LoginUtility.*;
 import static com.my.entity.UserRegFields.CAPTCHA;
 import static com.my.entity.UserRegFields.EMAIL;
 import static com.my.service.user.UserServiceImpl.USER_ALREADY_EXISTS;
+import static com.my.web.page.Pages.MAIN;
+import static com.my.web.page.Pages.REGISTRATION;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 
@@ -65,7 +66,7 @@ public class RegistrationCommandTest {
 
         registrationCommand.doCommand(request, response, Method.GET);
 
-        verify(response).sendRedirect(MAIN_PAGE);
+        verify(response).sendRedirect(MAIN);
     }
 
     @Test

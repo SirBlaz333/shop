@@ -6,6 +6,7 @@ import com.my.cmd.impl.util.ProductUtility;
 import com.my.entity.Cpu;
 import com.my.entity.ProductFilterFormBean;
 import com.my.service.product.ProductService;
+import com.my.web.page.Pages;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -31,7 +32,7 @@ public class ShowProductsCommand implements Command {
         request.setAttribute(ProductFilterFormBean.MAX_PAGES, maxPages);
         request.setAttribute(ProductFilterFormBean.PAGE_COUNT, productFilterFormBean.getPageCount());
         request.setAttribute(ProductFilterFormBean.PAGE_SIZE, productFilterFormBean.getPageSize());
-        request.getRequestDispatcher("products.jsp").forward(request, response);
+        request.getRequestDispatcher(Pages.PRODUCTS).forward(request, response);
     }
 
 }

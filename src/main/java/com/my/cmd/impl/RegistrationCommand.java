@@ -10,6 +10,7 @@ import com.my.web.captcha.exception.CaptchaException;
 import com.my.web.captcha.container.strategy.CaptchaContainerStrategy;
 import com.my.service.user.UserService;
 import com.my.cmd.Command;
+import com.my.web.page.Pages;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -44,6 +45,6 @@ public class RegistrationCommand implements Command {
         String imagesFilepath = request.getServletContext().getInitParameter(DisplayAvatarCommand.IMAGES_FILEPATH);
         user = userService.add(user, imagesFilepath);
         request.getSession().setAttribute(UserRegFields.USER, user);
-        response.sendRedirect(LoginUtility.MAIN_PAGE);
+        response.sendRedirect(Pages.MAIN);
     }
 }
