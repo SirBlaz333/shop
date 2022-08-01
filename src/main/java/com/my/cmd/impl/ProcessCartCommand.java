@@ -5,6 +5,8 @@ import com.my.cmd.Method;
 import com.my.cmd.impl.util.CartUtility;
 import com.my.entity.Cart;
 import com.my.entity.Cpu;
+import com.my.service.cart.CartAction;
+import com.my.service.cart.CartActionContainer;
 import com.my.service.product.ProductService;
 
 import javax.servlet.ServletException;
@@ -15,35 +17,23 @@ import java.io.IOException;
 public class ProcessCartCommand implements Command {
     private final CartUtility cartUtility;
     private final ProductService productService;
+    private final CartActionContainer container;
 
     public ProcessCartCommand(ProductService productService) {
         this.productService = productService;
         cartUtility = new CartUtility();
+        container = new CartActionContainer(productService);
     }
 
     @Override
     public void doCommand(HttpServletRequest request, HttpServletResponse response, Method method) throws ServletException, IOException {
+        int id = getInt(request.getParameter(CartUtility.PRODUCT_ID));
+        int amount = getInt(request.getParameter(CartUtility.AMOUNT));
+        String action = request.getParameter(CartUtility.ACTION);
         Cart cart = cartUtility.getCart(request.getSession());
-        int id = getInt(request.getParameter("productId"));
         Cpu cpu = productService.getProductById(id);
-        int amount = getInt(request.getParameter("amount"));
-        String action = request.getParameter("action");
-        doAction(cpu, amount, cart, action);
-    }
-
-    private void doAction(Cpu cpu, int amount, Cart cart, String action) {
-        if (action.equals("put") && productService.getProductAmount(cpu) > cart.get(cpu)) {
-            cart.put(cpu, amount);
-        }
-        if (action.equals("removeAll")) {
-            cart.remove(cpu);
-        }
-        if (action.equals("remove")) {
-            cart.remove(cpu, amount);
-        }
-        if (action.equals("clear")) {
-            cart = new Cart();
-        }
+        CartAction cartAction = container.getAction(action);
+        cartAction.doAction(cart, cpu, amount);
     }
 
     private int getInt(String value) {

@@ -46,6 +46,10 @@ public class Cart {
         return cart.size();
     }
 
+    public void clear(){
+        cart.clear();
+    }
+
     public double calculatePrice() {
         double totalPrice = 0;
         for (Cpu cpu : cart.keySet()) {
