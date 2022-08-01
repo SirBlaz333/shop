@@ -7,6 +7,10 @@ public class CpuDTO {
     private int manufacturerId;
     private int MemoryTypeId;
 
+    public CpuDTO(){
+        cpu = new Cpu();
+    }
+
     public Cpu getCpu() {
         return cpu;
     }

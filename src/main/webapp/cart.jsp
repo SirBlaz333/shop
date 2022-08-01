@@ -45,7 +45,15 @@
                 <div class="name">Name</div>
                 <div class="price">Price</div>
                 <div class="amount">Amount</div>
-                <div class="delete"></div>
+                <div class="delete">
+                    <form method="post" action="controller">
+                        <input type="hidden" name="command" value="processCart"/>
+                        <input type="hidden" name="action" value="clear"/>
+                        <button type="button" onclick="doAsyncRequest(this)">
+                            <img src="img/bin-icon.png"/>
+                        </button>
+                    </form>
+                </div>
             </div>
             <div id="async">
                 <c:forEach var="product" items="${cart.getMap().keySet()}">
