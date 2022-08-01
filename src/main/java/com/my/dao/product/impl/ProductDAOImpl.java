@@ -5,6 +5,7 @@ import com.my.dao.DBManager;
 import com.my.dao.product.ProductDAO;
 import com.my.dao.product.sql.ProductSQLQueryBuilder;
 import com.my.entity.Cpu;
+import com.my.entity.OrderedProducts;
 import com.my.entity.ProductFilterFormBean;
 import com.my.entity.builder.CpuBuilder;
 import com.my.entity.dto.CpuDTO;
@@ -48,7 +49,8 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public void updateProductAmount(Map<Cpu, Integer> map) throws DBException {
+    public void updateProductAmount(OrderedProducts orderedProducts) throws DBException {
+        Map<Cpu, Integer> map = orderedProducts.getOrderedProducts();
         try (Connection connection = dbManager.getConnection()) {
             connection.setAutoCommit(false);
             for (Cpu cpu : map.keySet()) {

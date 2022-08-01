@@ -5,6 +5,7 @@ import com.my.dao.manufacturer.ManufacturerDAO;
 import com.my.dao.mt.MemoryTypeDAO;
 import com.my.dao.product.ProductDAO;
 import com.my.entity.Cpu;
+import com.my.entity.OrderedProducts;
 import com.my.entity.ProductFilterFormBean;
 import com.my.entity.dto.CpuDTO;
 import com.my.service.ServiceException;
@@ -38,9 +39,9 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void buyProduct(Map<Cpu, Integer> map) throws ServiceException {
+    public void buyProduct(OrderedProducts orderedProducts) throws ServiceException {
         try {
-            productDAO.updateProductAmount(map);
+            productDAO.updateProductAmount(orderedProducts);
         } catch (DBException e) {
             throw new ServiceException(e.getMessage());
         }
