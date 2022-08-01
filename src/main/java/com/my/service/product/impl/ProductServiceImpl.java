@@ -39,7 +39,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void buyProduct(OrderedProducts orderedProducts) throws ServiceException {
+    public synchronized void buyProduct(OrderedProducts orderedProducts) throws ServiceException {
         try {
             productDAO.updateProductAmount(orderedProducts);
         } catch (DBException e) {
