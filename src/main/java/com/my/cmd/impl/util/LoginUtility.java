@@ -24,7 +24,7 @@ public class LoginUtility {
     public static final String WRONG_CAPTCHA_MESSAGE = "You enter wrong number. Please try again";
     private final CaptchaContainerStrategy container;
 
-    public LoginUtility(CaptchaContainerStrategy captchaContainer){
+    public LoginUtility(CaptchaContainerStrategy captchaContainer) {
         container = captchaContainer;
     }
 
@@ -53,32 +53,32 @@ public class LoginUtility {
     }
 
     private BufferedImage uploadAvatar(HttpServletRequest request) throws ServletException {
-        try{
+        try {
             Part part = request.getPart(UserRegFields.AVATAR);
             InputStream inputStream = part.getInputStream();
             return ImageIO.read(inputStream);
-        } catch (IOException | NullPointerException e){
+        } catch (IOException | NullPointerException e) {
             return null;
         }
     }
 
     private void checkCaptcha(Captcha expectedCaptcha, String actualCaptcha) throws CaptchaException {
-        if(expectedCaptcha == null){
+        if (expectedCaptcha == null) {
             throw new CaptchaException(TIMEOUT_MESSAGE);
         }
-        if(!expectedCaptcha.getText().equals(actualCaptcha)){
+        if (!expectedCaptcha.getText().equals(actualCaptcha)) {
             throw new CaptchaException(WRONG_CAPTCHA_MESSAGE);
         }
     }
 
 
-    public void showError(HttpServletRequest request, HttpServletResponse response, String errorMessage) throws ServletException, IOException {
+    public void showError(HttpServletRequest request, HttpServletResponse response, String pageToRedirect, String errorMessage) throws ServletException, IOException {
         request.setAttribute(ERROR_MESSAGE, errorMessage);
         setAttributesForForward(request);
-        request.getRequestDispatcher("controller?command=showLoginPage").forward(request, response);
+        request.getRequestDispatcher(pageToRedirect).forward(request, response);
     }
 
-    private void setAttributesForForward(HttpServletRequest request){
+    private void setAttributesForForward(HttpServletRequest request) {
         request.setAttribute(UserRegFields.EMAIL, request.getParameter(UserRegFields.EMAIL));
         request.setAttribute(UserRegFields.FIRSTNAME, request.getParameter(UserRegFields.FIRSTNAME));
         request.setAttribute(UserRegFields.LASTNAME, request.getParameter(UserRegFields.LASTNAME));

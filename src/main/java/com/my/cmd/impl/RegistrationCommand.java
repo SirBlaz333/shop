@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class RegistrationCommand implements Command {
+    public static final String REGISTRATION_PAGE = "controller?command=showLoginPage&register=true";
     private final LoginUtility loginUtility;
     private final UserService userService;
 
@@ -29,9 +30,10 @@ public class RegistrationCommand implements Command {
         try {
             doRegister(request, response);
         } catch (ServiceException | CaptchaException e) {
-            loginUtility.showError(request, response, e.getMessage());
+            loginUtility.showError(request, response, REGISTRATION_PAGE, e.getMessage());
         }
     }
+
     private void doRegister(HttpServletRequest request, HttpServletResponse response) throws CaptchaException, ServiceException, IOException, ServletException {
         loginUtility.checkCaptcha(request);
         User user = loginUtility.createUser(request);

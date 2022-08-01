@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class LoginCommand implements Command {
+    public static final String LOGIN_PAGE = "controller?command=showLoginPage";
     private final UserService userService;
     private final LoginUtility loginUtility;
 
@@ -29,7 +30,7 @@ public class LoginCommand implements Command {
         try {
             doLogin(request, response);
         } catch (ServiceException | CaptchaException e) {
-            loginUtility.showError(request, response, e.getMessage());
+            loginUtility.showError(request, response, LOGIN_PAGE, e.getMessage());
         }
     }
 
