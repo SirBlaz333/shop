@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class RegistrationCommand implements Command {
-    public static final String REGISTRATION_PAGE = "controller?command=showLoginPage&register=true";
     private final LoginUtility loginUtility;
     private final UserService userService;
     private final ErrorUtility errorUtility;
@@ -35,7 +34,7 @@ public class RegistrationCommand implements Command {
             doRegister(request, response);
         } catch (ServiceException | CaptchaException e) {
             loginUtility.setAttributesForForward(request);
-            errorUtility.showError(request, response, REGISTRATION_PAGE, e.getMessage());
+            errorUtility.showError(request, response, Pages.REGISTRATION, e.getMessage());
         }
     }
 
