@@ -12,7 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class OrderDAOImpl implements OrderDAO {
-    public static final String ADD_ORDER = "INSERT INTO orders (state_id, state_description, datetime, user_id) VALUES (?, ?, ?, ?);";
+    public static final String ADD_ORDER = "INSERT INTO orders (state_id, state_description, datetime, address, user_id) VALUES (?, ?, ?, ?, ?);";
     private final DBManager dbManager;
     private final Logger logger;
 
@@ -29,6 +29,7 @@ public class OrderDAOImpl implements OrderDAO {
             preparedStatement.setInt(index++, order.getOrderStatusId());
             preparedStatement.setString(index++, order.getStatusDescription());
             preparedStatement.setString(index++, order.getDateTime());
+            preparedStatement.setString(index++, order.getAddress());
             preparedStatement.setInt(index, order.getUser().getId());
             preparedStatement.execute();
         } catch (SQLException | DBException e) {
