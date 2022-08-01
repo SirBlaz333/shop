@@ -7,6 +7,7 @@ function doAsyncRequest(e){
             data: formData,
             cache: false,
             success: function (data) {
+                $("#cart-async").load(location.href + " #cart-async");
                 $("#async").load(location.href + " #async");
             }
         });

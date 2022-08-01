@@ -10,12 +10,14 @@ public class CartUtility {
     public Cart getCart(HttpSession session) {
         Cart cart = (Cart) session.getAttribute(CART);
         if (cart == null) {
-            createNewCart(session);
+            cart = createNewCart(session);
         }
         return cart;
     }
 
-    public void createNewCart(HttpSession session){
-        session.setAttribute(CART, new Cart());
+    public Cart createNewCart(HttpSession session){
+        Cart cart = new Cart();
+        session.setAttribute(CART, cart);
+        return cart;
     }
 }
