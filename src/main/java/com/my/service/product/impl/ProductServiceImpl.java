@@ -12,8 +12,6 @@ import com.my.service.ServiceException;
 import com.my.service.product.ProductService;
 
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ProductServiceImpl implements ProductService {
@@ -53,17 +51,6 @@ public class ProductServiceImpl implements ProductService {
         return cpuDTOs.stream()
                 .map(this::parseCPUDataTransferObject)
                 .collect(Collectors.toList());
-    }
-
-    private int[] parseArray(String[] array, Function<String, Integer> function) {
-        if (array == null) {
-            return null;
-        }
-        int[] numbers = new int[array.length];
-        for (int i = 0; i < array.length; i++) {
-            numbers[i] = function.apply(array[i]);
-        }
-        return numbers;
     }
 
     @Override
