@@ -49,7 +49,7 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public void updateProductAmount(OrderedProducts orderedProducts) throws DBException {
+    public void buyProduct(OrderedProducts orderedProducts) throws DBException {
         Map<Cpu, Integer> map = orderedProducts.getOrderedProducts();
         try (Connection connection = dbManager.getConnection()) {
             connection.setAutoCommit(false);
@@ -65,6 +65,7 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     private void updateCpu(Connection connection, Cpu cpu, int amount) throws SQLException {
+        amount = getProductAmount(cpu) - amount;
         PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PRODUCT_AMOUNT);
         int index = BEGIN_INDEX;
         preparedStatement.setInt(index++, amount);

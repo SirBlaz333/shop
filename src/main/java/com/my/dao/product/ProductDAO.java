@@ -8,12 +8,11 @@ import com.my.entity.ProductFilterFormBean;
 import com.my.entity.dto.CpuDTO;
 
 import java.util.List;
-import java.util.Map;
 
 public interface ProductDAO extends DAO {
     CpuDTO getProductById(int id);
 
-    void updateProductAmount(OrderedProducts orderedProducts) throws DBException;
+    void buyProduct(OrderedProducts orderedProducts) throws DBException;
 
     int getProductAmount(Cpu cpu);
 

@@ -19,7 +19,6 @@ import java.io.InputStream;
 
 public class LoginUtility {
     public static final String MAIN_PAGE = "index.jsp";
-    public static final String ERROR_MESSAGE = "errorMessage";
     public static final String TIMEOUT_MESSAGE = "Captcha expired. Please try again";
     public static final String WRONG_CAPTCHA_MESSAGE = "You enter wrong number. Please try again";
     private final CaptchaContainerStrategy container;
@@ -71,14 +70,7 @@ public class LoginUtility {
         }
     }
 
-
-    public void showError(HttpServletRequest request, HttpServletResponse response, String pageToRedirect, String errorMessage) throws ServletException, IOException {
-        request.setAttribute(ERROR_MESSAGE, errorMessage);
-        setAttributesForForward(request);
-        request.getRequestDispatcher(pageToRedirect).forward(request, response);
-    }
-
-    private void setAttributesForForward(HttpServletRequest request) {
+    public void setAttributesForForward(HttpServletRequest request) {
         request.setAttribute(UserRegFields.EMAIL, request.getParameter(UserRegFields.EMAIL));
         request.setAttribute(UserRegFields.FIRSTNAME, request.getParameter(UserRegFields.FIRSTNAME));
         request.setAttribute(UserRegFields.LASTNAME, request.getParameter(UserRegFields.LASTNAME));

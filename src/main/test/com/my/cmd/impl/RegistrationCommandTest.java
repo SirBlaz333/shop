@@ -24,6 +24,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import static com.my.cmd.impl.ShowLoginPageCommand.REGISTRATION;
+import static com.my.cmd.impl.util.ErrorUtility.ERROR_MESSAGE;
 import static com.my.cmd.impl.util.LoginUtility.*;
 import static com.my.entity.UserRegFields.CAPTCHA;
 import static com.my.entity.UserRegFields.EMAIL;

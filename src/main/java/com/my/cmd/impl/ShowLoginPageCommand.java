@@ -1,6 +1,7 @@
 package com.my.cmd.impl;
 
 import com.my.cmd.Method;
+import com.my.cmd.impl.util.ErrorUtility;
 import com.my.cmd.impl.util.LoginUtility;
 import com.my.entity.Captcha;
 import com.my.service.captcha.CaptchaService;
@@ -56,8 +57,8 @@ public class ShowLoginPageCommand implements Command {
 
     private void setAttributes(HttpServletRequest request){
         request.setAttribute(REGISTER, request.getParameter(REGISTER));
-        if(request.getParameter(LoginUtility.ERROR_MESSAGE) != null){
-            request.setAttribute(LoginUtility.ERROR_MESSAGE, request.getParameter(LoginUtility.ERROR_MESSAGE));
+        if(request.getParameter(ErrorUtility.ERROR_MESSAGE) != null){
+            request.setAttribute(ErrorUtility.ERROR_MESSAGE, request.getParameter(ErrorUtility.ERROR_MESSAGE));
         }
     }
 

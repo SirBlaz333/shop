@@ -67,7 +67,8 @@
                 </div>
             </c:forEach>
             <div class="billing row">
-                <form action="">
+                <form action="controller" method="post">
+                    <input type="hidden" name="command" value="createOrder"/>
                     <div class="row">
                         <div>
                             <div class="row">

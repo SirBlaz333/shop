@@ -1,5 +1,6 @@
 package com.my.cmd.impl;
 
+import com.my.cmd.impl.util.ErrorUtility;
 import com.my.cmd.impl.util.LoginUtility;
 import com.my.cmd.Method;
 import com.my.entity.User;
@@ -19,10 +20,12 @@ public class RegistrationCommand implements Command {
     public static final String REGISTRATION_PAGE = "controller?command=showLoginPage&register=true";
     private final LoginUtility loginUtility;
     private final UserService userService;
+    private final ErrorUtility errorUtility;
 
     public RegistrationCommand(CaptchaContainerStrategy captchaContainer, UserService userService) {
         this.userService = userService;
         loginUtility = new LoginUtility(captchaContainer);
+        errorUtility = new ErrorUtility();
     }
 
     @Override
@@ -30,7 +33,8 @@ public class RegistrationCommand implements Command {
         try {
             doRegister(request, response);
         } catch (ServiceException | CaptchaException e) {
-            loginUtility.showError(request, response, REGISTRATION_PAGE, e.getMessage());
+            loginUtility.setAttributesForForward(request);
+            errorUtility.showError(request, response, REGISTRATION_PAGE, e.getMessage());
         }
     }
 

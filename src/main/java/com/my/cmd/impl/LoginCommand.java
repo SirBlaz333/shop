@@ -2,6 +2,7 @@ package com.my.cmd.impl;
 
 import com.my.cmd.Command;
 import com.my.cmd.Method;
+import com.my.cmd.impl.util.ErrorUtility;
 import com.my.cmd.impl.util.LoginUtility;
 import com.my.entity.User;
 import com.my.entity.UserRegFields;
@@ -19,10 +20,12 @@ public class LoginCommand implements Command {
     public static final String LOGIN_PAGE = "controller?command=showLoginPage";
     private final UserService userService;
     private final LoginUtility loginUtility;
+    private final ErrorUtility errorUtility;
 
     public LoginCommand(CaptchaContainerStrategy captchaContainer, UserService userService) {
         this.userService = userService;
         loginUtility = new LoginUtility(captchaContainer);
+        errorUtility = new ErrorUtility();
     }
 
     @Override
@@ -30,7 +33,8 @@ public class LoginCommand implements Command {
         try {
             doLogin(request, response);
         } catch (ServiceException | CaptchaException e) {
-            loginUtility.showError(request, response, LOGIN_PAGE, e.getMessage());
+            loginUtility.setAttributesForForward(request);
+            errorUtility.showError(request, response, LOGIN_PAGE, e.getMessage());
         }
     }
 
