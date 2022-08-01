@@ -7,8 +7,10 @@ import com.my.dao.manufacturer.impl.ManufacturerDAOImpl;
 import com.my.dao.mt.MemoryTypeDAO;
 import com.my.dao.mt.impl.MemoryTypeDAOImpl;
 import com.my.dao.order.OrderDAO;
+import com.my.dao.order.OrderStatusDAO;
 import com.my.dao.order.OrderedProductsDAO;
 import com.my.dao.order.impl.OrderDAOImpl;
+import com.my.dao.order.impl.OrderStatusDAOImpl;
 import com.my.dao.order.impl.OrderedProductsDAOImpl;
 import com.my.dao.product.ProductDAO;
 import com.my.dao.product.impl.ProductDAOImpl;
@@ -43,11 +45,11 @@ public class ApplicationInitializer {
         ProductDAO productDAO = new ProductDAOImpl(dbManager);
         OrderDAO orderDAO = new OrderDAOImpl(dbManager);
         OrderedProductsDAO orderedProductsDAO = new OrderedProductsDAOImpl(dbManager);
-
+        OrderStatusDAO orderStatusDAO = new OrderStatusDAOImpl(dbManager);
 
         userService = new UserServiceImpl(userDAO);
         productService = new ProductServiceImpl(productDAO, manufacturerDAO, memoryTypeDAO);
-        orderService = new OrderServiceImpl(orderDAO, orderedProductsDAO);
+        orderService = new OrderServiceImpl(orderDAO, orderedProductsDAO, orderStatusDAO);
         timeService = new TimeServiceImpl();
 
         commandContainer = new CommandContainer(this);
