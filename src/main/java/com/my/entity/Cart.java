@@ -31,7 +31,11 @@ public class Cart {
     }
 
     public int get(Cpu cpu) {
-        return cart.get(cpu);
+        Integer value = cart.get(cpu);
+        if(value == null){
+            return 0;
+        }
+        return value;
     }
 
     public Map<Cpu, Integer> getMap() {

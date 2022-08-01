@@ -32,7 +32,7 @@ public class ProcessCartCommand implements Command {
     }
 
     private void doAction(Cpu cpu, int amount, Cart cart, String action) {
-        if (action.equals("put")) {
+        if (action.equals("put") && productService.getProductAmount(cpu) > cart.get(cpu)) {
             cart.put(cpu, amount);
         }
         if (action.equals("removeAll")) {

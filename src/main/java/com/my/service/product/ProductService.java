@@ -9,6 +9,7 @@ import java.util.Map;
 
 public interface ProductService {
     Cpu getProductById(int id);
+    int getProductAmount(Cpu cpu);
     void buyProduct(Map<Cpu, Integer> map) throws ServiceException;
     List<Cpu> getProducts(ProductFilterFormBean bean);
     int getMaxPagesAndSetPageCount(ProductFilterFormBean bean);

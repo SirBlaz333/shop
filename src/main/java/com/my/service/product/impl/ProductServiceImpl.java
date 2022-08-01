@@ -33,6 +33,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public int getProductAmount(Cpu cpu) {
+        return productDAO.getProductAmount(cpu);
+    }
+
+    @Override
     public void buyProduct(Map<Cpu, Integer> map) throws ServiceException {
         try {
             productDAO.updateProductAmount(map);
