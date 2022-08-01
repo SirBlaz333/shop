@@ -32,16 +32,6 @@ public class OrderBuilder {
         return this;
     }
 
-    public OrderBuilder withZip(String zip) {
-        order.setZip(zip);
-        return this;
-    }
-
-    public OrderBuilder withCity(String city) {
-        order.setCity(city);
-        return this;
-    }
-
     public OrderBuilder withUser(User user) {
         order.setUser(user);
         return this;

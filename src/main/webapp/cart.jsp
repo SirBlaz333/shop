@@ -36,26 +36,13 @@
             <h1>Cart</h1>
         </header>
         <div class="cart">
-            <div class="header row">
-                <div class="header product-info">
-                    <div class="product-icon">
-
-                    </div>
-                    <div class="brand">
-                        Brand
-                    </div>
-                    <div class="name">
-                        Name
-                    </div>
-                    <div class="price">
-                        Price
-                    </div>
-                    <div class="amount">
-                        Amount
-                    </div>
-                    <div class="delete">
-                    </div>
-                </div>
+            <div class="header row product-info">
+                <div class="product-icon"></div>
+                <div class="brand">Brand</div>
+                <div class="name">Name</div>
+                <div class="price">Price</div>
+                <div class="amount">Amount</div>
+                <div class="delete"></div>
             </div>
             <div id="async">
                 <c:forEach var="product" items="${cart.getMap().keySet()}">
@@ -135,7 +122,7 @@
                         </c:choose>
                     </div>
                 </c:if>
-                <c:if test="${cart.getMap().size() == 0}">
+                <c:if test="${cart == null || cart.getMap().size() == 0}">
                     <div class="empty">
                         Your cart is empty
                     <div>
