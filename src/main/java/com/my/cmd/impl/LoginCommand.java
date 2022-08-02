@@ -24,8 +24,8 @@ public class LoginCommand implements Command {
 
     public LoginCommand(CaptchaContainerStrategy captchaContainer, UserService userService) {
         this.userService = userService;
-        loginUtility = new LoginUtility(captchaContainer);
-        redirectionUtility = new RedirectionUtility();
+        this.loginUtility = new LoginUtility(captchaContainer);
+        this.redirectionUtility = new RedirectionUtility();
     }
 
     @Override

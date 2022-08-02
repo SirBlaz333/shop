@@ -22,7 +22,7 @@ public class LoginUtility {
     private final CaptchaContainerStrategy container;
 
     public LoginUtility(CaptchaContainerStrategy captchaContainer) {
-        container = captchaContainer;
+        this.container = captchaContainer;
     }
 
     public void checkCaptcha(HttpServletRequest request) throws CaptchaException {

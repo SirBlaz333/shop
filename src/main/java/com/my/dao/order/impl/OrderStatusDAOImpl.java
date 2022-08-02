@@ -18,7 +18,7 @@ public class OrderStatusDAOImpl implements OrderStatusDAO {
 
     public OrderStatusDAOImpl(DBManager dbManager) {
         this.dbManager = dbManager;
-        logger = Logger.getLogger(getClass().getName());
+        this.logger = Logger.getLogger(getClass().getName());
     }
 
     @Override

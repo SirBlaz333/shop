@@ -23,7 +23,7 @@ import com.my.service.product.impl.ProductServiceImpl;
 import com.my.service.time.TimeService;
 import com.my.service.time.impl.TimeServiceImpl;
 import com.my.service.user.UserService;
-import com.my.service.user.UserServiceImpl;
+import com.my.service.user.impl.UserServiceImpl;
 import com.my.web.captcha.container.strategy.CaptchaContainerStrategies;
 
 public class ApplicationInitializer {

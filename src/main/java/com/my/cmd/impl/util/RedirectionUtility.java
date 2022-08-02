@@ -9,7 +9,7 @@ public class RedirectionUtility {
     public static final String REDIRECT_URL = "redirectURL";
     public static final String ERROR_MESSAGE = "errorMessage";
 
-    public void showErrorRedirect(HttpServletRequest request, HttpServletResponse response, String pageToRedirect, String errorMessage) throws IOException {
+    public void showErrorRedirect(HttpServletResponse response, String pageToRedirect, String errorMessage) throws IOException {
         String url = appendErrorMessage(pageToRedirect, errorMessage);
         response.sendRedirect(url);
     }

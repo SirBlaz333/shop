@@ -21,7 +21,7 @@ public class DisplayAvatarCommand implements Command {
     private final Logger logger;
 
     public DisplayAvatarCommand(){
-        logger = Logger.getLogger(getClass().getName());
+        this.logger = Logger.getLogger(getClass().getName());
     }
 
     @Override

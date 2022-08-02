@@ -1,4 +1,7 @@
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<fmt:setBundle basename="locale"/>
+<fmt:setLocale value="${request.getLocale()}"/>
 <head>
     <link rel="stylesheet" href="css/my-css/menu-panel-style.css">
 </head>
@@ -7,14 +10,16 @@
         <form action="controller" method="post">
             <button type="submit" class="right-button">
                 <input type="hidden" name="command" value="showLoginPage">
-                Login
+                <fmt:message key="login"/>
             </button>
         </form>
     </c:when>
     <c:otherwise>
         <form action="controller" method="post">
             <input type="hidden" name="command" value="logout">
-            <button type="submit" class="right-button">Logout</button>
+            <button type="submit" class="right-button">
+                <fmt:message key="logout"/>
+            </button>
         </form>
         <form action="controller" method="post">
             <button class="right-button">

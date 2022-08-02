@@ -19,7 +19,7 @@ public class CaptchaService {
     private final Random random;
 
     public CaptchaService() {
-        random = new Random(RANDOM_SEED);
+        this.random = new Random(RANDOM_SEED);
     }
 
     public Captcha createCaptcha() {

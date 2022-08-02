@@ -20,7 +20,7 @@ public class ShowProductsCommand implements Command {
 
     public ShowProductsCommand(ProductService productService) {
         this.productService = productService;
-        productUtility = new ProductUtility();
+        this.productUtility = new ProductUtility();
     }
 
     @Override
