@@ -1,14 +1,20 @@
-package com.my.web;
+package com.my.web.filter;
 
-import javax.servlet.*;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
 @WebFilter(filterName = "CharacterEncodingFilter",
-            urlPatterns = "/*")
+        urlPatterns = "/*")
 public class CharacterEncodingFilter implements Filter {
     @Override
-    public void init(FilterConfig filterConfig) {
+    public void init(FilterConfig filterConfig) throws ServletException {
+        Filter.super.init(filterConfig);
     }
 
     @Override
@@ -19,5 +25,6 @@ public class CharacterEncodingFilter implements Filter {
 
     @Override
     public void destroy() {
+        Filter.super.destroy();
     }
 }
