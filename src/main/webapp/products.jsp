@@ -122,7 +122,7 @@
                                 <input type="hidden" name="productId" value="${product.id}"/>
                                 <input type="hidden" name="action" value="put"/>
                                 <input type="hidden" name="amount" value="1"/>
-                                <input type="button" onclick="doAsyncRequest(this)" value="Check" class="link-button"/>
+                                <input type="button" onclick="doAsyncRequest(this)" value="Add to cart" class="link-button"/>
                             </form>
                         </div>
                     </li>
