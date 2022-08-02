@@ -2,7 +2,7 @@ package com.my.cmd.impl;
 
 import com.my.cmd.Command;
 import com.my.cmd.Method;
-import com.my.cmd.impl.util.ErrorUtility;
+import com.my.cmd.impl.util.RedirectionUtility;
 import com.my.cmd.impl.util.LoginUtility;
 import com.my.entity.User;
 import com.my.entity.UserRegFields;
@@ -20,12 +20,12 @@ import java.io.IOException;
 public class LoginCommand implements Command {
     private final UserService userService;
     private final LoginUtility loginUtility;
-    private final ErrorUtility errorUtility;
+    private final RedirectionUtility redirectionUtility;
 
     public LoginCommand(CaptchaContainerStrategy captchaContainer, UserService userService) {
         this.userService = userService;
         loginUtility = new LoginUtility(captchaContainer);
-        errorUtility = new ErrorUtility();
+        redirectionUtility = new RedirectionUtility();
     }
 
     @Override
@@ -34,7 +34,8 @@ public class LoginCommand implements Command {
             doLogin(request, response);
         } catch (ServiceException | CaptchaException e) {
             loginUtility.setAttributesForForward(request);
-            errorUtility.showError(request, response, Pages.LOGIN, e.getMessage());
+            redirectionUtility.setRedirectUrl(request);
+            redirectionUtility.showError(request, response, Pages.LOGIN, e.getMessage());
         }
     }
 
@@ -43,6 +44,7 @@ public class LoginCommand implements Command {
         User user = loginUtility.createUser(request);
         user = userService.login(user);
         request.getSession().setAttribute(UserRegFields.USER, user);
-        response.sendRedirect(Pages.MAIN);
+        String url = redirectionUtility.getRedirectUrl(request, Pages.MAIN);
+        response.sendRedirect(url);
     }
 }

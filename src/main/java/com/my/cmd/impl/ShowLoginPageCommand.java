@@ -1,7 +1,7 @@
 package com.my.cmd.impl;
 
 import com.my.cmd.Method;
-import com.my.cmd.impl.util.ErrorUtility;
+import com.my.cmd.impl.util.RedirectionUtility;
 import com.my.entity.Captcha;
 import com.my.service.captcha.CaptchaService;
 import com.my.cmd.Command;
@@ -27,9 +27,11 @@ public class ShowLoginPageCommand implements Command {
     private final CaptchaService captchaService;
     private final CaptchaContainerStrategy container;
     private final Logger logger;
+    private final RedirectionUtility redirectionUtility;
 
     public ShowLoginPageCommand(CaptchaContainerStrategy captchaContainerStrategy) {
         captchaService = new CaptchaService();
+        redirectionUtility = new RedirectionUtility();
         container = captchaContainerStrategy;
         logger = Logger.getLogger(getClass().getName());
     }
@@ -51,13 +53,14 @@ public class ShowLoginPageCommand implements Command {
         container.startRemoveRemove(captchaKey);
         request.getSession().setAttribute(CAPTCHA_IMAGE, captcha.getImage());
         setAttributes(request);
+        redirectionUtility.setRedirectUrl(request);
         request.getRequestDispatcher(Pages.REGISTRATION_JSP).forward(request, response);
     }
 
     private void setAttributes(HttpServletRequest request){
         request.setAttribute(REGISTER, request.getParameter(REGISTER));
-        if(request.getParameter(ErrorUtility.ERROR_MESSAGE) != null){
-            request.setAttribute(ErrorUtility.ERROR_MESSAGE, request.getParameter(ErrorUtility.ERROR_MESSAGE));
+        if(request.getParameter(RedirectionUtility.ERROR_MESSAGE) != null){
+            request.setAttribute(RedirectionUtility.ERROR_MESSAGE, request.getParameter(RedirectionUtility.ERROR_MESSAGE));
         }
     }
 

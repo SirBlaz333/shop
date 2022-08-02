@@ -3,7 +3,7 @@ package com.my.cmd.impl;
 import com.my.cmd.Command;
 import com.my.cmd.Method;
 import com.my.cmd.impl.util.CartUtility;
-import com.my.cmd.impl.util.ErrorUtility;
+import com.my.cmd.impl.util.RedirectionUtility;
 import com.my.entity.Cart;
 import com.my.entity.Order;
 import com.my.entity.OrderStatus;
@@ -23,17 +23,18 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class CreateOrderCommand implements Command {
+    public static final String ADDRESS = "address";
     private final OrderService orderService;
     private final ProductService productService;
     private final TimeService timeService;
-    private final ErrorUtility errorUtility;
+    private final RedirectionUtility redirectionUtility;
     private final CartUtility cartUtility;
 
     public CreateOrderCommand(OrderService orderService, ProductService productService, TimeService timeService) {
         this.orderService = orderService;
         this.productService = productService;
         this.timeService = timeService;
-        errorUtility = new ErrorUtility();
+        redirectionUtility = new RedirectionUtility();
         cartUtility = new CartUtility();
     }
 
@@ -46,12 +47,12 @@ public class CreateOrderCommand implements Command {
             cartUtility.createNewCart(request.getSession());
             request.getRequestDispatcher(Pages.MAIN).forward(request, response);
         } catch (ServiceException e){
-            errorUtility.showError(request, response, Pages.CART, e.getMessage());
+            redirectionUtility.showError(request, response, Pages.CART, e.getMessage());
         }
     }
 
     private Order buildOrder(HttpServletRequest request){
-        String address = request.getParameter("address");
+        String address = request.getParameter(ADDRESS);
         OrderBuilder orderBuilder = new OrderBuilder();
         User user = (User) request.getSession().getAttribute(UserRegFields.USER);
         Cart cart = cartUtility.getCart(request.getSession());

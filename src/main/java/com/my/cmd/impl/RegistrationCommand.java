@@ -1,6 +1,6 @@
 package com.my.cmd.impl;
 
-import com.my.cmd.impl.util.ErrorUtility;
+import com.my.cmd.impl.util.RedirectionUtility;
 import com.my.cmd.impl.util.LoginUtility;
 import com.my.cmd.Method;
 import com.my.entity.User;
@@ -20,12 +20,12 @@ import java.io.IOException;
 public class RegistrationCommand implements Command {
     private final LoginUtility loginUtility;
     private final UserService userService;
-    private final ErrorUtility errorUtility;
+    private final RedirectionUtility redirectionUtility;
 
     public RegistrationCommand(CaptchaContainerStrategy captchaContainer, UserService userService) {
         this.userService = userService;
         loginUtility = new LoginUtility(captchaContainer);
-        errorUtility = new ErrorUtility();
+        redirectionUtility = new RedirectionUtility();
     }
 
     @Override
@@ -34,7 +34,8 @@ public class RegistrationCommand implements Command {
             doRegister(request, response);
         } catch (ServiceException | CaptchaException e) {
             loginUtility.setAttributesForForward(request);
-            errorUtility.showError(request, response, Pages.REGISTRATION, e.getMessage());
+            redirectionUtility.setRedirectUrl(request);
+            redirectionUtility.showError(request, response, Pages.REGISTRATION, e.getMessage());
         }
     }
 
@@ -44,6 +45,7 @@ public class RegistrationCommand implements Command {
         String imagesFilepath = request.getServletContext().getInitParameter(DisplayAvatarCommand.IMAGES_FILEPATH);
         user = userService.add(user, imagesFilepath);
         request.getSession().setAttribute(UserRegFields.USER, user);
-        response.sendRedirect(Pages.MAIN);
+        String url = redirectionUtility.getRedirectUrl(request, Pages.MAIN);
+        response.sendRedirect(url);
     }
 }

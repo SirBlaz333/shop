@@ -43,6 +43,7 @@
         </header>
         <div class = "registration">
             <form action="controller" method="post" name="registration" id="registration" enctype="multipart/form-data">
+                <input type="hidden" name="redirectURL" value="${redirectURL}"/>
                 <div class = "text-center" style="color: red">
                     ${errorMessage}
                 </div>
@@ -100,6 +101,7 @@
             </form>
             <c:if test="${register == null}">
                 <form action="controller" method="post">
+                    <input type="hidden" name="redirectURL" value="${redirectURL}"/>
                     <input type="hidden" name="command" value="showLoginPage"/>
                     <input type="hidden" name="register" value="true"/>
                     <button type="submit">Sign up</button>
