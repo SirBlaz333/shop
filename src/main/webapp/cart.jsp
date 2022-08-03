@@ -113,25 +113,11 @@
                 </c:forEach>
                 <c:if test="${cart.getMap().size() > 0}">
                     <div class="confirmation">
-                        <c:choose>
-                            <c:when test="${user == null}">
-                                <form method="post" action="controller">
-                                    <input type="hidden" name="redirectURL" value="cart.jsp"/>
-                                    <input type="hidden" name="command" value="showLoginPage"/>
-                                    <input type="hidden" name="errorMessage" value="You are not logged in. Please log in and try again"/>
-                                    <button type="submit">
-                                        Confirm
-                                    </button>
-                                </form>
-                            </c:when>
-                            <c:otherwise>
-                                <form action="credentials.jsp">
-                                    <button type="submit">
-                                        Confirm
-                                    </button>
-                                </form>
-                            </c:otherwise>
-                        </c:choose>
+                        <form method="post" action="credentials.jsp">
+                            <button type="submit">
+                                Confirm
+                            </button>
+                        </form>
                     </div>
                 </c:if>
                 <c:if test="${cart == null || cart.getMap().size() == 0}">
