@@ -51,6 +51,7 @@ public class CreateOrderCommand implements Command {
             cartUtility.createNewCart(request.getSession());
             request.getRequestDispatcher(Pages.MAIN).forward(request, response);
         } catch (ServiceException e) {
+            setAvailableAmountInCart(cartUtility.getCart(request.getSession()), productService);
             redirectionUtility.showError(request, response, Pages.CART, e.getMessage());
         }
     }
@@ -61,8 +62,9 @@ public class CreateOrderCommand implements Command {
         User user = (User) request.getSession().getAttribute(UserRegFields.USER);
         Cart cart = cartUtility.getCart(request.getSession());
         String dateTime = timeService.now();
+        List<OrderedProduct> orderedProducts = convertToOrderedProductList(cart.getMap());
         return orderBuilder.withAddress(address)
-                .withOrderedProducts(convertToOrderedProductList(cart.getMap()))
+                .withOrderedProducts(orderedProducts)
                 .withOrderStatus(OrderStatus.CONFIRMED)
                 .withUser(user)
                 .withDateTime(dateTime)
@@ -79,5 +81,13 @@ public class CreateOrderCommand implements Command {
             orderedProducts.add(orderedProduct);
         }
         return orderedProducts;
+    }
+
+    private void setAvailableAmountInCart(Cart cart, ProductService productService){
+        Map<Cpu, Integer> map = cart.getMap();
+        for(Cpu cpu : map.keySet()){
+            int amount = Math.min(map.get(cpu), productService.getProductAmount(cpu));
+            cart.set(cpu, amount);
+        }
     }
 }
