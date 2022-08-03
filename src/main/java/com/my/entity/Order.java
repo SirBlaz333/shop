@@ -1,5 +1,7 @@
 package com.my.entity;
 
+import java.util.List;
+
 public class Order {
     private int id;
     private OrderStatus orderStatus;
@@ -8,7 +10,7 @@ public class Order {
     private String dateTime;
     private String address;
     private User user;
-    private OrderedProducts orderedProducts;
+    private List<OrderedProduct> orderedProducts;
 
     public int getId() {
         return id;
@@ -66,11 +68,11 @@ public class Order {
         this.user = user;
     }
 
-    public OrderedProducts getOrderedProducts() {
+    public List<OrderedProduct> getOrderedProducts() {
         return orderedProducts;
     }
 
-    public void setOrderedProducts(OrderedProducts orderedProducts) {
-        this.orderedProducts = orderedProducts;
+    public void setOrderedProducts(List<OrderedProduct> orderedProductList) {
+        this.orderedProducts = orderedProductList;
     }
 }

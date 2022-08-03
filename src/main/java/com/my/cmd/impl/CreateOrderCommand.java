@@ -5,9 +5,10 @@ import com.my.cmd.Method;
 import com.my.cmd.impl.util.CartUtility;
 import com.my.cmd.impl.util.RedirectionUtility;
 import com.my.entity.Cart;
+import com.my.entity.Cpu;
 import com.my.entity.Order;
 import com.my.entity.OrderStatus;
-import com.my.entity.OrderedProducts;
+import com.my.entity.OrderedProduct;
 import com.my.entity.User;
 import com.my.entity.UserRegFields;
 import com.my.entity.builder.OrderBuilder;
@@ -21,6 +22,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class CreateOrderCommand implements Command {
     public static final String ADDRESS = "address";
@@ -40,28 +44,40 @@ public class CreateOrderCommand implements Command {
 
     @Override
     public void doCommand(HttpServletRequest request, HttpServletResponse response, Method method) throws ServletException, IOException {
-        try{
+        try {
             Order order = buildOrder(request);
             productService.buyProduct(order.getOrderedProducts());
             orderService.create(order);
             cartUtility.createNewCart(request.getSession());
             request.getRequestDispatcher(Pages.MAIN).forward(request, response);
-        } catch (ServiceException e){
+        } catch (ServiceException e) {
             redirectionUtility.showError(request, response, Pages.CART, e.getMessage());
         }
     }
 
-    private Order buildOrder(HttpServletRequest request){
+    private Order buildOrder(HttpServletRequest request) {
         String address = request.getParameter(ADDRESS);
         OrderBuilder orderBuilder = new OrderBuilder();
         User user = (User) request.getSession().getAttribute(UserRegFields.USER);
         Cart cart = cartUtility.getCart(request.getSession());
         String dateTime = timeService.now();
         return orderBuilder.withAddress(address)
-                .withOrderedProducts(new OrderedProducts(cart.getMap()))
+                .withOrderedProducts(convertToOrderedProductList(cart.getMap()))
                 .withOrderStatus(OrderStatus.CONFIRMED)
                 .withUser(user)
                 .withDateTime(dateTime)
                 .build();
+    }
+
+    private List<OrderedProduct> convertToOrderedProductList(Map<Cpu, Integer> map) {
+        List<OrderedProduct> orderedProducts = new ArrayList<>();
+        for (Cpu cpu : map.keySet()) {
+            int id = cpu.getId();
+            double price = cpu.getPrice();
+            int quantity = map.get(cpu);
+            OrderedProduct orderedProduct = new OrderedProduct(id, price, quantity);
+            orderedProducts.add(orderedProduct);
+        }
+        return orderedProducts;
     }
 }
