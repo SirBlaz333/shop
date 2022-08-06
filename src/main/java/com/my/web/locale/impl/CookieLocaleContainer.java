@@ -10,7 +10,7 @@ import java.util.Locale;
 
 public class CookieLocaleContainer implements LocaleContainer {
     @Override
-    public Locale getLocale(HttpServletRequest request, HttpServletResponse response) {
+    public Locale getLocale(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals(LocaleFilter.LANGUAGE)) {

@@ -5,6 +5,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Locale;
 
 public interface LocaleContainer {
-    Locale getLocale(HttpServletRequest request, HttpServletResponse response);
+    Locale getLocale(HttpServletRequest request);
     void setLocale(HttpServletRequest request, HttpServletResponse response, Locale locale);
 }

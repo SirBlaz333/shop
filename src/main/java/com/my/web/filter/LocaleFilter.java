@@ -1,5 +1,6 @@
 package com.my.web.filter;
 
+import com.my.entity.request.LocaleRequestWrapper;
 import com.my.web.locale.LocaleContainer;
 
 import javax.servlet.Filter;
@@ -29,38 +30,51 @@ public class LocaleFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         Filter.super.init(filterConfig);
         locales = new HashMap<>();
-        locales.put("", new Locale("un"));
-        // TODO: 02.08.2022 get locales and default locales from deployment descriptor
+        String defaultLanguage = filterConfig.getInitParameter("DefaultLocale");
+        defaultLocale = new Locale(defaultLanguage);
+        locales.put(defaultLanguage, defaultLocale);
+        // TODO: 02.08.2022 get locales from deployment descriptor
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest) servletRequest;
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
+        LocaleRequestWrapper request = new LocaleRequestWrapper((HttpServletRequest) servletRequest);
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        String language = request.getParameter(LANGUAGE);
-        Locale locale = locales.get(language);
-        if (locale != null) {
-            localeContainer.setLocale(request, response, locale);
-            filterChain.doFilter(servletRequest, servletResponse);
-        }
-        locale = localeContainer.getLocale(request, response);
-        if (locale != null) {
-            localeContainer.setLocale(request, response, locale);
-            filterChain.doFilter(servletRequest, servletResponse);
-        }
+        Locale locale = defaultLocale;
+        locale = getLocaleFromLocalesOrDefault(request, locale);
+        locale = getLocaleFromContainerOrDefault(request, locale);
+        locale = getLocaleFromRequestOrDefault(request, locale);
+        localeContainer.setLocale(request, response, locale);
+        request.setLocale(locale);
+        chain.doFilter(request, response);
+    }
+
+    private Locale getLocaleFromLocalesOrDefault(HttpServletRequest request, Locale defaultLocale) {
         Enumeration<Locale> localeEnumeration = request.getLocales();
         while (localeEnumeration.hasMoreElements()) {
             Locale userLocale = localeEnumeration.nextElement();
             if (locales.containsValue(userLocale)) {
-                locale = userLocale;
+                return userLocale;
             }
         }
-        if (locale == null) {
-            locale = defaultLocale;
+        return defaultLocale;
+    }
+
+    private Locale getLocaleFromContainerOrDefault(HttpServletRequest request, Locale defaultLocale) {
+        Locale locale = localeContainer.getLocale(request);
+        if (locale != null) {
+            return locale;
         }
-        localeContainer.setLocale(request, response, locale);
-        filterChain.doFilter(servletRequest, servletResponse);
-        // TODO: 02.08.2022 getLocale and getLocales must return new locale
+        return defaultLocale;
+    }
+
+    private Locale getLocaleFromRequestOrDefault(HttpServletRequest request, Locale defaultLocale) {
+        String language = request.getParameter(LANGUAGE);
+        Locale locale = locales.get(language);
+        if (locale != null) {
+            return locale;
+        }
+        return defaultLocale;
     }
 
     @Override

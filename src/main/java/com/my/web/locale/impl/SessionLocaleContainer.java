@@ -9,7 +9,7 @@ import java.util.Locale;
 
 public class SessionLocaleContainer implements LocaleContainer {
     @Override
-    public Locale getLocale(HttpServletRequest request, HttpServletResponse response) {
+    public Locale getLocale(HttpServletRequest request) {
         return (Locale) request.getSession().getAttribute(LocaleFilter.LANGUAGE);
     }
 
