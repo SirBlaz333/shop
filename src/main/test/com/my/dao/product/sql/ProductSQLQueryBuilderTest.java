@@ -22,7 +22,7 @@ public class ProductSQLQueryBuilderTest {
         bean.setPageCount(2);
         ProductSQLQueryBuilder builder = new ProductSQLQueryBuilder();
         String query = builder.buildSelectQuery(bean);
-        String expected = "SELECT * FROM products WHERE `name` = 'Core I-7' " +
+        String expected = "SELECT * FROM products WHERE amount != 0 AND `name` LIKE 'Core I-7%' " +
                 "AND (memory_type_id = 5 OR memory_type_id = 6) " +
                 "AND (manufacturer_id = 1 OR manufacturer_id = 2 OR manufacturer_id = 3) " +
                 "AND price >= 200.0 AND price <= 500.0 ORDER BY price ASC LIMIT 10, 10;";
@@ -38,7 +38,7 @@ public class ProductSQLQueryBuilderTest {
         bean.setOrder(SortingOrder.ASC);
         ProductSQLQueryBuilder builder = new ProductSQLQueryBuilder();
         String query = builder.buildSelectQuery(bean);
-        String expected = "SELECT * FROM products ORDER BY price ASC;";
+        String expected = "SELECT * FROM products WHERE amount != 0 ORDER BY price ASC;";
         assertEquals(expected, query);
     }
 
@@ -51,7 +51,7 @@ public class ProductSQLQueryBuilderTest {
         bean.setMemoryTypeIds(new int[]{1, 2});
         ProductSQLQueryBuilder builder = new ProductSQLQueryBuilder();
         String query = builder.buildSelectQuery(bean);
-        String expected = "SELECT * FROM products WHERE " +
+        String expected = "SELECT * FROM products WHERE amount != 0 AND " +
                 "(memory_type_id = 1 OR memory_type_id = 2) AND (manufacturer_id = 1 " +
                 "OR manufacturer_id = 2) AND price >= 200.0 AND price <= 500.0;";
         assertEquals(expected, query);
@@ -66,7 +66,7 @@ public class ProductSQLQueryBuilderTest {
         bean.setPageCount(2);
         ProductSQLQueryBuilder builder = new ProductSQLQueryBuilder();
         String query = builder.buildSelectQuery(bean);
-        String expected = "SELECT * FROM products LIMIT 10, 10;";
+        String expected = "SELECT * FROM products WHERE amount != 0 LIMIT 10, 10;";
         assertEquals(expected, query);
     }
 
@@ -77,7 +77,7 @@ public class ProductSQLQueryBuilderTest {
         bean.setBoundPrice(-1);
         ProductSQLQueryBuilder builder = new ProductSQLQueryBuilder();
         String query = builder.buildSelectQuery(bean);
-        String expected = "SELECT * FROM products;";
+        String expected = "SELECT * FROM products WHERE amount != 0;";
         assertEquals(expected, query);
     }
 
@@ -89,7 +89,7 @@ public class ProductSQLQueryBuilderTest {
         bean.setMemoryTypeIds(new int[]{1, 2});
         ProductSQLQueryBuilder builder = new ProductSQLQueryBuilder();
         String query = builder.buildSelectQuery(bean);
-        String expected = "SELECT * FROM products WHERE (memory_type_id = 1 OR memory_type_id = 2);";
+        String expected = "SELECT * FROM products WHERE amount != 0 AND (memory_type_id = 1 OR memory_type_id = 2);";
         assertEquals(expected, query);
     }
 }
