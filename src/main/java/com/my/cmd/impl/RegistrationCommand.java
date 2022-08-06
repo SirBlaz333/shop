@@ -28,6 +28,12 @@ public class RegistrationCommand implements Command {
         redirectionUtility = new RedirectionUtility();
     }
 
+    RegistrationCommand(CaptchaContainerStrategy captchaContainer, UserService userService, RedirectionUtility redirectionUtility){
+        this.userService = userService;
+        loginUtility = new LoginUtility(captchaContainer);
+        this.redirectionUtility = redirectionUtility;
+    }
+
     @Override
     public void doCommand(HttpServletRequest request, HttpServletResponse response, Method method) throws ServletException, IOException {
         try {
