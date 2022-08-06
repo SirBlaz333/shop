@@ -4,11 +4,12 @@ import com.my.dao.DBException;
 import com.my.dao.DBManager;
 import com.my.dao.order.OrderedProductsDAO;
 import com.my.entity.Cpu;
-import com.my.entity.OrderedProducts;
+import com.my.entity.OrderedProduct;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -24,7 +25,7 @@ public class OrderedProductsDAOImpl implements OrderedProductsDAO {
     }
 
     @Override
-    public void put(OrderedProducts orderedProducts, int orderId) {
+    public void put(List<OrderedProduct> orderedProducts, int orderId) {
         try (Connection connection = dbManager.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(ADD_ORDERED_PRODUCTS);
             put(orderedProducts, orderId, preparedStatement);
@@ -33,14 +34,13 @@ public class OrderedProductsDAOImpl implements OrderedProductsDAO {
         }
     }
 
-    private void put(OrderedProducts orderedProducts, int orderId, PreparedStatement preparedStatement) throws SQLException {
-        Map<Cpu, Integer> map = orderedProducts.getOrderedProducts();
-        for (Cpu cpu : map.keySet()) {
+    private void put(List<OrderedProduct> orderedProducts, int orderId, PreparedStatement preparedStatement) throws SQLException {
+        for (OrderedProduct orderedProduct : orderedProducts) {
             int index = BEGIN_INDEX;
             preparedStatement.setInt(index++, orderId);
-            preparedStatement.setInt(index++, cpu.getId());
-            preparedStatement.setDouble(index++, cpu.getPrice());
-            preparedStatement.setInt(index, map.get(cpu));
+            preparedStatement.setInt(index++, orderedProduct.getId());
+            preparedStatement.setDouble(index++, orderedProduct.getPrice());
+            preparedStatement.setInt(index, orderedProduct.getQuantity());
             preparedStatement.execute();
         }
     }

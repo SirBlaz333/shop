@@ -5,7 +5,7 @@ import com.my.dao.DBManager;
 import com.my.dao.product.ProductDAO;
 import com.my.dao.product.sql.ProductSQLQueryBuilder;
 import com.my.entity.Cpu;
-import com.my.entity.OrderedProducts;
+import com.my.entity.OrderedProduct;
 import com.my.entity.ProductFilterFormBean;
 import com.my.entity.builder.CpuBuilder;
 import com.my.entity.dto.CpuDTO;
@@ -49,12 +49,11 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public void buyProduct(OrderedProducts orderedProducts) throws DBException {
-        Map<Cpu, Integer> map = orderedProducts.getOrderedProducts();
+    public void buyProduct(List<OrderedProduct> orderedProducts) throws DBException {
         try (Connection connection = dbManager.getConnection()) {
             connection.setAutoCommit(false);
-            for (Cpu cpu : map.keySet()) {
-                updateCpu(connection, cpu, map.get(cpu));
+            for (OrderedProduct orderedProduct : orderedProducts) {
+                updateCpu(connection, orderedProduct.getId(), orderedProduct.getQuantity());
             }
             connection.commit();
         } catch (DBException e) {
@@ -64,13 +63,20 @@ public class ProductDAOImpl implements ProductDAO {
         }
     }
 
-    private void updateCpu(Connection connection, Cpu cpu, int amount) throws SQLException {
-        amount = getProductAmount(cpu) - amount;
+    private void updateCpu(Connection connection, int id, int amount) throws SQLException {
+        amount = getProductAmount(id) - amount;
         PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PRODUCT_AMOUNT);
         int index = BEGIN_INDEX;
         preparedStatement.setInt(index++, amount);
-        preparedStatement.setInt(index, cpu.getId());
+        preparedStatement.setInt(index, id);
         preparedStatement.execute();
+    }
+
+    private int getProductAmount(int id){
+        Cpu cpu = new CpuBuilder()
+                .withId(id)
+                .buildCPU();
+        return getProductAmount(cpu);
     }
 
     @Override

@@ -2,8 +2,10 @@ package com.my.entity.builder;
 
 import com.my.entity.Order;
 import com.my.entity.OrderStatus;
-import com.my.entity.OrderedProducts;
+import com.my.entity.OrderedProduct;
 import com.my.entity.User;
+
+import java.util.List;
 
 public class OrderBuilder {
     private final Order order;
@@ -37,7 +39,7 @@ public class OrderBuilder {
         return this;
     }
 
-    public OrderBuilder withOrderedProducts(OrderedProducts orderedProducts) {
+    public OrderBuilder withOrderedProducts(List<OrderedProduct> orderedProducts) {
         order.setOrderedProducts(orderedProducts);
         return this;
     }

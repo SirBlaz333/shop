@@ -14,6 +14,14 @@ public class Cart {
         cart.merge(cpu, amount, Integer::sum);
     }
 
+    public void set(Cpu cpu, int amount){
+        if(amount == 0){
+            cart.remove(cpu);
+        } else {
+            cart.put(cpu, amount);
+        }
+    }
+
     public void remove(Cpu cpu, int amount) {
         Integer oldAmount = cart.get(cpu);
         if (oldAmount != null) {
