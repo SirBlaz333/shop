@@ -2,7 +2,10 @@ package com.my.entity.request;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.Locale;
 
 public class LocaleRequestWrapper extends HttpServletRequestWrapper {
@@ -19,31 +22,12 @@ public class LocaleRequestWrapper extends HttpServletRequestWrapper {
 
     @Override
     public Enumeration<Locale> getLocales() {
-        return new LocaleEnumeration(locale);
+        List<Locale> locales = new ArrayList<>();
+        locales.add(locale);
+        return Collections.enumeration(locales);
     }
 
     public void setLocale(Locale locale) {
         this.locale = locale;
-    }
-
-    private static class LocaleEnumeration implements Enumeration<Locale> {
-        private final Locale locale;
-        private boolean hasMoreElements;
-
-        public LocaleEnumeration(Locale locale) {
-            this.locale = locale;
-            hasMoreElements = true;
-        }
-
-        @Override
-        public boolean hasMoreElements() {
-            return hasMoreElements;
-        }
-
-        @Override
-        public Locale nextElement() {
-            hasMoreElements = false;
-            return locale;
-        }
     }
 }
