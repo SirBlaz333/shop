@@ -9,7 +9,6 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -18,8 +17,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 
-@WebFilter(filterName = "LocaleFilter",
-        urlPatterns = "/*")
 public class LocaleFilter implements Filter {
     public static final String LANGUAGE = "lang";
     private Map<String, Locale> locales;

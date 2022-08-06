@@ -35,4 +35,12 @@
       <param-value>en</param-value>
     </init-param>
   </filter>
+  <filter>
+    <filter-name>CharacterEncodingFilter</filter-name>
+    <filter-class>com.my.web.filter.CharacterEncodingFilter</filter-class>
+  </filter>
+  <filter>
+    <filter-name>CredentialsFilter</filter-name>
+    <filter-class>com.my.web.filter.CredentialsFilter</filter-class>
+  </filter>
 </web-app>

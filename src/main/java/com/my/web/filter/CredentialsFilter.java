@@ -19,8 +19,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebFilter(filterName = "CredentialsFilter",
-        urlPatterns = "/credentials.jsp")
 public class CredentialsFilter implements Filter {
     public static final String USER_IS_NOT_LOGGED_IN = "You are not logged in. Please log in and try again";
     private RedirectionUtility redirectionUtility;
