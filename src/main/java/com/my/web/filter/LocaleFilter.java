@@ -12,18 +12,25 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public class LocaleFilter implements Filter {
     public static final String LANGUAGE = "lang";
-    private Map<String, Locale> locales;
+    private List<Locale> locales;
     private LocaleContainer localeContainer;
     private Locale defaultLocale;
+
+    public LocaleFilter() {
+    }
+
+    LocaleFilter(LocaleContainer localeContainer, List<Locale> locales) {
+        this.localeContainer = localeContainer;
+        this.locales = locales;
+    }
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -31,29 +38,29 @@ public class LocaleFilter implements Filter {
         localeContainer = getLocaleContainer(filterConfig);
         String defaultLanguage = filterConfig.getInitParameter("DefaultLocale");
         defaultLocale = new Locale(defaultLanguage);
-        locales = new HashMap<>();
-        locales.put(defaultLanguage, defaultLocale);
-        // TODO: 02.08.2022 get locales from deployment descriptor
+        locales = getLocales();
+        locales.add(defaultLocale);
     }
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
-        LocaleRequestWrapper request = new LocaleRequestWrapper((HttpServletRequest) servletRequest);
+        HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         Locale locale = defaultLocale;
         locale = getLocaleFromLocalesOrDefault(request, locale);
         locale = getLocaleFromContainerOrDefault(request, locale);
         locale = getLocaleFromRequestOrDefault(request, locale);
         localeContainer.setLocale(request, response, locale);
-        request.setLocale(locale);
-        chain.doFilter(request, response);
+        LocaleRequestWrapper requestWrapper = new LocaleRequestWrapper(request);
+        requestWrapper.setLocale(locale);
+        chain.doFilter(requestWrapper, response);
     }
 
     private Locale getLocaleFromLocalesOrDefault(HttpServletRequest request, Locale defaultLocale) {
         Enumeration<Locale> localeEnumeration = request.getLocales();
         while (localeEnumeration.hasMoreElements()) {
             Locale userLocale = localeEnumeration.nextElement();
-            if (locales.containsValue(userLocale)) {
+            if (locales.contains(userLocale)) {
                 return userLocale;
             }
         }
@@ -70,14 +77,20 @@ public class LocaleFilter implements Filter {
 
     private Locale getLocaleFromRequestOrDefault(HttpServletRequest request, Locale defaultLocale) {
         String language = request.getParameter(LANGUAGE);
-        Locale locale = locales.get(language);
-        if (locale != null) {
+        if (language == null) {
+            return defaultLocale;
+        }
+        Locale locale = new Locale(language);
+        if (locales.contains(locale)) {
             return locale;
         }
         return defaultLocale;
     }
 
     private LocaleContainer getLocaleContainer(FilterConfig filterConfig) {
+        if (localeContainer != null) {
+            return localeContainer;
+        }
         try {
             String className = filterConfig.getInitParameter("LocaleContainer");
             Class<?> localeContainerClass = Class.forName(className);
@@ -86,6 +99,14 @@ public class LocaleFilter implements Filter {
                  NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private List<Locale> getLocales() {
+        if (locales != null) {
+            return locales;
+        }
+        // TODO: 06.08.2022 get locales from deployment descriptor
+        return new ArrayList<>();
     }
 
     @Override
