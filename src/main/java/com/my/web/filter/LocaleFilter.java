@@ -12,6 +12,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Locale;
@@ -26,9 +28,10 @@ public class LocaleFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         Filter.super.init(filterConfig);
-        locales = new HashMap<>();
+        localeContainer = getLocaleContainer(filterConfig);
         String defaultLanguage = filterConfig.getInitParameter("DefaultLocale");
         defaultLocale = new Locale(defaultLanguage);
+        locales = new HashMap<>();
         locales.put(defaultLanguage, defaultLocale);
         // TODO: 02.08.2022 get locales from deployment descriptor
     }
@@ -72,6 +75,17 @@ public class LocaleFilter implements Filter {
             return locale;
         }
         return defaultLocale;
+    }
+
+    private LocaleContainer getLocaleContainer(FilterConfig filterConfig) {
+        try {
+            String className = filterConfig.getInitParameter("LocaleContainer");
+            Class<?> localeContainerClass = Class.forName(className);
+            return (LocaleContainer) localeContainerClass.getConstructor().newInstance();
+        } catch (ClassNotFoundException | InvocationTargetException | InstantiationException | IllegalAccessException |
+                 NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
