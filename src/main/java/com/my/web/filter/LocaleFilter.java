@@ -105,7 +105,10 @@ public class LocaleFilter implements Filter {
             return locales;
         }
         // TODO: 06.08.2022 get locales from deployment descriptor
-        return new ArrayList<>();
+        List<Locale> localeList = new ArrayList<>();
+        localeList.add(new Locale("en"));
+        localeList.add(new Locale("ua"));
+        return localeList;
     }
 
     @Override
