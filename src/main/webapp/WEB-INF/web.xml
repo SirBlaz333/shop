@@ -39,12 +39,24 @@
       <param-value>com.my.web.locale.impl.SessionLocaleContainer</param-value>
     </init-param>
   </filter>
+  <filter-mapping>
+    <filter-name>LocaleFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
   <filter>
     <filter-name>CharacterEncodingFilter</filter-name>
     <filter-class>com.my.web.filter.CharacterEncodingFilter</filter-class>
   </filter>
+  <filter-mapping>
+    <filter-name>CharacterEncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
   <filter>
     <filter-name>CredentialsFilter</filter-name>
     <filter-class>com.my.web.filter.CredentialsFilter</filter-class>
   </filter>
+  <filter-mapping>
+    <filter-name>CredentialsFilter</filter-name>
+    <url-pattern>/credentials.jsp</url-pattern>
+  </filter-mapping>
 </web-app>
