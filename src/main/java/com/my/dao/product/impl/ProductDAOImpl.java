@@ -5,7 +5,7 @@ import com.my.dao.DBManager;
 import com.my.dao.product.ProductDAO;
 import com.my.dao.product.sql.ProductSQLQueryBuilder;
 import com.my.entity.Cpu;
-import com.my.entity.OrderedProduct;
+import com.my.entity.OrderProduct;
 import com.my.entity.ProductFilterFormBean;
 import com.my.entity.builder.CpuBuilder;
 import com.my.entity.dto.CpuDTO;
@@ -16,7 +16,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -49,11 +48,11 @@ public class ProductDAOImpl implements ProductDAO {
     }
 
     @Override
-    public void buyProduct(List<OrderedProduct> orderedProducts) throws DBException {
+    public void buyProduct(List<OrderProduct> orderProducts) throws DBException {
         try (Connection connection = dbManager.getConnection()) {
             connection.setAutoCommit(false);
-            for (OrderedProduct orderedProduct : orderedProducts) {
-                updateCpu(connection, orderedProduct.getId(), orderedProduct.getQuantity());
+            for (OrderProduct orderProduct : orderProducts) {
+                updateCpu(connection, orderProduct.getId(), orderProduct.getQuantity());
             }
             connection.commit();
         } catch (DBException e) {
