@@ -1,7 +1,9 @@
 package com.my.web.filter;
 
 import com.my.entity.request.LocaleRequestWrapper;
+import com.my.service.ServiceException;
 import com.my.web.locale.LocaleContainer;
+import com.my.web.locale.LocaleParser;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -13,13 +15,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
 
 public class LocaleFilter implements Filter {
     public static final String LANGUAGE = "lang";
+    public static final String LOCALES = "Locales";
+    public static final String LOCALE_CONTAINER = "LocaleContainer";
+    public static final String DEFAULT_LOCALE = "DefaultLocale";
+    private LocaleParser localeParser;
     private List<Locale> locales;
     private LocaleContainer localeContainer;
     private Locale defaultLocale;
@@ -34,10 +39,11 @@ public class LocaleFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
+        localeParser = new LocaleParser();
         localeContainer = getLocaleContainer(filterConfig);
-        String defaultLanguage = filterConfig.getInitParameter("DefaultLocale");
+        String defaultLanguage = filterConfig.getInitParameter(DEFAULT_LOCALE);
         defaultLocale = new Locale(defaultLanguage);
-        locales = getLocales();
+        locales = getLocales(filterConfig);
         locales.add(defaultLocale);
     }
 
@@ -86,29 +92,26 @@ public class LocaleFilter implements Filter {
         return defaultLocale;
     }
 
-    private LocaleContainer getLocaleContainer(FilterConfig filterConfig) {
+    private LocaleContainer getLocaleContainer(FilterConfig filterConfig) throws ServletException {
         if (localeContainer != null) {
             return localeContainer;
         }
         try {
-            String className = filterConfig.getInitParameter("LocaleContainer");
+            String className = filterConfig.getInitParameter(LOCALE_CONTAINER);
             Class<?> localeContainerClass = Class.forName(className);
             return (LocaleContainer) localeContainerClass.getConstructor().newInstance();
         } catch (ClassNotFoundException | InvocationTargetException | InstantiationException | IllegalAccessException |
                  NoSuchMethodException e) {
-            throw new RuntimeException(e);
+            throw new ServletException(e);
         }
     }
 
-    private List<Locale> getLocales() {
+    private List<Locale> getLocales(FilterConfig filterConfig) throws ServletException {
         if (locales != null) {
             return locales;
         }
-        // TODO: 06.08.2022 get locales from deployment descriptor
-        List<Locale> localeList = new ArrayList<>();
-        localeList.add(new Locale("en"));
-        localeList.add(new Locale("ua"));
-        return localeList;
+        String localesParam = filterConfig.getInitParameter(LOCALES);
+        return localeParser.getLocales(localesParam);
     }
 
     @Override

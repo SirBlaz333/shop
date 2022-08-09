@@ -35,6 +35,10 @@
       <param-value>en</param-value>
     </init-param>
     <init-param>
+      <param-name>Locales</param-name>
+      <param-value>en, ua</param-value>
+    </init-param>
+    <init-param>
       <param-name>LocaleContainer</param-name>
       <param-value>com.my.web.locale.impl.SessionLocaleContainer</param-value>
     </init-param>
