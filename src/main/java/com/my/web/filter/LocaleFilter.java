@@ -17,6 +17,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 public class LocaleFilter implements Filter {
@@ -24,7 +25,7 @@ public class LocaleFilter implements Filter {
     public static final String LOCALES = "Locales";
     public static final String LOCALE_CONTAINER = "LocaleContainer";
     public static final String DEFAULT_LOCALE = "DefaultLocale";
-    public static final String BUNDLE_BASE_NAME = "locale";
+    public static final String RESOURCE_BUNDLE_BASE_NAME = "locale";
     private ParamParser paramParser;
     private List<Locale> locales;
     private LocaleContainer localeContainer;
@@ -42,10 +43,45 @@ public class LocaleFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         paramParser = new ParamParser();
         localeContainer = getLocaleContainer(filterConfig);
-        String defaultLanguage = filterConfig.getInitParameter(DEFAULT_LOCALE);
-        defaultLocale = new Locale(defaultLanguage);
+        defaultLocale = getDefaultLocale(filterConfig);
         locales = getLocales(filterConfig);
-        locales.add(defaultLocale);
+        validateResourceBundlesExistence(locales);
+    }
+
+    private Locale getDefaultLocale(FilterConfig filterConfig){
+        String defaultLanguage = filterConfig.getInitParameter(DEFAULT_LOCALE);
+        return new Locale(defaultLanguage);
+    }
+
+    private LocaleContainer getLocaleContainer(FilterConfig filterConfig) throws ServletException {
+        if (localeContainer != null) {
+            return localeContainer;
+        }
+        try {
+            String className = filterConfig.getInitParameter(LOCALE_CONTAINER);
+            Class<?> localeContainerClass = Class.forName(className);
+            return (LocaleContainer) localeContainerClass.getConstructor().newInstance();
+        } catch (ClassNotFoundException | InvocationTargetException | InstantiationException | IllegalAccessException |
+                 NoSuchMethodException e) {
+            throw new ServletException(e);
+        }
+    }
+
+    private List<Locale> getLocales(FilterConfig filterConfig) {
+        if (locales != null) {
+            return locales;
+        }
+        String localesParam = filterConfig.getInitParameter(LOCALES);
+        return paramParser.getParams(localesParam)
+                .stream()
+                .map(Locale::new)
+                .collect(Collectors.toList());
+    }
+
+    private void validateResourceBundlesExistence(List<Locale> locales) {
+        for (Locale locale : locales) {
+            ResourceBundle.getBundle(RESOURCE_BUNDLE_BASE_NAME, locale);
+        }
     }
 
     @Override
@@ -57,8 +93,7 @@ public class LocaleFilter implements Filter {
         locale = getLocaleFromContainerOrDefault(request, locale);
         locale = getLocaleFromRequestOrDefault(request, locale);
         localeContainer.setLocale(request, response, locale);
-        LocaleRequestWrapper requestWrapper = new LocaleRequestWrapper(request);
-        requestWrapper.setLocale(locale);
+        LocaleRequestWrapper requestWrapper = new LocaleRequestWrapper(request, locale, locales);
         chain.doFilter(requestWrapper, response);
     }
 
@@ -91,35 +126,5 @@ public class LocaleFilter implements Filter {
             return locale;
         }
         return defaultLocale;
-    }
-
-    private LocaleContainer getLocaleContainer(FilterConfig filterConfig) throws ServletException {
-        if (localeContainer != null) {
-            return localeContainer;
-        }
-        try {
-            String className = filterConfig.getInitParameter(LOCALE_CONTAINER);
-            Class<?> localeContainerClass = Class.forName(className);
-            return (LocaleContainer) localeContainerClass.getConstructor().newInstance();
-        } catch (ClassNotFoundException | InvocationTargetException | InstantiationException | IllegalAccessException |
-                 NoSuchMethodException e) {
-            throw new ServletException(e);
-        }
-    }
-
-    private List<Locale> getLocales(FilterConfig filterConfig) {
-        if (locales != null) {
-            return locales;
-        }
-        String localesParam = filterConfig.getInitParameter(LOCALES);
-        return paramParser.getParams(localesParam)
-                .stream()
-                .map(Locale::new)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public void destroy() {
-        Filter.super.destroy();
     }
 }
