@@ -1,9 +1,8 @@
 package com.my.web.filter;
 
 import com.my.entity.request.LocaleRequestWrapper;
-import com.my.service.ServiceException;
 import com.my.web.locale.LocaleContainer;
-import com.my.web.locale.LocaleParser;
+import com.my.web.filter.parser.ParamParser;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -18,13 +17,15 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 public class LocaleFilter implements Filter {
     public static final String LANGUAGE = "lang";
     public static final String LOCALES = "Locales";
     public static final String LOCALE_CONTAINER = "LocaleContainer";
     public static final String DEFAULT_LOCALE = "DefaultLocale";
-    private LocaleParser localeParser;
+    public static final String BUNDLE_BASE_NAME = "locale";
+    private ParamParser paramParser;
     private List<Locale> locales;
     private LocaleContainer localeContainer;
     private Locale defaultLocale;
@@ -39,7 +40,7 @@ public class LocaleFilter implements Filter {
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
-        localeParser = new LocaleParser();
+        paramParser = new ParamParser();
         localeContainer = getLocaleContainer(filterConfig);
         String defaultLanguage = filterConfig.getInitParameter(DEFAULT_LOCALE);
         defaultLocale = new Locale(defaultLanguage);
@@ -106,12 +107,15 @@ public class LocaleFilter implements Filter {
         }
     }
 
-    private List<Locale> getLocales(FilterConfig filterConfig) throws ServletException {
+    private List<Locale> getLocales(FilterConfig filterConfig) {
         if (locales != null) {
             return locales;
         }
         String localesParam = filterConfig.getInitParameter(LOCALES);
-        return localeParser.getLocales(localesParam);
+        return paramParser.getParams(localesParam)
+                .stream()
+                .map(Locale::new)
+                .collect(Collectors.toList());
     }
 
     @Override
