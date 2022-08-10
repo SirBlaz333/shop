@@ -71,4 +71,12 @@
     <filter-name>CacheDisableFilter</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
+  <filter>
+    <filter-name>GzipResponseCompressionFilter</filter-name>
+    <filter-class>com.my.web.filter.GzipResponseCompressionFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>GzipResponseCompressionFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
 </web-app>
