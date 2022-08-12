@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
@@ -93,7 +95,7 @@ public class LocaleFilter implements Filter {
         locale = getLocaleFromContainerOrDefault(request, locale);
         locale = getLocaleFromRequestOrDefault(request, locale);
         localeContainer.setLocale(request, response, locale);
-        LocaleRequestWrapper requestWrapper = new LocaleRequestWrapper(request, locale, locales);
+        LocaleRequestWrapper requestWrapper = new LocaleRequestWrapper(request, locale, new ArrayList<>(locales));
         chain.doFilter(requestWrapper, response);
     }
 
