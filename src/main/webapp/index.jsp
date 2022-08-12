@@ -2,7 +2,6 @@
 <%@ taglib prefix="mylib" tagdir="/WEB-INF/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib prefix="llt" uri="/WEB-INF/tags/LocaleListTag.tld" %>
 <fmt:setBundle basename="locale"/>
 <fmt:setLocale value="${request.getLocale()}"/>
 <!DOCTYPE html>
@@ -56,11 +55,6 @@
         <section class="tm-section-head" id="top">
             <header id="header" class="text-center tm-text-gray">
                 <h1><fmt:message key="title_uppercase"/>
-                <select>
-                    <llt:forEnum var="locale" enumeration="<%=request.getLocales()%>">
-                        <option><c:out value="${locale}"/></option>
-                    </llt:forEnum>
-                </select>
             </header>
         </section>
 

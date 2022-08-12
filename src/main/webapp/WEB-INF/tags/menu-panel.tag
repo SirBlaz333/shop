@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="css/my-css/menu-panel-style.css">
 </head>
 <div class="panel">
+    <mylib:localization/>
     <form action="index.jsp">
         <button type="submit" class="menu-button">
             <fmt:message key="home"/>
