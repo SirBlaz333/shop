@@ -47,3 +47,31 @@
     max-width: 40px;
     max-height: 40px;
 }
+
+.localization {
+    float: left;
+    position: relative;
+    display: flex;
+    height: 50px;
+    overflow: hidden;
+}
+
+.localization select{
+    font-size: 32px;
+    appearance: none;
+    background: #eee;
+    outline: 0;
+    border: 0;
+    box-shadow: none;
+    padding: 0 1em;
+    background-image: none;
+    cursor: pointer;
+}
+
+.localization select:hover{
+    background: #ccc;
+}
+
+.localization select::-ms-expand {
+    display: none;
+}
