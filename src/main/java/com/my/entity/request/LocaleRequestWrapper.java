@@ -16,6 +16,7 @@ public class LocaleRequestWrapper extends HttpServletRequestWrapper {
         super(request);
         this.locale = locale;
         this.locales = new ArrayList<>();
+        locales.remove(locale);
         this.locales.add(locale);
         this.locales.addAll(locales);
     }
