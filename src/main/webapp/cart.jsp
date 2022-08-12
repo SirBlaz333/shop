@@ -36,7 +36,7 @@
             <h1>Cart</h1>
         </header>
         <div class = "text-center" style="color: red">
-            ${errorMessage}
+            <c:out value="${param.errorMessage}"/>
         </div>
         <div class="cart">
             <div class="header row product-info">

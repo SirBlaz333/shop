@@ -10,7 +10,7 @@ public class Order {
     private String dateTime;
     private String address;
     private User user;
-    private List<OrderedProduct> orderedProducts;
+    private List<OrderProduct> orderProducts;
 
     public int getId() {
         return id;
@@ -68,11 +68,11 @@ public class Order {
         this.user = user;
     }
 
-    public List<OrderedProduct> getOrderedProducts() {
-        return orderedProducts;
+    public List<OrderProduct> getOrderedProducts() {
+        return orderProducts;
     }
 
-    public void setOrderedProducts(List<OrderedProduct> orderedProductList) {
-        this.orderedProducts = orderedProductList;
+    public void setOrderedProducts(List<OrderProduct> orderProductList) {
+        this.orderProducts = orderProductList;
     }
 }
