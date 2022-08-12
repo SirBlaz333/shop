@@ -1,4 +1,5 @@
 <%@ taglib prefix="mylib" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 <head>
     <link rel="stylesheet" href="css/my-css/menu-panel-style.css">
 </head>
@@ -16,8 +17,9 @@
             Products
         </button>
     </form>
-    <form action="cart.jsp">
+    <form id="cart-async" action="cart.jsp">
         <button type="submit" class="cart-button">
+            <c:out value="${cart != null ? cart.getSize() : 0}"/>
             <img src="img/cart-icon.png">
         </button>
     </form>

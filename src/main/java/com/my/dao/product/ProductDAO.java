@@ -1,7 +1,9 @@
 package com.my.dao.product;
 
 import com.my.dao.DAO;
+import com.my.dao.DBException;
 import com.my.entity.Cpu;
+import com.my.entity.OrderProduct;
 import com.my.entity.ProductFilterFormBean;
 import com.my.entity.dto.CpuDTO;
 
@@ -10,7 +12,7 @@ import java.util.List;
 public interface ProductDAO extends DAO {
     CpuDTO getProductById(int id);
 
-    void updateProductAmount(Cpu cpu, int amount);
+    void buyProduct(List<OrderProduct> orderProducts) throws DBException;
 
     int getProductAmount(Cpu cpu);
 

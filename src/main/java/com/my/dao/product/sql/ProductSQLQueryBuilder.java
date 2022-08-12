@@ -5,7 +5,6 @@ import com.my.entity.ProductFilterFormBean;
 public class ProductSQLQueryBuilder {
     private final static String SPACE = " ";
     private StringBuilder query;
-    private boolean first;
 
     public String buildSelectQuery(ProductFilterFormBean bean) {
         query = new StringBuilder();
@@ -26,16 +25,12 @@ public class ProductSQLQueryBuilder {
     }
 
     private void appendFilters(ProductFilterFormBean bean) {
-        first = true;
-        query.append(" WHERE");
+        query.append(" WHERE amount != 0");
         appendName(bean.getName());
         appendArray("memory_type_id", bean.getMemoryTypeIds());
         appendArray("manufacturer_id", bean.getManufacturerIds());
         appendPrice(bean.getOriginPrice(), ">=");
         appendPrice(bean.getBoundPrice(), "<=");
-        if (first) {
-            query.delete(query.length() - 6, query.length());
-        }
     }
 
     private void appendSorting(ProductFilterFormBean bean) {
@@ -92,13 +87,10 @@ public class ProductSQLQueryBuilder {
                 append(sign).
                 append(SPACE).
                 append(fieldValue);
-        first = false;
     }
 
     private void appendAND() {
-        if (!first) {
-            query.append(" AND");
-        }
+        query.append(" AND");
     }
 
     private void appendOR(int parameterNumber) {

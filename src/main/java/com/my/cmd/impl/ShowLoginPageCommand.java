@@ -1,10 +1,12 @@
 package com.my.cmd.impl;
 
 import com.my.cmd.Method;
+import com.my.cmd.impl.util.RedirectionUtility;
 import com.my.entity.Captcha;
 import com.my.service.captcha.CaptchaService;
 import com.my.cmd.Command;
 import com.my.web.captcha.container.strategy.CaptchaContainerStrategy;
+import com.my.web.page.Pages;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
@@ -18,7 +20,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ShowLoginPageCommand implements Command {
-    public static final String REGISTRATION = "registration.jsp";
     public final static String IMAGE_FORMAT = "png";
     public static final String CAPTCHA_IMAGE = "captchaImg";
     public static final String REGISTER = "register";
@@ -26,9 +27,11 @@ public class ShowLoginPageCommand implements Command {
     private final CaptchaService captchaService;
     private final CaptchaContainerStrategy container;
     private final Logger logger;
+    private final RedirectionUtility redirectionUtility;
 
     public ShowLoginPageCommand(CaptchaContainerStrategy captchaContainerStrategy) {
         captchaService = new CaptchaService();
+        redirectionUtility = new RedirectionUtility();
         container = captchaContainerStrategy;
         logger = Logger.getLogger(getClass().getName());
     }
@@ -49,8 +52,16 @@ public class ShowLoginPageCommand implements Command {
         container.put(request, response, captchaKey, captcha);
         container.startRemoveRemove(captchaKey);
         request.getSession().setAttribute(CAPTCHA_IMAGE, captcha.getImage());
+        setAttributes(request);
+        redirectionUtility.setRedirectUrl(request);
+        request.getRequestDispatcher(Pages.REGISTRATION_JSP).forward(request, response);
+    }
+
+    private void setAttributes(HttpServletRequest request){
         request.setAttribute(REGISTER, request.getParameter(REGISTER));
-        request.getRequestDispatcher(REGISTRATION).forward(request, response);
+        if(request.getParameter(RedirectionUtility.ERROR_MESSAGE) != null){
+            request.setAttribute(RedirectionUtility.ERROR_MESSAGE, request.getParameter(RedirectionUtility.ERROR_MESSAGE));
+        }
     }
 
     private void displayCaptcha(HttpServletRequest request, HttpServletResponse response) {

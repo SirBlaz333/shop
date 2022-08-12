@@ -1,5 +1,7 @@
 package com.my.entity;
 
+import java.util.Objects;
+
 public class Cpu {
     private int id;
     private String name;
@@ -54,5 +56,18 @@ public class Cpu {
 
     public void setMemoryType(String memoryType) {
         this.memoryType = memoryType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cpu cpu = (Cpu) o;
+        return id == cpu.id && Double.compare(cpu.price, price) == 0 && coreNumber == cpu.coreNumber && name.equals(cpu.name) && manufacturer.equals(cpu.manufacturer) && memoryType.equals(cpu.memoryType);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, manufacturer, price, coreNumber, memoryType);
     }
 }

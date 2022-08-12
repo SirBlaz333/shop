@@ -1,16 +1,17 @@
 package com.my.service.product.impl;
 
+import com.my.dao.DBException;
 import com.my.dao.manufacturer.ManufacturerDAO;
 import com.my.dao.mt.MemoryTypeDAO;
 import com.my.dao.product.ProductDAO;
 import com.my.entity.Cpu;
+import com.my.entity.OrderProduct;
 import com.my.entity.ProductFilterFormBean;
 import com.my.entity.dto.CpuDTO;
 import com.my.service.ServiceException;
 import com.my.service.product.ProductService;
 
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ProductServiceImpl implements ProductService {
@@ -31,19 +32,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void buyProduct(Cpu cpu, int amount) throws ServiceException {
-        int productAmount = productDAO.getProductAmount(cpu);
-        if (productAmount - amount < 0) {
-            throw new ServiceException("Cannot buy this amount of product");
-        }
-        productAmount -= amount;
-        productDAO.updateProductAmount(cpu, productAmount);
+    public int getProductAmount(Cpu cpu) {
+        return productDAO.getProductAmount(cpu);
     }
 
     @Override
-    public void putProduct(Cpu cpu, int amount) {
-        int productAmount = productDAO.getProductAmount(cpu) + amount;
-        productDAO.updateProductAmount(cpu, productAmount);
+    public synchronized void buyProduct(List<OrderProduct> orderProducts) throws ServiceException {
+        try {
+            productDAO.buyProduct(orderProducts);
+        } catch (DBException e) {
+            throw new ServiceException(e.getMessage());
+        }
     }
 
     @Override
@@ -54,22 +53,11 @@ public class ProductServiceImpl implements ProductService {
                 .collect(Collectors.toList());
     }
 
-    private int[] parseArray(String[] array, Function<String, Integer> function) {
-        if (array == null) {
-            return null;
-        }
-        int[] numbers = new int[array.length];
-        for (int i = 0; i < array.length; i++) {
-            numbers[i] = function.apply(array[i]);
-        }
-        return numbers;
-    }
-
     @Override
     public int getMaxPagesAndSetPageCount(ProductFilterFormBean bean) {
         int productCount = productDAO.getProductCount(bean);
         int maxPages = (int) Math.ceil((double) productCount / bean.getPageSize());
-        if(bean.getPageCount() > maxPages){
+        if (bean.getPageCount() > maxPages) {
             bean.setPageCount(1);
         }
         return maxPages;
