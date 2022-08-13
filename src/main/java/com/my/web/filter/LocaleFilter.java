@@ -3,6 +3,8 @@ package com.my.web.filter;
 import com.my.entity.request.LocaleRequestWrapper;
 import com.my.web.locale.LocaleContainer;
 import com.my.web.filter.parser.ParamParser;
+import com.my.web.locale.LocaleContainerFactory;
+import com.my.web.locale.impl.LocaleContainerFactoryImpl;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -13,9 +15,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Locale;
@@ -25,13 +25,13 @@ import java.util.stream.Collectors;
 public class LocaleFilter implements Filter {
     public static final String LANGUAGE = "lang";
     public static final String LOCALES = "Locales";
-    public static final String LOCALE_CONTAINER = "LocaleContainer";
     public static final String DEFAULT_LOCALE = "DefaultLocale";
     public static final String RESOURCE_BUNDLE_BASE_NAME = "locale";
     private ParamParser paramParser;
     private List<Locale> locales;
     private LocaleContainer localeContainer;
     private Locale defaultLocale;
+    private LocaleContainerFactory localeContainerFactory;
 
     public LocaleFilter() {
     }
@@ -44,6 +44,7 @@ public class LocaleFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         paramParser = new ParamParser();
+        localeContainerFactory = new LocaleContainerFactoryImpl();
         localeContainer = getLocaleContainer(filterConfig);
         defaultLocale = getDefaultLocale(filterConfig);
         locales = getLocales(filterConfig);
@@ -59,14 +60,7 @@ public class LocaleFilter implements Filter {
         if (localeContainer != null) {
             return localeContainer;
         }
-        try {
-            String className = filterConfig.getInitParameter(LOCALE_CONTAINER);
-            Class<?> localeContainerClass = Class.forName(className);
-            return (LocaleContainer) localeContainerClass.getConstructor().newInstance();
-        } catch (ClassNotFoundException | InvocationTargetException | InstantiationException | IllegalAccessException |
-                 NoSuchMethodException e) {
-            throw new ServletException(e);
-        }
+        return localeContainerFactory.getLocaleContainer(filterConfig);
     }
 
     private List<Locale> getLocales(FilterConfig filterConfig) {

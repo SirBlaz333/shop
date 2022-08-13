@@ -40,7 +40,11 @@
     </init-param>
     <init-param>
       <param-name>LocaleContainer</param-name>
-      <param-value>com.my.web.locale.impl.SessionLocaleContainer</param-value>
+      <param-value>com.my.web.locale.impl.CookieLocaleContainer</param-value>
+    </init-param>
+    <init-param>
+      <param-name>CookieMaxAge</param-name>
+      <param-value>600</param-value>
     </init-param>
   </filter>
   <filter-mapping>
