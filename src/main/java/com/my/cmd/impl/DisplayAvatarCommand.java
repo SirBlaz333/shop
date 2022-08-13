@@ -2,8 +2,8 @@ package com.my.cmd.impl;
 
 import com.my.cmd.Command;
 import com.my.cmd.Method;
-import com.my.entity.User;
-import com.my.entity.UserRegFields;
+import com.my.entity.user.User;
+import com.my.entity.user.UserRegFields;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;

@@ -1,4 +1,4 @@
-package com.my.entity;
+package com.my.entity.order;
 
 public class OrderProduct {
     private final int id;

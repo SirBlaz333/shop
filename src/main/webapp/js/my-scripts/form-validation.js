@@ -23,9 +23,8 @@ var formIsCorrect;
 form.addEventListener("submit", (e) => {
   formIsCorrect = true;
   e.preventDefault();
-  var register = window.location.search.substr(1);
-  register = register.split("&")[0].trim();
-  if(register === "register"){
+  const params = new URLSearchParams(window.location.search);
+  if(params.has("register")){
     validateFirstname();
     validateLastname();
   }

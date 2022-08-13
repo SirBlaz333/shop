@@ -1,4 +1,4 @@
-package com.my.entity;
+package com.my.entity.user;
 
 import java.awt.image.BufferedImage;
 

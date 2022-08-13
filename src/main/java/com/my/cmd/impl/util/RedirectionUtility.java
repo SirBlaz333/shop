@@ -24,10 +24,6 @@ public class RedirectionUtility {
         return (redirectURL != null) ? redirectURL : defaultURL;
     }
 
-    public void setRedirectUrl(HttpServletRequest request) {
-        request.setAttribute(FROM, request.getParameter(FROM));
-    }
-
     private String appendErrorMessage(String URL, String paramValue) {
         return URL + RedirectionUtility.ERROR_MESSAGE + "=" + paramValue + "&";
     }

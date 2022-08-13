@@ -23,16 +23,13 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import static com.my.cmd.impl.util.LoginUtility.*;
-import static com.my.entity.UserRegFields.CAPTCHA;
-import static com.my.entity.UserRegFields.EMAIL;
+import static com.my.entity.user.UserRegFields.CAPTCHA;
+import static com.my.entity.user.UserRegFields.EMAIL;
 import static com.my.service.user.impl.UserServiceImpl.USER_ALREADY_EXISTS;
 import static com.my.web.page.Pages.MAIN;
 import static com.my.web.page.Pages.REGISTRATION;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.eq;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RegistrationCommandTest {

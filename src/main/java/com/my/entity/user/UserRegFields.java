@@ -1,4 +1,4 @@
-package com.my.entity;
+package com.my.entity.user;
 
 public class UserRegFields {
     public static final String EMAIL = "email";

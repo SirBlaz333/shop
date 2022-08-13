@@ -3,7 +3,7 @@ package com.my.dao.order.impl;
 import com.my.dao.DBException;
 import com.my.dao.DBManager;
 import com.my.dao.order.OrderedProductsDAO;
-import com.my.entity.OrderProduct;
+import com.my.entity.order.OrderProduct;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

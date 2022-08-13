@@ -1,6 +1,6 @@
 package com.my.service.user;
 
-import com.my.entity.User;
+import com.my.entity.user.User;
 import com.my.service.ServiceException;
 
 import java.util.List;

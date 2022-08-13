@@ -1,7 +1,7 @@
 package com.my.dao.order;
 
 import com.my.dao.DAO;
-import com.my.entity.OrderProduct;
+import com.my.entity.order.OrderProduct;
 
 import java.util.List;
 

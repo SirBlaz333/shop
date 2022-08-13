@@ -1,6 +1,6 @@
 package com.my.entity.security;
 
-import com.my.entity.UserRole;
+import com.my.entity.user.UserRole;
 
 import java.util.Collections;
 import java.util.List;

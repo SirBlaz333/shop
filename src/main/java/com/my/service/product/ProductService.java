@@ -1,7 +1,7 @@
 package com.my.service.product;
 
 import com.my.entity.Cpu;
-import com.my.entity.OrderProduct;
+import com.my.entity.order.OrderProduct;
 import com.my.entity.ProductFilterFormBean;
 import com.my.service.ServiceException;
 

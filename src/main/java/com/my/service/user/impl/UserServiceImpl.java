@@ -1,4 +1,4 @@
-package com.my.service.user;
+package com.my.service.user.impl;
 
 import com.my.cmd.impl.ShowLoginPageCommand;
 import com.my.dao.DBException;
@@ -8,6 +8,8 @@ import com.my.entity.dto.UserDTO;
 import com.my.entity.user.User;
 import com.my.entity.user.UserRole;
 import com.my.service.ServiceException;
+import com.my.service.user.UserRoleParser;
+import com.my.service.user.UserService;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

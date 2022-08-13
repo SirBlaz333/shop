@@ -1,9 +1,9 @@
 package com.my.cmd.impl.util;
 
 import com.my.entity.Captcha;
-import com.my.entity.User;
-import com.my.entity.UserBuilder;
-import com.my.entity.UserRegFields;
+import com.my.entity.user.User;
+import com.my.entity.builder.UserBuilder;
+import com.my.entity.user.UserRegFields;
 import com.my.web.captcha.container.strategy.CaptchaContainerStrategy;
 import com.my.web.captcha.exception.CaptchaException;
 

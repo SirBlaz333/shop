@@ -2,7 +2,7 @@ package com.my.cmd.impl;
 
 import com.my.cmd.Command;
 import com.my.cmd.Method;
-import com.my.entity.UserRegFields;
+import com.my.entity.user.UserRegFields;
 import com.my.web.page.Pages;
 
 import javax.servlet.ServletException;

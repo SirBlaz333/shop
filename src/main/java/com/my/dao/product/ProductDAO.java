@@ -3,7 +3,7 @@ package com.my.dao.product;
 import com.my.dao.DAO;
 import com.my.dao.DBException;
 import com.my.entity.Cpu;
-import com.my.entity.OrderProduct;
+import com.my.entity.order.OrderProduct;
 import com.my.entity.ProductFilterFormBean;
 import com.my.entity.dto.CpuDTO;
 

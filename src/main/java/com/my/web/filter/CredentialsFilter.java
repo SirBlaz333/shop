@@ -3,8 +3,8 @@ package com.my.web.filter;
 import com.my.cmd.impl.util.CartUtility;
 import com.my.cmd.impl.util.RedirectionUtility;
 import com.my.entity.Cart;
-import com.my.entity.User;
-import com.my.entity.UserRegFields;
+import com.my.entity.user.User;
+import com.my.entity.user.UserRegFields;
 import com.my.web.page.Pages;
 
 import javax.servlet.Filter;
@@ -13,7 +13,6 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
-import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;

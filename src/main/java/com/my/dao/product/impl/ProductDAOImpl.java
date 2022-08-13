@@ -5,7 +5,7 @@ import com.my.dao.DBManager;
 import com.my.dao.product.ProductDAO;
 import com.my.dao.product.sql.ProductSQLQueryBuilder;
 import com.my.entity.Cpu;
-import com.my.entity.OrderProduct;
+import com.my.entity.order.OrderProduct;
 import com.my.entity.ProductFilterFormBean;
 import com.my.entity.builder.CpuBuilder;
 import com.my.entity.dto.CpuDTO;

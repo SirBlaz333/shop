@@ -1,4 +1,6 @@
-package com.my.entity;
+package com.my.entity.order;
+
+import com.my.entity.user.User;
 
 import java.util.List;
 

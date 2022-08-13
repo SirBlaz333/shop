@@ -27,22 +27,21 @@ public class ShowLoginPageCommand implements Command {
     private final CaptchaService captchaService;
     private final CaptchaContainerStrategy container;
     private final Logger logger;
-    private final RedirectionUtility redirectionUtility;
 
     public ShowLoginPageCommand(CaptchaContainerStrategy captchaContainerStrategy) {
-        this.captchaService = new CaptchaService();
-        this.redirectionUtility = new RedirectionUtility();
-        this.container = captchaContainerStrategy;
-        this.logger = Logger.getLogger(getClass().getName());
+        captchaService = new CaptchaService();
+        container = captchaContainerStrategy;
+        logger = Logger.getLogger(getClass().getName());
     }
 
     @Override
     public void doCommand(HttpServletRequest request, HttpServletResponse response, Method method) throws IOException, ServletException {
-        if(method == Method.GET){
-            displayCaptcha(request, response);
-        }
-        if(method == Method.POST){
+        Object captcha = request.getSession().getAttribute(CAPTCHA_IMAGE);
+        if(method == Method.POST || captcha == null){
             createCaptchaAndRedirect(request, response);
+        }
+        if(method == Method.GET && captcha != null){
+            displayCaptcha(request, response);
         }
     }
 
@@ -53,7 +52,6 @@ public class ShowLoginPageCommand implements Command {
         container.startRemoveRemove(captchaKey);
         request.getSession().setAttribute(CAPTCHA_IMAGE, captcha.getImage());
         setAttributes(request);
-        redirectionUtility.setRedirectUrl(request);
         request.getRequestDispatcher(Pages.REGISTRATION_JSP).forward(request, response);
     }
 

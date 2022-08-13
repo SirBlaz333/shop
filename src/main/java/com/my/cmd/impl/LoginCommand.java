@@ -4,8 +4,8 @@ import com.my.cmd.Command;
 import com.my.cmd.Method;
 import com.my.cmd.impl.util.RedirectionUtility;
 import com.my.cmd.impl.util.LoginUtility;
-import com.my.entity.User;
-import com.my.entity.UserRegFields;
+import com.my.entity.user.User;
+import com.my.entity.user.UserRegFields;
 import com.my.service.ServiceException;
 import com.my.service.user.UserService;
 import com.my.web.captcha.container.strategy.CaptchaContainerStrategy;
@@ -34,7 +34,6 @@ public class LoginCommand implements Command {
             doLogin(request, response);
         } catch (ServiceException | CaptchaException e) {
             loginUtility.setAttributesForForward(request);
-            redirectionUtility.setRedirectUrl(request);
             redirectionUtility.showError(request, response, Pages.LOGIN, e.getMessage());
         }
     }

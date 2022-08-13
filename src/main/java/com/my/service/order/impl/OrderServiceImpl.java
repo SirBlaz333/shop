@@ -3,7 +3,7 @@ package com.my.service.order.impl;
 import com.my.dao.order.OrderDAO;
 import com.my.dao.order.OrderStatusDAO;
 import com.my.dao.order.OrderedProductsDAO;
-import com.my.entity.Order;
+import com.my.entity.order.Order;
 import com.my.service.order.OrderService;
 
 public class OrderServiceImpl implements OrderService {
