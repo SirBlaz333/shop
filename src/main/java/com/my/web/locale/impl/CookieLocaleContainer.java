@@ -18,6 +18,9 @@ public class CookieLocaleContainer implements LocaleContainer {
     @Override
     public Locale getLocale(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
+        if(cookies == null){
+            return null;
+        }
         for (Cookie cookie : cookies) {
             if (cookie.getName().equals(LocaleFilter.LANGUAGE)) {
                 cookie.setMaxAge(maxAge);
