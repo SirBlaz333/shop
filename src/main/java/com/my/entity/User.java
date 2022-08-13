@@ -10,6 +10,15 @@ public class User {
     private String password;
     private boolean newsletter;
     private BufferedImage image;
+    private UserRole userRole;
+
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
+    }
 
     public String getEmail() {
         return email;

@@ -80,6 +80,7 @@
 
   <build>
     <finalName>pre_prod_java_winter_2022_web</finalName>
+    <testSourceDirectory>src/main/test/</testSourceDirectory>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <plugin>

@@ -16,17 +16,18 @@
     <param-value>10000</param-value>
   </context-param>
   <context-param>
-    <param-name>UserService</param-name>
-    <param-value>com.my.service.user.impl.UserServiceImpl</param-value>
-  </context-param>
-  <context-param>
-    <param-name>UserDAO</param-name>
-    <param-value>com.my.dao.user.impl.UserDAOMap</param-value>
-  </context-param>
-  <context-param>
     <param-name>ImagesFilepath</param-name>
     <param-value>images\</param-value>
   </context-param>
+  <context-param>
+    <param-name>RestrictionsFilepath</param-name>
+    <param-value>src/main/resources/restrictions.xml</param-value>
+  </context-param>
+
+  <listener>
+    <listener-class>com.my.web.listener.RestrictionsListener</listener-class>
+  </listener>
+
   <filter>
     <filter-name>CharacterEncodingFilter</filter-name>
     <filter-class>com.my.web.filter.CharacterEncodingFilter</filter-class>
@@ -36,6 +37,17 @@
     <url-pattern>/controller</url-pattern>
     <url-pattern>*.jsp</url-pattern>
   </filter-mapping>
+
+  <filter>
+    <filter-name>SecurityFilter</filter-name>
+    <filter-class>com.my.web.filter.SecurityFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>SecurityFilter</filter-name>
+    <url-pattern>/controller</url-pattern>
+    <url-pattern>*.jsp</url-pattern>
+  </filter-mapping>
+
   <filter>
     <filter-name>LocaleFilter</filter-name>
     <filter-class>com.my.web.filter.LocaleFilter</filter-class>
@@ -61,6 +73,7 @@
     <url-pattern>/controller</url-pattern>
     <url-pattern>*.jsp</url-pattern>
   </filter-mapping>
+
   <filter>
     <filter-name>CredentialsFilter</filter-name>
     <filter-class>com.my.web.filter.CredentialsFilter</filter-class>
@@ -69,6 +82,7 @@
     <filter-name>CredentialsFilter</filter-name>
     <url-pattern>/credentials.jsp</url-pattern>
   </filter-mapping>
+
   <filter>
     <filter-name>CacheDisableFilter</filter-name>
     <filter-class>com.my.web.filter.CacheDisableFilter</filter-class>
@@ -78,6 +92,7 @@
     <url-pattern>/controller</url-pattern>
     <url-pattern>*.jsp</url-pattern>
   </filter-mapping>
+
   <filter>
     <filter-name>GzipResponseCompressionFilter</filter-name>
     <filter-class>com.my.web.filter.GzipResponseCompressionFilter</filter-class>
@@ -87,4 +102,18 @@
     <url-pattern>/controller</url-pattern>
     <url-pattern>*.jsp</url-pattern>
   </filter-mapping>
+
+  <error-page>
+    <error-code>404</error-code>
+    <location>/error.jsp</location>
+  </error-page>
+  <error-page>
+    <error-code>500</error-code>
+    <location>/error.jsp</location>
+  </error-page>
+  <error-page>
+    <exception-type>java.lang.RuntimeException</exception-type>
+    <location>/error.jsp</location>
+  </error-page>
+
 </web-app>

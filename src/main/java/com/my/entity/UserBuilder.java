@@ -1,4 +1,7 @@
-package com.my.entity;
+package com.my.entity.builder;
+
+import com.my.entity.user.User;
+import com.my.entity.user.UserRole;
 
 import java.awt.image.BufferedImage;
 
@@ -40,6 +43,11 @@ public class UserBuilder {
 
     public UserBuilder withImage(BufferedImage bufferedImage){
         user.setImage(bufferedImage);
+        return this;
+    }
+
+    public UserBuilder withRole(UserRole userRole){
+        user.setUserRole(userRole);
         return this;
     }
 

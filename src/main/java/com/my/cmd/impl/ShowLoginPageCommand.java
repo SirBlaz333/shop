@@ -59,6 +59,9 @@ public class ShowLoginPageCommand implements Command {
 
     private void setAttributes(HttpServletRequest request){
         request.setAttribute(REGISTER, request.getParameter(REGISTER));
+        if(request.getParameter(RedirectionUtility.FROM) != null){
+            request.setAttribute(RedirectionUtility.FROM, request.getParameter(RedirectionUtility.FROM));
+        }
         if(request.getParameter(RedirectionUtility.ERROR_MESSAGE) != null){
             request.setAttribute(RedirectionUtility.ERROR_MESSAGE, request.getParameter(RedirectionUtility.ERROR_MESSAGE));
         }

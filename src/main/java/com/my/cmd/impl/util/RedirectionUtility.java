@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class RedirectionUtility {
-    public static final String REDIRECT_URL = "redirectURL";
+    public static final String FROM = "from";
     public static final String ERROR_MESSAGE = "errorMessage";
 
     public void showErrorRedirect(HttpServletResponse response, String pageToRedirect, String errorMessage) throws IOException {
@@ -20,12 +20,12 @@ public class RedirectionUtility {
     }
 
     public String getRedirectUrl(HttpServletRequest request, String defaultURL) {
-        String redirectURL = request.getParameter(REDIRECT_URL);
+        String redirectURL = request.getParameter(FROM);
         return (redirectURL != null) ? redirectURL : defaultURL;
     }
 
     public void setRedirectUrl(HttpServletRequest request) {
-        request.setAttribute(REDIRECT_URL, request.getParameter(REDIRECT_URL));
+        request.setAttribute(FROM, request.getParameter(FROM));
     }
 
     private String appendErrorMessage(String URL, String paramValue) {

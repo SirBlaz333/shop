@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<security>
+    <restriction>
+        <url-pattern>.*/user.*</url-pattern>
+        <role>User</role>
+        <role>Admin</role>
+    </restriction>
+    <restriction>
+        <url-pattern>.*/admin.*</url-pattern>
+        <role>Admin</role>
+    </restriction>
+</security>

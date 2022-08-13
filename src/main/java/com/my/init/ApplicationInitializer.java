@@ -15,7 +15,9 @@ import com.my.dao.order.impl.OrderedProductsDAOImpl;
 import com.my.dao.product.ProductDAO;
 import com.my.dao.product.impl.ProductDAOImpl;
 import com.my.dao.user.UserDAO;
+import com.my.dao.user.UserRolesDAO;
 import com.my.dao.user.impl.UserDAOImpl;
+import com.my.dao.user.impl.UserRolesDAOImpl;
 import com.my.service.order.OrderService;
 import com.my.service.order.impl.OrderServiceImpl;
 import com.my.service.product.ProductService;
@@ -46,8 +48,9 @@ public class ApplicationInitializer {
         OrderDAO orderDAO = new OrderDAOImpl(dbManager);
         OrderedProductsDAO orderedProductsDAO = new OrderedProductsDAOImpl(dbManager);
         OrderStatusDAO orderStatusDAO = new OrderStatusDAOImpl(dbManager);
+        UserRolesDAO userRolesDAO = new UserRolesDAOImpl(dbManager);
 
-        userService = new UserServiceImpl(userDAO);
+        userService = new UserServiceImpl(userDAO, userRolesDAO);
         productService = new ProductServiceImpl(productDAO, manufacturerDAO, memoryTypeDAO);
         orderService = new OrderServiceImpl(orderDAO, orderedProductsDAO, orderStatusDAO);
         timeService = new TimeServiceImpl();
