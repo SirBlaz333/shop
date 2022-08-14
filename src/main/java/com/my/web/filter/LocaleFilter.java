@@ -36,9 +36,10 @@ public class LocaleFilter implements Filter {
     public LocaleFilter() {
     }
 
-    LocaleFilter(LocaleContainer localeContainer, List<Locale> locales) {
+    LocaleFilter(LocaleContainer localeContainer, List<Locale> locales, Locale defaultLocale) {
         this.localeContainer = localeContainer;
         this.locales = locales;
+        this.defaultLocale = defaultLocale;
     }
 
     @Override

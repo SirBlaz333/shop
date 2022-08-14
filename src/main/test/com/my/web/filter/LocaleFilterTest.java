@@ -34,22 +34,18 @@ public class LocaleFilterTest {
     @Mock
     private FilterChain filterChain;
     @Mock
-    private FilterConfig filterConfig;
-    @Mock
     private LocaleContainer localeContainer;
     @Mock
     private List<Locale> locales;
 
     @Before
-    public void setUp() throws ServletException {
+    public void setUp() {
         locales = new ArrayList<>();
         locales.add(Locale.ENGLISH);
         locales.add(Locale.GERMAN);
         locales.add(Locale.FRENCH);
-        when(filterConfig.getInitParameter("DefaultLocale")).thenReturn("en");
         when(request.getLocales()).thenReturn(Collections.enumeration(new ArrayList<>()));
-        localeFilter = new LocaleFilter(localeContainer, locales);
-        localeFilter.init(filterConfig);
+        localeFilter = new LocaleFilter(localeContainer, locales, new Locale("en"));
     }
 
     @Test
@@ -125,18 +121,25 @@ public class LocaleFilterTest {
         testLocale(Locale.ENGLISH);
     }
 
+    @Test
+    public void testLocales() throws ServletException, IOException {
+        localeFilter.doFilter(request, response, filterChain);
+        ArgumentCaptor<HttpServletRequest> requestCaptor = ArgumentCaptor.forClass(HttpServletRequest.class);
+        verify(filterChain).doFilter(requestCaptor.capture(), eq(response));
+        Enumeration<Locale> localeEnumeration = requestCaptor.getValue().getLocales();
+        while (localeEnumeration.hasMoreElements()) {
+            assertTrue(locales.contains(localeEnumeration.nextElement()));
+        }
+    }
+
     private void testLocale(Locale locale) throws ServletException, IOException {
         ArgumentCaptor<HttpServletRequest> requestCaptor = ArgumentCaptor.forClass(HttpServletRequest.class);
         verify(filterChain).doFilter(requestCaptor.capture(), eq(response));
         HttpServletRequest request = requestCaptor.getValue();
         assertEquals(locale, request.getLocale());
-        Enumeration<Locale> locales = request.getLocales();
-        assertTrue(locales.hasMoreElements());
-        assertEquals(locale, locales.nextElement());
-        assertFalse(locales.hasMoreElements());
     }
 
-    private Enumeration<Locale> createEnumeration(){
+    private Enumeration<Locale> createEnumeration() {
         return Collections.enumeration(locales);
     }
 
