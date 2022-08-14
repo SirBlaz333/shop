@@ -8,4 +8,5 @@ public class Pages {
     public static final String PRODUCTS = "products.jsp?";
     public static final String CART = "cart.jsp?";
     public static final String CREDENTIALS = "credentials.jsp?";
+    public static final String ERROR = "error.jsp";
 }

@@ -15,13 +15,7 @@
         </form>
     </c:when>
     <c:otherwise>
-        <form action="controller" method="post">
-            <input type="hidden" name="command" value="logout">
-            <button type="submit" class="right-button">
-                <fmt:message key="logout"/>
-            </button>
-        </form>
-        <form action="controller" method="post">
+        <form action="user.jsp" method="post">
             <button class="right-button">
                 <c:out value="${user.firstname}"/>
                 <img src="controller?command=displayAvatar" class="avatar" alt=""/>

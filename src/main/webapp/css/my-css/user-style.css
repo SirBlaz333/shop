@@ -1,0 +1,41 @@
+.user{
+    margin-top: 50px;
+}
+
+.row {
+    display: flex;
+    height: 100px;
+    margin: auto;
+    width: 1000px;
+}
+
+.small-col {
+    width: 45%;
+}
+
+.small-col:first-of-type{
+    margin-right: 10%;
+}
+
+.avatar img{
+    max-width: 200px;
+    max-height: 200px;
+}
+
+.logout{
+    margin-top: 200px;
+}
+
+.logout button{
+    font-size: 28px;
+    height: 75px;
+    width: 100%;
+    border-radius: 8px;
+    border: none;
+    background: #eee;
+    transition: 0.3s;
+}
+
+.logout button:hover{
+    background: #ccc;
+}
