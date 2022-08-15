@@ -44,7 +44,7 @@
     </init-param>
     <init-param>
       <param-name>Locales</param-name>
-      <param-value>en, ua</param-value>
+      <param-value>en, uk</param-value>
     </init-param>
     <init-param>
       <param-name>LocaleContainer</param-name>
