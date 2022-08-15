@@ -10,13 +10,17 @@ import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
 public class CharacterEncodingFilter implements Filter {
+
+    public static final String CHARACTER_ENCODING = "UTF-8";
+
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
     }
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding(CHARACTER_ENCODING);
+        response.setCharacterEncoding(CHARACTER_ENCODING);
         chain.doFilter(request, response);
     }
 
