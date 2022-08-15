@@ -33,7 +33,8 @@
   </filter>
   <filter-mapping>
     <filter-name>CharacterEncodingFilter</filter-name>
-    <url-pattern>/*</url-pattern>
+    <url-pattern>/controller</url-pattern>
+    <url-pattern>*.jsp</url-pattern>
   </filter-mapping>
   <filter>
     <filter-name>LocaleFilter</filter-name>
@@ -57,7 +58,8 @@
   </filter>
   <filter-mapping>
     <filter-name>LocaleFilter</filter-name>
-    <url-pattern>/*</url-pattern>
+    <url-pattern>/controller</url-pattern>
+    <url-pattern>*.jsp</url-pattern>
   </filter-mapping>
   <filter>
     <filter-name>CredentialsFilter</filter-name>
@@ -73,7 +75,8 @@
   </filter>
   <filter-mapping>
     <filter-name>CacheDisableFilter</filter-name>
-    <url-pattern>/*</url-pattern>
+    <url-pattern>/controller</url-pattern>
+    <url-pattern>*.jsp</url-pattern>
   </filter-mapping>
   <filter>
     <filter-name>GzipResponseCompressionFilter</filter-name>
@@ -81,6 +84,7 @@
   </filter>
   <filter-mapping>
     <filter-name>GzipResponseCompressionFilter</filter-name>
-    <url-pattern>/*</url-pattern>
+    <url-pattern>/controller</url-pattern>
+    <url-pattern>*.jsp</url-pattern>
   </filter-mapping>
 </web-app>
