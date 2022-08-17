@@ -52,7 +52,7 @@ public class LocaleFilter implements Filter {
         validateResourceBundlesExistence(locales);
     }
 
-    private Locale getDefaultLocale(FilterConfig filterConfig){
+    private Locale getDefaultLocale(FilterConfig filterConfig) {
         String defaultLanguage = filterConfig.getInitParameter(DEFAULT_LOCALE);
         return new Locale(defaultLanguage);
     }
@@ -85,16 +85,22 @@ public class LocaleFilter implements Filter {
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
-        Locale locale = defaultLocale;
-        locale = getLocaleFromLocalesOrDefault(request, locale);
-        locale = getLocaleFromContainerOrDefault(request, locale);
-        locale = getLocaleFromRequestOrDefault(request, locale);
+        Locale locale = getLocaleFromRequest(request);
+        if (locale == null) {
+            locale = getLocaleFromContainer(request);
+        }
+        if (locale == null) {
+            locale = getLocaleFromLocales(request);
+        }
+        if (locale == null) {
+            locale = defaultLocale;
+        }
         localeContainer.setLocale(request, response, locale);
         LocaleRequestWrapper requestWrapper = new LocaleRequestWrapper(request, locale, new ArrayList<>(locales));
         chain.doFilter(requestWrapper, response);
     }
 
-    private Locale getLocaleFromLocalesOrDefault(HttpServletRequest request, Locale defaultLocale) {
+    private Locale getLocaleFromLocales(HttpServletRequest request) {
         Enumeration<Locale> localeEnumeration = request.getLocales();
         while (localeEnumeration.hasMoreElements()) {
             Locale userLocale = localeEnumeration.nextElement();
@@ -102,18 +108,14 @@ public class LocaleFilter implements Filter {
                 return userLocale;
             }
         }
-        return defaultLocale;
+        return null;
     }
 
-    private Locale getLocaleFromContainerOrDefault(HttpServletRequest request, Locale defaultLocale) {
-        Locale locale = localeContainer.getLocale(request);
-        if (locale != null) {
-            return locale;
-        }
-        return defaultLocale;
+    private Locale getLocaleFromContainer(HttpServletRequest request) {
+        return localeContainer.getLocale(request);
     }
 
-    private Locale getLocaleFromRequestOrDefault(HttpServletRequest request, Locale defaultLocale) {
+    private Locale getLocaleFromRequest(HttpServletRequest request) {
         String language = request.getParameter(LANGUAGE);
         if (language == null) {
             return defaultLocale;
@@ -122,6 +124,6 @@ public class LocaleFilter implements Filter {
         if (locales.contains(locale)) {
             return locale;
         }
-        return defaultLocale;
+        return null;
     }
 }

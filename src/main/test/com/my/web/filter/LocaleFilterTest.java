@@ -24,7 +24,7 @@ import java.util.Locale;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(MockitoJUnitRunner.Silent.class)
 public class LocaleFilterTest {
     private LocaleFilter localeFilter;
     @Mock
