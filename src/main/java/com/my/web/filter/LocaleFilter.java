@@ -4,6 +4,7 @@ import com.my.entity.request.LocaleRequestWrapper;
 import com.my.web.locale.LocaleContainer;
 import com.my.web.filter.parser.ParamParser;
 import com.my.web.locale.LocaleContainerFactory;
+import com.my.web.locale.exception.LocaleContainerFactoryException;
 import com.my.web.locale.impl.LocaleContainerFactoryImpl;
 
 import javax.servlet.Filter;
@@ -46,9 +47,13 @@ public class LocaleFilter implements Filter {
     public void init(FilterConfig filterConfig) throws ServletException {
         paramParser = new ParamParser();
         localeContainerFactory = new LocaleContainerFactoryImpl();
-        localeContainer = getLocaleContainer(filterConfig);
         defaultLocale = getDefaultLocale(filterConfig);
         locales = getLocales(filterConfig);
+        try{
+            localeContainer = getLocaleContainer(filterConfig);
+        } catch (LocaleContainerFactoryException e){
+            throw new ServletException(e);
+        }
         validateResourceBundlesExistence(locales);
     }
 
@@ -57,7 +62,7 @@ public class LocaleFilter implements Filter {
         return new Locale(defaultLanguage);
     }
 
-    private LocaleContainer getLocaleContainer(FilterConfig filterConfig) throws ServletException {
+    private LocaleContainer getLocaleContainer(FilterConfig filterConfig) throws LocaleContainerFactoryException {
         if (localeContainer != null) {
             return localeContainer;
         }
