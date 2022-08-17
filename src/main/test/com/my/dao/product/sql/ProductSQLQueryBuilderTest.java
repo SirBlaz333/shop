@@ -4,7 +4,7 @@ import com.my.entity.ProductFilterFormBean;
 import com.my.entity.SortingOrder;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class ProductSQLQueryBuilderTest {
 

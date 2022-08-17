@@ -29,7 +29,10 @@ import static com.my.service.user.impl.UserServiceImpl.USER_ALREADY_EXISTS;
 import static com.my.web.page.Pages.MAIN;
 import static com.my.web.page.Pages.REGISTRATION;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.eq;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class RegistrationCommandTest {
