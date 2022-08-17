@@ -14,10 +14,6 @@ public class CacheDisableFilter implements Filter {
     public static final String NO_CACHE = "no-cache";
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-    }
-
-    @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         response.addHeader(CACHE_CONTROL, NO_CACHE);
