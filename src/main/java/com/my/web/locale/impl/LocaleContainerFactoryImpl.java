@@ -1,6 +1,7 @@
 package com.my.web.locale.impl;
 
 import com.my.web.locale.LocaleContainer;
+import com.my.web.locale.LocaleContainerConstants;
 import com.my.web.locale.LocaleContainerFactory;
 import com.my.web.locale.exception.LocaleContainerFactoryException;
 
@@ -26,7 +27,7 @@ public class LocaleContainerFactoryImpl implements LocaleContainerFactory {
     }
 
     private LocaleContainer createLocaleContainer(FilterConfig filterConfig) throws InvocationTargetException, InstantiationException, IllegalAccessException, LocaleContainerFactoryException {
-        String classname = filterConfig.getInitParameter(LOCALE_CONTAINER);
+        String classname = filterConfig.getInitParameter(LocaleContainerConstants.LOCALE_CONTAINER);
         if (classname.equals(SessionLocaleContainer.class.getName())) {
             return (LocaleContainer) getConstructor(classname).newInstance();
         }
