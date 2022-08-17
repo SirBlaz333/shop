@@ -45,5 +45,6 @@ public class GzipServletOutputStream extends ServletOutputStream {
 
     @Override
     public void setWriteListener(WriteListener writeListener) {
+        throw new UnsupportedOperationException();
     }
 }
