@@ -17,7 +17,7 @@
             <type>java.util.Enumeration</type>
         </attribute>
         <attribute>
-            <name>var</name>
+            <name>name</name>
             <required>true</required>
             <rtexprvalue>false</rtexprvalue>
             <type>java.lang.String</type>

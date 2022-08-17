@@ -8,22 +8,22 @@ import java.util.Enumeration;
 import java.util.Locale;
 
 public class LocaleListTag extends SimpleTagSupport {
-    private String var;
+    private String name;
     private Enumeration<Locale> enumeration;
 
     public void setEnumeration(Enumeration<Locale> enumeration) {
         this.enumeration = enumeration;
     }
 
-    public void setVar(String var) {
-        this.var = var;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
     public void doTag() throws JspException, IOException {
         JspWriter jspWriter = getJspContext().getOut();
         while (enumeration.hasMoreElements()) {
-            getJspContext().setAttribute(var, enumeration.nextElement());
+            getJspContext().setAttribute(name, enumeration.nextElement());
             getJspBody().invoke(jspWriter);
         }
     }

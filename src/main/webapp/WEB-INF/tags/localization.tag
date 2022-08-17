@@ -5,7 +5,7 @@
 </head>
 <div class="localization">
     <select name="lang" id="localization" value="${request.getLocale()}">
-        <llt:forEnum var="locale" enumeration="<%=request.getLocales()%>">
+        <llt:forEnum name="locale" enumeration="<%=request.getLocales()%>">
             <option value="${locale}"><c:out value="${locale.toString().toUpperCase()}"/></option>
         </llt:forEnum>
     </select>

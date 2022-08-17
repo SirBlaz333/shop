@@ -14,6 +14,10 @@ public class CharacterEncodingFilter implements Filter {
     public static final String CHARACTER_ENCODING = "UTF-8";
 
     @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
+    }
+
+    @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws ServletException, IOException {
         request.setCharacterEncoding(CHARACTER_ENCODING);
         response.setCharacterEncoding(CHARACTER_ENCODING);
