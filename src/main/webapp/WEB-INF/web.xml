@@ -17,7 +17,7 @@
   </context-param>
   <context-param>
     <param-name>UserService</param-name>
-    <param-value>com.my.service.user.UserServiceImpl</param-value>
+    <param-value>com.my.service.user.impl.UserServiceImpl</param-value>
   </context-param>
   <context-param>
     <param-name>UserDAO</param-name>

@@ -18,7 +18,7 @@ public class ManufacturerDAOImpl implements ManufacturerDAO {
 
     public ManufacturerDAOImpl(DBManager dbManager) {
         this.dbManager = dbManager;
-        logger = Logger.getLogger(getClass().getName());
+        this.logger = Logger.getLogger(getClass().getName());
     }
 
     @Override

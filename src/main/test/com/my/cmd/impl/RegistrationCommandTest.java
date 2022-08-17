@@ -1,21 +1,16 @@
 package com.my.cmd.impl;
 
 import com.my.cmd.impl.util.RedirectionUtility;
-import com.my.dao.user.impl.UserDAOMap;
 import com.my.cmd.Method;
 import com.my.entity.Captcha;
 import com.my.service.ServiceException;
 import com.my.service.user.UserService;
-import com.my.service.user.UserServiceImpl;
 import com.my.web.captcha.container.strategy.CaptchaContainerStrategy;
-import com.my.web.captcha.exception.CaptchaException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import javax.servlet.RequestDispatcher;
@@ -27,11 +22,10 @@ import javax.servlet.http.HttpSession;
 
 import java.io.IOException;
 
-import static com.my.cmd.impl.util.RedirectionUtility.ERROR_MESSAGE;
 import static com.my.cmd.impl.util.LoginUtility.*;
 import static com.my.entity.UserRegFields.CAPTCHA;
 import static com.my.entity.UserRegFields.EMAIL;
-import static com.my.service.user.UserServiceImpl.USER_ALREADY_EXISTS;
+import static com.my.service.user.impl.UserServiceImpl.USER_ALREADY_EXISTS;
 import static com.my.web.page.Pages.MAIN;
 import static com.my.web.page.Pages.REGISTRATION;
 import static org.junit.Assert.assertEquals;

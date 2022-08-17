@@ -38,8 +38,8 @@ public class CreateOrderCommand implements Command {
         this.orderService = orderService;
         this.productService = productService;
         this.timeService = timeService;
-        redirectionUtility = new RedirectionUtility();
-        cartUtility = new CartUtility();
+        this.redirectionUtility = new RedirectionUtility();
+        this.cartUtility = new CartUtility();
     }
 
     @Override

@@ -24,8 +24,8 @@ public class RegistrationCommand implements Command {
 
     public RegistrationCommand(CaptchaContainerStrategy captchaContainer, UserService userService) {
         this.userService = userService;
-        loginUtility = new LoginUtility(captchaContainer);
-        redirectionUtility = new RedirectionUtility();
+        this.loginUtility = new LoginUtility(captchaContainer);
+        this.redirectionUtility = new RedirectionUtility();
     }
 
     RegistrationCommand(CaptchaContainerStrategy captchaContainer, UserService userService, RedirectionUtility redirectionUtility){

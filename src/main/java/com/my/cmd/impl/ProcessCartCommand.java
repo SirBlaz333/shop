@@ -21,8 +21,8 @@ public class ProcessCartCommand implements Command {
 
     public ProcessCartCommand(ProductService productService) {
         this.productService = productService;
-        cartUtility = new CartUtility();
-        container = new CartActionContainer(productService);
+        this.cartUtility = new CartUtility();
+        this.container = new CartActionContainer(productService);
     }
 
     @Override

@@ -10,7 +10,7 @@ public class GzipServletOutputStream extends ServletOutputStream {
     private final GZIPOutputStream gzipOutputStream;
 
     public GzipServletOutputStream(OutputStream outputStream) throws IOException {
-        gzipOutputStream = new GZIPOutputStream(outputStream);
+        this.gzipOutputStream = new GZIPOutputStream(outputStream);
     }
 
     @Override
