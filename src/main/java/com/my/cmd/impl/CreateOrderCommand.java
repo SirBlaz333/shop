@@ -52,7 +52,7 @@ public class CreateOrderCommand implements Command {
             request.getRequestDispatcher(Pages.MAIN).forward(request, response);
         } catch (ServiceException e) {
             setAvailableAmountInCart(cartUtility.getCart(request.getSession()), productService);
-            redirectionUtility.showErrorRedirect(request, response, Pages.CART, e.getMessage());
+            redirectionUtility.showErrorRedirect(response, Pages.CART, e.getMessage());
         }
     }
 
