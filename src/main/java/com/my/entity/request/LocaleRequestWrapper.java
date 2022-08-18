@@ -10,15 +10,10 @@ import java.util.Locale;
 
 public class LocaleRequestWrapper extends HttpServletRequestWrapper {
     private final Locale locale;
-    private final List<Locale> locales;
 
-    public LocaleRequestWrapper(HttpServletRequest request, Locale locale, List<Locale> locales) {
+    public LocaleRequestWrapper(HttpServletRequest request, Locale locale) {
         super(request);
         this.locale = locale;
-        this.locales = new ArrayList<>();
-        locales.remove(locale);
-        this.locales.add(locale);
-        this.locales.addAll(locales);
     }
 
     @Override
@@ -28,6 +23,8 @@ public class LocaleRequestWrapper extends HttpServletRequestWrapper {
 
     @Override
     public Enumeration<Locale> getLocales() {
+        List<Locale> locales = new ArrayList<>();
+        locales.add(locale);
         return Collections.enumeration(locales);
     }
 }

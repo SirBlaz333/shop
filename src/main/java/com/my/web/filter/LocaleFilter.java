@@ -101,7 +101,7 @@ public class LocaleFilter implements Filter {
             locale = defaultLocale;
         }
         localeContainer.setLocale(request, response, locale);
-        LocaleRequestWrapper requestWrapper = new LocaleRequestWrapper(request, locale, new ArrayList<>(locales));
+        LocaleRequestWrapper requestWrapper = new LocaleRequestWrapper(request, locale);
         chain.doFilter(requestWrapper, response);
     }
 
