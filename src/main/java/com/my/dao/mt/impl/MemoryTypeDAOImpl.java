@@ -19,7 +19,7 @@ public class MemoryTypeDAOImpl implements MemoryTypeDAO {
 
     public MemoryTypeDAOImpl(DBManager dbManager) {
         this.dbManager = dbManager;
-        logger = Logger.getLogger(getClass().getName());
+        this.logger = Logger.getLogger(getClass().getName());
     }
 
     @Override

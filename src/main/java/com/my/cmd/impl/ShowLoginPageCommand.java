@@ -30,10 +30,10 @@ public class ShowLoginPageCommand implements Command {
     private final RedirectionUtility redirectionUtility;
 
     public ShowLoginPageCommand(CaptchaContainerStrategy captchaContainerStrategy) {
-        captchaService = new CaptchaService();
-        redirectionUtility = new RedirectionUtility();
-        container = captchaContainerStrategy;
-        logger = Logger.getLogger(getClass().getName());
+        this.captchaService = new CaptchaService();
+        this.redirectionUtility = new RedirectionUtility();
+        this.container = captchaContainerStrategy;
+        this.logger = Logger.getLogger(getClass().getName());
     }
 
     @Override

@@ -17,7 +17,7 @@
   </context-param>
   <context-param>
     <param-name>UserService</param-name>
-    <param-value>com.my.service.user.UserServiceImpl</param-value>
+    <param-value>com.my.service.user.impl.UserServiceImpl</param-value>
   </context-param>
   <context-param>
     <param-name>UserDAO</param-name>
@@ -27,4 +27,64 @@
     <param-name>ImagesFilepath</param-name>
     <param-value>images\</param-value>
   </context-param>
+  <filter>
+    <filter-name>CharacterEncodingFilter</filter-name>
+    <filter-class>com.my.web.filter.CharacterEncodingFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>CharacterEncodingFilter</filter-name>
+    <url-pattern>/controller</url-pattern>
+    <url-pattern>*.jsp</url-pattern>
+  </filter-mapping>
+  <filter>
+    <filter-name>LocaleFilter</filter-name>
+    <filter-class>com.my.web.filter.LocaleFilter</filter-class>
+    <init-param>
+      <param-name>DefaultLocale</param-name>
+      <param-value>en</param-value>
+    </init-param>
+    <init-param>
+      <param-name>Locales</param-name>
+      <param-value>en, uk</param-value>
+    </init-param>
+    <init-param>
+      <param-name>LocaleContainer</param-name>
+      <param-value>com.my.web.locale.impl.CookieLocaleContainer</param-value>
+    </init-param>
+    <init-param>
+      <param-name>CookieMaxAge</param-name>
+      <param-value>600</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>LocaleFilter</filter-name>
+    <url-pattern>/controller</url-pattern>
+    <url-pattern>*.jsp</url-pattern>
+  </filter-mapping>
+  <filter>
+    <filter-name>CredentialsFilter</filter-name>
+    <filter-class>com.my.web.filter.CredentialsFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>CredentialsFilter</filter-name>
+    <url-pattern>/credentials.jsp</url-pattern>
+  </filter-mapping>
+  <filter>
+    <filter-name>CacheDisableFilter</filter-name>
+    <filter-class>com.my.web.filter.CacheDisableFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>CacheDisableFilter</filter-name>
+    <url-pattern>/controller</url-pattern>
+    <url-pattern>*.jsp</url-pattern>
+  </filter-mapping>
+  <filter>
+    <filter-name>GzipResponseCompressionFilter</filter-name>
+    <filter-class>com.my.web.filter.GzipResponseCompressionFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>GzipResponseCompressionFilter</filter-name>
+    <url-pattern>/controller</url-pattern>
+    <url-pattern>*.jsp</url-pattern>
+  </filter-mapping>
 </web-app>

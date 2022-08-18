@@ -28,7 +28,7 @@ public class ProductDAOImpl implements ProductDAO {
 
     public ProductDAOImpl(DBManager dbManager) {
         this.dbManager = dbManager;
-        logger = Logger.getLogger(getClass().getName());
+        this.logger = Logger.getLogger(getClass().getName());
     }
 
     @Override

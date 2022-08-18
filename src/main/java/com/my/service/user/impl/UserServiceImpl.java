@@ -1,10 +1,11 @@
-package com.my.service.user;
+package com.my.service.user.impl;
 
 import com.my.cmd.impl.ShowLoginPageCommand;
 import com.my.dao.DBException;
 import com.my.dao.user.UserDAO;
 import com.my.entity.User;
 import com.my.service.ServiceException;
+import com.my.service.user.UserService;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -12,7 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     public static final String USER_ALREADY_EXISTS = "User with such email already exists";
     private final UserDAO userDAO;

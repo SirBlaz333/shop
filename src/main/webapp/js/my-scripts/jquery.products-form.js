@@ -18,7 +18,12 @@ $("#pagination").submit(function(e){
     submitForms();
 });
 
-$('select').on('change', function() {
+$('#sortingCriteria').on('change', function() {
+    sortingData = $('#sorting').serializeArray();
+    submitForms();
+});
+
+$('#sortingOrder').on('change', function() {
     sortingData = $('#sorting').serializeArray();
     submitForms();
 });
