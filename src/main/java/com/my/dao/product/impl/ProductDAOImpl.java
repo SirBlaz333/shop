@@ -4,11 +4,12 @@ import com.my.dao.DBException;
 import com.my.dao.DBManager;
 import com.my.dao.product.ProductDAO;
 import com.my.dao.product.sql.ProductSQLQueryBuilder;
-import com.my.entity.Cpu;
+import com.my.entity.cpu.Cpu;
 import com.my.entity.order.OrderProduct;
 import com.my.entity.ProductFilterFormBean;
-import com.my.entity.builder.CpuBuilder;
+import com.my.entity.cpu.CpuBuilder;
 import com.my.entity.dto.CpuDTO;
+import com.my.util.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -23,12 +24,11 @@ public class ProductDAOImpl implements ProductDAO {
     public static final String GET_PRODUCT_BY_ID = "SELECT * FROM products WHERE id = ?;";
     public static final String UPDATE_PRODUCT_AMOUNT = "UPDATE products SET amount = ? WHERE id = ?;";
     public static final String GET_PRODUCT_AMOUNT = "SELECT amount FROM products WHERE id = ?;";
+    private static final Logger LOGGER = LoggerFactory.getLogger(ProductDAOImpl.class);
     private final DBManager dbManager;
-    private final Logger logger;
 
     public ProductDAOImpl(DBManager dbManager) {
         this.dbManager = dbManager;
-        this.logger = Logger.getLogger(getClass().getName());
     }
 
     @Override
@@ -42,7 +42,7 @@ public class ProductDAOImpl implements ProductDAO {
                 cpuDTO = buildCPU(resultSet);
             }
         } catch (SQLException | DBException e) {
-            logger.log(Level.SEVERE, "Cannot get CPU by id");
+            LOGGER.log(Level.SEVERE, "Cannot get CPU by id");
         }
         return cpuDTO;
     }
@@ -56,7 +56,7 @@ public class ProductDAOImpl implements ProductDAO {
             }
             connection.commit();
         } catch (DBException e) {
-            logger.log(Level.SEVERE, "Cannot obtain a connection");
+            LOGGER.log(Level.SEVERE, "Cannot obtain a connection");
         } catch (SQLException e){
             throw new DBException("There is no such quantity in stock");
         }
@@ -89,7 +89,7 @@ public class ProductDAOImpl implements ProductDAO {
                 amount = resultSet.getInt(BEGIN_INDEX);
             }
         } catch (SQLException | DBException e) {
-            logger.log(Level.SEVERE, "Cannot get project amount");
+            LOGGER.log(Level.SEVERE, "Cannot get project amount");
         }
         return amount;
     }
@@ -106,7 +106,7 @@ public class ProductDAOImpl implements ProductDAO {
                 cpus.add(buildCPU(resultSet));
             }
         } catch (SQLException | DBException e) {
-            logger.log(Level.SEVERE, "Cannot get products");
+            LOGGER.log(Level.SEVERE, "Cannot get products");
         }
         return cpus;
     }
@@ -123,7 +123,7 @@ public class ProductDAOImpl implements ProductDAO {
                 amount = resultSet.getInt(BEGIN_INDEX);
             }
         } catch (SQLException | DBException e) {
-            logger.log(Level.SEVERE, "Cannot get count of products");
+            LOGGER.log(Level.SEVERE, "Cannot get count of products");
         }
         return amount;
     }

@@ -1,7 +1,7 @@
 package com.my.service.cart.impl;
 
 import com.my.entity.Cart;
-import com.my.entity.Cpu;
+import com.my.entity.cpu.Cpu;
 import com.my.service.cart.CartAction;
 
 public class CartRemoveAllAction implements CartAction {

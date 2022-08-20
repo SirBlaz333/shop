@@ -4,6 +4,7 @@ import com.my.dao.DBException;
 import com.my.dao.DBManager;
 import com.my.dao.order.OrderStatusDAO;
 import com.my.entity.order.OrderStatus;
+import com.my.util.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,12 +14,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class OrderStatusDAOImpl implements OrderStatusDAO {
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrderStatusDAOImpl.class);
     private final DBManager dbManager;
-    private final Logger logger;
 
     public OrderStatusDAOImpl(DBManager dbManager) {
         this.dbManager = dbManager;
-        this.logger = Logger.getLogger(getClass().getName());
     }
 
     @Override
@@ -32,7 +32,7 @@ public class OrderStatusDAOImpl implements OrderStatusDAO {
                 id = resultSet.getInt(BEGIN_INDEX);
             }
         } catch (SQLException | DBException e){
-            logger.log(Level.SEVERE, "Cannot get order status");
+            LOGGER.log(Level.SEVERE, "Cannot get order status");
         }
         return id;
     }

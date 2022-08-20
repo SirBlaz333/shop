@@ -1,8 +1,5 @@
-package com.my.entity.builder;
+package com.my.entity.order;
 
-import com.my.entity.order.Order;
-import com.my.entity.order.OrderStatus;
-import com.my.entity.order.OrderProduct;
 import com.my.entity.user.User;
 
 import java.util.List;

@@ -1,6 +1,4 @@
-package com.my.entity.builder;
-
-import com.my.entity.Cpu;
+package com.my.entity.cpu;
 
 public class CpuBuilder {
     private final Cpu cpu;

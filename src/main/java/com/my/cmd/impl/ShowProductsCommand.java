@@ -3,7 +3,7 @@ package com.my.cmd.impl;
 import com.my.cmd.Command;
 import com.my.cmd.Method;
 import com.my.cmd.impl.util.ProductUtility;
-import com.my.entity.Cpu;
+import com.my.entity.cpu.Cpu;
 import com.my.entity.ProductFilterFormBean;
 import com.my.service.product.ProductService;
 import com.my.web.page.Pages;

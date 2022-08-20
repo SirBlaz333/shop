@@ -4,6 +4,7 @@ import com.my.dao.DBException;
 import com.my.dao.DBManager;
 import com.my.dao.order.OrderDAO;
 import com.my.entity.order.Order;
+import com.my.util.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,12 +15,11 @@ import java.util.logging.Logger;
 
 public class OrderDAOImpl implements OrderDAO {
     public static final String ADD_ORDER = "INSERT INTO orders (state_id, state_description, datetime, address, user_id) VALUES (?, ?, ?, ?, ?);";
+    private static final Logger LOGGER = LoggerFactory.getLogger(OrderDAOImpl.class);
     private final DBManager dbManager;
-    private final Logger logger;
 
     public OrderDAOImpl(DBManager dbManager) {
         this.dbManager = dbManager;
-        this.logger = Logger.getLogger(getClass().getName());
     }
 
     @Override
@@ -35,7 +35,7 @@ public class OrderDAOImpl implements OrderDAO {
             preparedStatement.execute();
             setId(connection, order);
         } catch (SQLException | DBException e) {
-            logger.log(Level.SEVERE, "Cannot put order in database");
+            LOGGER.log(Level.SEVERE, "Cannot put order in database");
         }
     }
 

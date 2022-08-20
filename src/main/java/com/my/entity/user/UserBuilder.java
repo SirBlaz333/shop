@@ -1,7 +1,4 @@
-package com.my.entity.builder;
-
-import com.my.entity.user.User;
-import com.my.entity.user.UserRole;
+package com.my.entity.user;
 
 import java.awt.image.BufferedImage;
 

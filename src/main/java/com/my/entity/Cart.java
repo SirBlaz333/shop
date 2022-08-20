@@ -1,5 +1,7 @@
 package com.my.entity;
 
+import com.my.entity.cpu.Cpu;
+
 import java.util.HashMap;
 import java.util.Map;
 

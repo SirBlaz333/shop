@@ -4,7 +4,7 @@ import com.my.cmd.Command;
 import com.my.cmd.Method;
 import com.my.cmd.impl.util.CartUtility;
 import com.my.entity.Cart;
-import com.my.entity.Cpu;
+import com.my.entity.cpu.Cpu;
 import com.my.service.cart.CartAction;
 import com.my.service.cart.CartActionContainer;
 import com.my.service.product.ProductService;

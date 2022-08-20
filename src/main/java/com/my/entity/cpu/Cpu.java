@@ -1,4 +1,4 @@
-package com.my.entity;
+package com.my.entity.cpu;
 
 import java.util.Objects;
 

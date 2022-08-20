@@ -4,6 +4,7 @@ import com.my.dao.DBException;
 import com.my.dao.DBManager;
 import com.my.dao.order.OrderedProductsDAO;
 import com.my.entity.order.OrderProduct;
+import com.my.util.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,12 +15,11 @@ import java.util.logging.Logger;
 
 public class OrderedProductsDAOImpl implements OrderedProductsDAO {
     public static final String ADD_ORDERED_PRODUCTS = "INSERT INTO orders_products VALUES (?, ?, ?, ?);";
+    private final Logger LOGGER = LoggerFactory.getLogger(OrderedProductsDAOImpl.class);
     private final DBManager dbManager;
-    private final Logger logger;
 
     public OrderedProductsDAOImpl(DBManager dbManager) {
         this.dbManager = dbManager;
-        this.logger = Logger.getLogger(getClass().getName());
     }
 
     @Override
@@ -28,7 +28,7 @@ public class OrderedProductsDAOImpl implements OrderedProductsDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(ADD_ORDERED_PRODUCTS);
             put(orderProducts, orderId, preparedStatement);
         } catch (SQLException | DBException e) {
-            logger.log(Level.SEVERE, "Cannot put ordered products in database;");
+            LOGGER.log(Level.SEVERE, "Cannot put ordered products in database;");
         }
     }
 

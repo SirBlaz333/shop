@@ -1,6 +1,6 @@
 package com.my.entity.dto;
 
-import com.my.entity.Cpu;
+import com.my.entity.cpu.Cpu;
 
 public class CpuDTO {
     private Cpu cpu;

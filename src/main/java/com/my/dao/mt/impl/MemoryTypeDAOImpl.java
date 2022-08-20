@@ -3,6 +3,7 @@ package com.my.dao.mt.impl;
 import com.my.dao.DBException;
 import com.my.dao.DBManager;
 import com.my.dao.mt.MemoryTypeDAO;
+import com.my.util.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,12 +15,11 @@ import java.util.logging.Logger;
 public class MemoryTypeDAOImpl implements MemoryTypeDAO {
     public static final String GET_MEMORY_TYPE_BY_ID = "SELECT memory_type FROM memory_types WHERE id = ?;";
     public static final String GET_MEMORY_TYPE_ID = "SELECT id FROM memory_types WHERE memory_type = ?;";
+    private static final Logger LOGGER = LoggerFactory.getLogger(MemoryTypeDAOImpl.class);
     private final DBManager dbManager;
-    private final Logger logger;
 
     public MemoryTypeDAOImpl(DBManager dbManager) {
         this.dbManager = dbManager;
-        this.logger = Logger.getLogger(getClass().getName());
     }
 
     @Override
@@ -33,7 +33,7 @@ public class MemoryTypeDAOImpl implements MemoryTypeDAO {
                 memoryType = resultSet.getString(BEGIN_INDEX);
             }
         } catch (SQLException | DBException e) {
-            logger.log(Level.SEVERE, "Cannot get memory type by id");
+            LOGGER.log(Level.SEVERE, "Cannot get memory type by id");
         }
         return memoryType;
     }
@@ -49,7 +49,7 @@ public class MemoryTypeDAOImpl implements MemoryTypeDAO {
                 memoryTypeId = resultSet.getInt(BEGIN_INDEX);
             }
         } catch (SQLException | DBException e) {
-            logger.log(Level.SEVERE, "Cannot get memory type by id");
+            LOGGER.log(Level.SEVERE, "Cannot get memory type by id");
         }
         return memoryTypeId;
     }

@@ -5,6 +5,7 @@ import com.my.cmd.impl.util.RedirectionUtility;
 import com.my.entity.Captcha;
 import com.my.service.captcha.CaptchaService;
 import com.my.cmd.Command;
+import com.my.util.LoggerFactory;
 import com.my.web.captcha.container.strategy.CaptchaContainerStrategy;
 import com.my.web.page.Pages;
 
@@ -24,14 +25,13 @@ public class ShowLoginPageCommand implements Command {
     public static final String CAPTCHA_IMAGE = "captchaImg";
     public static final String REGISTER = "register";
     public static final String CANNOT_DISPLAY_CAPTCHA = "Cannot display captcha";
+    private static final Logger LOGGER = LoggerFactory.getLogger(ShowLoginPageCommand.class);
     private final CaptchaService captchaService;
     private final CaptchaContainerStrategy container;
-    private final Logger logger;
 
     public ShowLoginPageCommand(CaptchaContainerStrategy captchaContainerStrategy) {
-        captchaService = new CaptchaService();
-        container = captchaContainerStrategy;
-        logger = Logger.getLogger(getClass().getName());
+        this.captchaService = new CaptchaService();
+        this.container = captchaContainerStrategy;
     }
 
     @Override
@@ -76,7 +76,7 @@ public class ShowLoginPageCommand implements Command {
             OutputStream outputStream = response.getOutputStream();
             ImageIO.write(bufferedImage, IMAGE_FORMAT, outputStream);
         } catch (IOException e){
-            logger.log(Level.SEVERE, CANNOT_DISPLAY_CAPTCHA);
+            LOGGER.log(Level.SEVERE, CANNOT_DISPLAY_CAPTCHA);
         }
     }
 }

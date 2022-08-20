@@ -3,6 +3,7 @@ package com.my.dao.user.impl;
 import com.my.dao.DBException;
 import com.my.dao.DBManager;
 import com.my.dao.user.UserRolesDAO;
+import com.my.util.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,12 +13,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class UserRolesDAOImpl implements UserRolesDAO {
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserRolesDAOImpl.class);
     private final DBManager dbManager;
-    private final Logger logger;
 
     public UserRolesDAOImpl(DBManager dbManager) {
         this.dbManager = dbManager;
-        logger = Logger.getLogger(getClass().getName());
     }
 
     @Override
@@ -31,7 +31,7 @@ public class UserRolesDAOImpl implements UserRolesDAO {
                 userRole = resultSet.getString(BEGIN_INDEX);
             }
         } catch (DBException | SQLException e) {
-            logger.log(Level.SEVERE, "Cannot get user role by id");
+            LOGGER.log(Level.SEVERE, "Cannot get user role by id");
         }
         return userRole;
     }
@@ -47,7 +47,7 @@ public class UserRolesDAOImpl implements UserRolesDAO {
                 userRoleId = resultSet.getInt(BEGIN_INDEX);
             }
         } catch (DBException | SQLException e) {
-            logger.log(Level.SEVERE, "Cannot get user role by id");
+            LOGGER.log(Level.SEVERE, "Cannot get user role by id");
         }
         return userRoleId;
     }

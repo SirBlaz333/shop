@@ -5,7 +5,7 @@ import com.my.dao.DBManager;
 import com.my.dao.user.UserDAO;
 import com.my.entity.dto.UserDTO;
 import com.my.entity.user.User;
-import com.my.entity.builder.UserBuilder;
+import com.my.entity.user.UserBuilder;
 
 import java.io.IOException;
 import java.sql.Connection;

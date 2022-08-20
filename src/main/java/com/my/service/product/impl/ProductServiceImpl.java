@@ -4,7 +4,7 @@ import com.my.dao.DBException;
 import com.my.dao.manufacturer.ManufacturerDAO;
 import com.my.dao.mt.MemoryTypeDAO;
 import com.my.dao.product.ProductDAO;
-import com.my.entity.Cpu;
+import com.my.entity.cpu.Cpu;
 import com.my.entity.order.OrderProduct;
 import com.my.entity.ProductFilterFormBean;
 import com.my.entity.dto.CpuDTO;
